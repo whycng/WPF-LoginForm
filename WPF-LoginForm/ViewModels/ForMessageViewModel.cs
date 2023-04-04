@@ -24,6 +24,14 @@ namespace WPF_LoginForm.ViewModels
         public string ContactName { get; set; }
         public Uri ContactPhoto { get; set; }
         public string LastSeen { get; set; }
+        // test
+        public string defaultContactPhoto;
+        public string DefaultContactPhoto { 
+            get => defaultContactPhoto; set {
+                defaultContactPhoto = "/assets/5.jpg";
+            }
+        }
+
 
         #endregion
 
@@ -137,25 +145,7 @@ namespace WPF_LoginForm.ViewModels
         #region Commands
 
         // to get the contactName of selected chat so that we can open corresponding conversation
-        protected ICommand _getSelectedChatCommand;
-
-
-
-        //public ICommand GetSelectedChatCommand()
-        //{
-        //    if (_getSelectedChatCommand == null)
-        //    {
-        //        _getSelectedChatCommand = new RelayCommand(parameter(){ } );
-        //    }
-        //    return _getSelectedChatCommand;
-        //}
-        //#error version
-
-        //public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameterX => {
-        //    ContactName = v.ContactName;
-        //    ContactPhoto = v.ContactPhoto;
-        //},false );
-
+        protected ICommand _getSelectedChatCommand; 
 
         public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new Commands.RelayCommand(parameterX =>
         {   
@@ -163,11 +153,11 @@ namespace WPF_LoginForm.ViewModels
             {
                 // getting contactName from selected chat
                 ContactName = v.ContactName;
-                OnPropertyChanged(nameof(ContactName));
+                OnPropertyChanged("ContactName");
 
                 // 
                 ContactPhoto = v.ContactPhoto;
-                OnPropertyChanged(nameof(ContactPhoto));
+                OnPropertyChanged("ContactPhoto");
             }
             
         });

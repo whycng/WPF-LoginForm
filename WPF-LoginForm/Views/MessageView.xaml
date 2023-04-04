@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls"
+             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls" 
+             xmlns:ViewModel="clr-namespace:WPF_LoginForm.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
+    <UserControl.DataContext>
+        <ViewModel:ForMessageViewModel/>
+    </UserControl.DataContext>
     <UserControl.Resources>
         <Style x:Key="ContactInfoButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
@@ -31,7 +34,7 @@
                 <Ellipse Height="40" Width="40">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="{Binding ContactPhoto, 
-                            FallbackValue='/assets/5.jpg',TargetNullValue='/assets/5.jpg',
+                            FallbackValue=/assets/5.jpg,TargetNullValue=/assets/5.jpg,
                             UpdateSourceTrigger=PropertyChanged}"
                                     Stretch="UniformToFill"/>
                     </Ellipse.Fill>
@@ -42,14 +45,14 @@
                     <TextBlock>
                         <!--name-->
                         <Run Text="{Binding ContactName, 
-                            FallbackValue='Contact Name',
-                            TargetNullValue='Conatact Name',
+                            FallbackValue='ContactName',
+                            TargetNullValue='ConatactName',
                             UpdateSourceTrigger=PropertyChanged}"
                              FontWeight="Bold" FontSize="20"/>
                         <LineBreak/>
                         <!--online status--> 
                         <Run Text="{Binding LastSeen, 
-                             FallbackValue='Last Seen',
+                             FallbackValue='Last    Seen',
                             TargetNullValue='Last Seen',
                             UpdateSourceTrigger=PropertyChanged}"
                              FontSize="15"/>

@@ -142,7 +142,7 @@ namespace WPF_LoginForm.ViewModels
         private void ExecuteShowMessageViewCommand(object obj)
         {
             TestN = "testname in Message";
-            CurrentChildView = new MessageViewModel();
+            CurrentChildView = new ForMessageViewModel();
             Caption = "Message-MainViewModel";  
             Icon = IconChar.Message;
         }
