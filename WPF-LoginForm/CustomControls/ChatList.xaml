@@ -17,6 +17,8 @@
                         <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Command" Value="{Binding ContactName}"/>
+                        <Setter Property="CommandParameter" Value="{Binding ContactName}"/>
                         <Setter Property="Content" Value="{Binding ContactName}"/>
                         <!--to select the first chat..it is optional 1.04.0-->
                         <!--<Setter Property="IsChecked" Value="{Binding ChatIsSelected, Mode=TwoWay,

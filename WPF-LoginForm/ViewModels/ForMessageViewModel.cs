@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WPF_LoginForm.CustomControls;
 using WPF_LoginForm.Models;
 
@@ -129,6 +131,24 @@ namespace WPF_LoginForm.ViewModels
             OnPropertyChanged(nameof(Chats)); // ??
         }
         #endregion
+
+        #region Commands
+
+        // to get the contactName of selected chat so that we can open corresponding conversation
+        protected ICommand _getSelectedChatCommand;
+
+        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameter =>
+        {
+            if(parameter is ChatListData v) {
+                // getting Contact Name from selected chat   
+                ContactName = v.ContactName;
+
+                ContactPhoto = v.ContactPhoto;
+            }
+        });
+
+        #endregion
+
         #endregion
 
         #region Conversation
@@ -178,7 +198,7 @@ namespace WPF_LoginForm.ViewModels
                             MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
                             SentMessage = reader["SentMsgs"].ToString(),
                             MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
-                            IsMessageRecived = string.IsNullOrEmpty(reader["ReceivedMsgs"].ToString()) ? false:true
+                            IsMessageReceived = string.IsNullOrEmpty(reader["ReceivedMsgs"].ToString()) ? false:true
                         };
                         Conversations.Add(conversation);
                         OnPropertyChanged(nameof(Conversation));

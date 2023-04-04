@@ -13,7 +13,7 @@ namespace WPF_LoginForm.Models
         public string MsgReceivedOn { get; set; } 
         public string SentMessage { get; set; }
         public string MsgSentOn { get; set; }
-        public bool IsMessageRecived { get; set; }
+        public bool IsMessageReceived { get; set; }
         public bool MessageContainsReply { get; set; }
 
          

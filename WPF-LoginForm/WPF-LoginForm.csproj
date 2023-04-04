@@ -276,10 +276,6 @@
     <Resource Include="Images\profile-picture.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Database1_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Database1.mdf</DependentUpon>
-    </Content>
     <Content Include="Database\Database1.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -296,9 +292,6 @@
     <Resource Include="Assets\7.png" />
     <Resource Include="Assets\8.jpg" />
     <Resource Include="Assets\connectedworld.png" />
-    <Content Include="Assets\Database1.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Assets\ok.png" />
   </ItemGroup>
   <ItemGroup>
