@@ -161,7 +161,7 @@
                                FontFamily="Montserrat"
                                HorizontalAlignment="Center"/>
 
-                    <TextBlock Text="十八亿鼠标的梦想"
+                    <TextBlock Text="UPC 商务系统 "
                                Foreground="LightGray"
                                FontSize="12"
                                FontWeight="Medium"

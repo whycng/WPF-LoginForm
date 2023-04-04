@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_LoginForm.CustomControls;
 using WPF_LoginForm.Models;
-
+ 
 namespace WPF_LoginForm.ViewModels
 {
-    public class ForMessageViewModel:ViewModelBase // 45.00
+    public class ForMessageViewModel : ViewModelBase // 45.00
     {
 
         #region MainWindow For Message
 
         #region Properties
-        public string ContactName { get; set; } 
+        public string ContactName { get; set; }
         public Uri ContactPhoto { get; set; }
         public string LastSeen { get; set; }
 
@@ -85,7 +85,7 @@ namespace WPF_LoginForm.ViewModels
             {
                 new ChatListData()
                 {
-                    
+
                     ContactName = "Billy",
                     ContactPhoto = new Uri("/Assets/6.jpg",UriKind.RelativeOrAbsolute),
                     Message = "Hey,Whats up? 你好，你好，你end",
@@ -137,15 +137,36 @@ namespace WPF_LoginForm.ViewModels
         // to get the contactName of selected chat so that we can open corresponding conversation
         protected ICommand _getSelectedChatCommand;
 
-        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameter =>
+
+
+        //public ICommand GetSelectedChatCommand()
+        //{
+        //    if (_getSelectedChatCommand == null)
+        //    {
+        //        _getSelectedChatCommand = new RelayCommand(parameter(){ } );
+        //    }
+        //    return _getSelectedChatCommand;
+        //}
+        //#error version
+
+        //public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameterX => {
+        //    ContactName = v.ContactName;
+        //    ContactPhoto = v.ContactPhoto;
+        //},false );
+
+
+        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameterX =>
         {
-            if(parameter is ChatListData v) {
-                // getting Contact Name from selected chat   
+            if (parameterX is ChatListData v)
+            {
                 ContactName = v.ContactName;
+                OnPropertyChanged(nameof(ContactName));
 
                 ContactPhoto = v.ContactPhoto;
+                OnPropertyChanged(nameof(ContactPhoto));
             }
         });
+
 
         #endregion
 

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace WPF_LoginForm.Commands
 {
-    public class RelayCommand
+    public class RelayCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;
@@ -24,14 +24,14 @@ namespace WPF_LoginForm.Commands
             }
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object parameterX)
         {
-            return canExecute == null || canExecute(parameter);
+            return canExecute == null || canExecute(parameterX);
         }
 
-        public void Execute(object parameter)
+        public void Execute(object parameterX)
         {
-            execute(parameter);
+            execute(parameterX);
         }
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
