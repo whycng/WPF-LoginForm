@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="WPF_LoginForm.Views.CompassView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_LoginForm.Views"
+             xmlns:Models="clr-namespace:WPF_LoginForm.Models"
+             xmlns:viewModels="clr-namespace:WPF_LoginForm.ViewModels"  
+             mc:Ignorable="d" 
+          
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <!--<UserControl.DataContext>
+        
+        <viewModels:CompassViewModel/>
+    </UserControl.DataContext>-->
+    <StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="400"/>
+            </Grid.RowDefinitions>
+
+
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="搜索条件:" Background="White" VerticalAlignment="Center"/>
+                <TextBox Width="200" Height="25" Text="{Binding Search}"  Margin="10 0 0 0"/>
+                <Button Content="查找" Command="{Binding QueryCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                <Button Content="重置" Command="{Binding ResetCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                <Button Content="新增" Command="{Binding AddCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                 
+            </StackPanel>
+            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding GridModelList}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="序号" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="修改" 
+                                            CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.EditCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="White" Foreground="Black"/>
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                
+            </DataGrid>
+
+
+        </Grid>
+    
+    </StackPanel>
+
+</UserControl>

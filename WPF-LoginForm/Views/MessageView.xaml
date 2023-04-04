@@ -1,0 +1,247 @@
+﻿<UserControl x:Class="WPF_LoginForm.Views.MessageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="ContactInfoButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <ControlTemplate x:Key="ContactInfoButtonTemplate" TargetType="{x:Type Button}">
+
+            <Border
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                >
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <!--Profile photo-->
+                    <ColumnDefinition Width="75"/>
+                    <!--Name & Online status-->
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Ellipse Height="40" Width="40">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding ContactPhoto, 
+                            FallbackValue='/assets/5.jpg',TargetNullValue='/assets/5.jpg',
+                            UpdateSourceTrigger=PropertyChanged}"
+                                    Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <Grid Grid.Column="1">
+                    
+                    <TextBlock>
+                        <!--name-->
+                        <Run Text="{Binding ContactName, 
+                            FallbackValue='Contact Name',
+                            TargetNullValue='Conatact Name',
+                            UpdateSourceTrigger=PropertyChanged}"
+                             FontWeight="Bold" FontSize="20"/>
+                        <LineBreak/>
+                        <!--online status--> 
+                        <Run Text="{Binding LastSeen, 
+                             FallbackValue='Last Seen',
+                            TargetNullValue='Last Seen',
+                            UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="15"/>
+                    </TextBlock>
+                </Grid>
+            </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Border CornerRadius="20" Background="WhiteSmoke">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Title Bar-->
+            <Border 
+                Background="#49a078"
+                CornerRadius="20,20,0,0"
+                Grid.ColumnSpan="3"
+                Height="30"
+                 />
+            <Grid>
+                
+            </Grid>
+            
+            <!-- Contact Chat List -->
+            <Grid Grid.Row="1" MinWidth="406">
+                <Grid.RowDefinitions>
+                    <!-- Title & Search Options -->
+                    <RowDefinition Height="Auto"/>
+                    <!--SearchBox-->
+                    <RowDefinition Height="Auto"/>
+                    <!--Status Thumbs-->
+                    <RowDefinition Height="Auto"/>
+                    <!-- All Chats-->
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <!-- Title & Search Options -->
+                <Grid Grid.Row="0"
+                    Height="75"
+                    Margin="15,0">
+                    <Grid.ColumnDefinitions>
+                        <!-- Title-->
+                        <ColumnDefinition Width="Auto"/>
+                        
+                        <!-- Blank-->
+                        <ColumnDefinition Width="Auto"/>
+                        
+                        <!-- Search -->
+                        <ColumnDefinition Width="40"/>
+                        
+                        <!-- more -->
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock 
+                        Text="Chats"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="SemiBold"/>
+                    
+                    <!--Search Button 23:00 --> 
+                    <Button 
+                        Grid.Column="2"
+                        x:Name="btnChatSearchButton"
+                        Content="{StaticResource search}" Style="{StaticResource IconButtonStyle}">
+                    </Button>
+                    <!--More option--> 
+                    <ToggleButton Grid.Column="3"
+                        x:Name="btnMoreOptions" 
+                        Content="{StaticResource more}" Style="{StaticResource ToggleIconButtonStyle}" >
+                    </ToggleButton>
+                    
+                    
+                </Grid>
+
+                <!-- #region SerachBox-->
+                <!-- To-Do:Add search box pen/close trugers-->
+                <Border
+                        Grid.Row="1"
+                        Background="#dce1de"
+                        CornerRadius="15"
+                        Margin="20"
+                        Height="50"
+                        x:Name="searchBoxBorder"
+                        FocusManager.FocusedElement="{Binding ElementName=searchQuery}" 
+                    >
+                    <TextBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Name="searchQuery"
+                        Padding="12,0"
+                        Text="search text"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Center"
+                        />
+                </Border>
+                <!-- #endregion-->
+                
+                <!--#region Status Thumbnails-->
+                <customcontrols:StatusThumbs Grid.Row="2"/>
+                <!--#endregion-->
+                
+                <!-- #region Cahts List -->
+                <customcontrols:ChatList Grid.Row="3"/>
+                <!--<ScrollViewer Grid.Row="3">
+                    <StackPanel>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
+                    </StackPanel>
+                </ScrollViewer>-->
+
+                <!-- #endregion -->
+            </Grid>
+            
+            <!--#region Conversion Screen-->
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <!--Convesation Header-->
+                    <RowDefinition Height="Auto"/>
+                    <!--Body-->
+                    <RowDefinition/>
+                    <!--Reply popup-->
+                    <RowDefinition Height="Auto"/>
+                    <!--SendMessage Box-->
+                    <RowDefinition Height="Auto"/> 
+                </Grid.RowDefinitions>
+                
+                <Grid Height="75" Margin="0,0,15,0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <!--Conatct Header Name & Online Status-->
+                        <ColumnDefinition />
+                        <!--Video Call Button-->
+                        <ColumnDefinition Width="50"/>
+                        <!--Call Button-->
+                        <ColumnDefinition Width="50"/>
+                        <!--Search Message Button-->
+                        <ColumnDefinition Width="50"/>
+                        <!--More option-->
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!--Conatact Info Button-->
+                    <Button 
+                        Template="{StaticResource ContactInfoButtonTemplate}"
+                        Style="{StaticResource ContactInfoButtonStyle}"/>
+                    
+                    <!--VideCall Button-->
+                    <Button Grid.Column="1" 
+                            Content="{StaticResource videocall}" Style="{StaticResource IconButtonStyle}"/>
+                    <!--Call Button-->
+                    <Button Grid.Column="2" 
+                            Content="{StaticResource call}" Style="{StaticResource IconButtonStyle}" />
+                    <!--Search Message Button-->
+                    <Button Grid.Column="3" 
+                            Content="{StaticResource search}" Style="{StaticResource IconButtonStyle}"/>
+                    <!--More option-->
+                    <ToggleButton Grid.Column="4" 
+                        Content="{StaticResource more}" Style="{StaticResource ToggleIconButtonStyle}" >
+                    </ToggleButton>
+                </Grid>
+                
+                <!--Conversation Message Body-->
+                <customcontrols:Conversation Grid.Row="1"/>
+            </Grid>
+        </Grid>
+    </Border>
+
+
+</UserControl>
