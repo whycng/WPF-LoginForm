@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_LoginForm.CustomControls;
 using WPF_LoginForm.Models;
- 
+using WPF_LoginForm.Commands;
+using GalaSoft.MvvmLight.Command;
+
 namespace WPF_LoginForm.ViewModels
 {
     public class ForMessageViewModel : ViewModelBase // 45.00
@@ -155,16 +157,19 @@ namespace WPF_LoginForm.ViewModels
         //},false );
 
 
-        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameterX =>
-        {
-            if (parameterX is ChatListData v)
+        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new Commands.RelayCommand(parameterX =>
+        {   
+            if(parameterX is ChatListData v)
             {
+                // getting contactName from selected chat
                 ContactName = v.ContactName;
                 OnPropertyChanged(nameof(ContactName));
 
+                // 
                 ContactPhoto = v.ContactPhoto;
                 OnPropertyChanged(nameof(ContactPhoto));
             }
+            
         });
 
 
