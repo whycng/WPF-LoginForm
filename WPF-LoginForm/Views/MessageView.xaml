@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls" 
+             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
+             xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls" 
              xmlns:ViewModel="clr-namespace:WPF_LoginForm.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -24,6 +25,9 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 >
             <Grid VerticalAlignment="Center">
+                <Grid.DataContext>
+                    <ViewModel:ForMessageViewModel/>
+                </Grid.DataContext>
                 <Grid.ColumnDefinitions>
                     <!--Profile photo-->
                     <ColumnDefinition Width="75"/>
@@ -32,17 +36,29 @@
                 </Grid.ColumnDefinitions>
 
                 <Ellipse Height="40" Width="40">
+                        <Ellipse.DataContext> 
+                            <ViewModel:ForMessageViewModel/> 
+                        </Ellipse.DataContext>
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding ContactPhoto, 
+                            <ImageBrush
+                                Stretch="UniformToFill"
+                                ImageSource="{Binding ContactPhoto,
+                                FallbackValue='/assets/5.jpg',
+                                TargetNullValue='/assets/5.jpg',
+                                UpdateSourceTrigger=PropertyChanged}"/>
+                            <!--<ImageBrush ImageSource="{Binding ContactPhoto, 
                             FallbackValue=/assets/5.jpg,TargetNullValue=/assets/5.jpg,
                             UpdateSourceTrigger=PropertyChanged}"
-                                    Stretch="UniformToFill"/>
+                                    Stretch="UniformToFill"/>-->
                     </Ellipse.Fill>
                 </Ellipse>
 
                 <Grid Grid.Column="1">
                     
                     <TextBlock>
+                        <TextBlock.DataContext>
+                            <ViewModel:ForMessageViewModel/>
+                        </TextBlock.DataContext>
                         <!--name-->
                         <Run Text="{Binding ContactName, 
                             FallbackValue='ContactName',
@@ -82,9 +98,7 @@
                 Grid.ColumnSpan="3"
                 Height="30"
                  />
-            <Grid>
-                
-            </Grid>
+             
             
             <!-- Contact Chat List -->
             <Grid Grid.Row="1" MinWidth="406">
@@ -221,10 +235,12 @@
                     </Grid.ColumnDefinitions>
                     
                     <!--Conatact Info Button-->
-                    <Button 
+                    <Button  
                         Template="{StaticResource ContactInfoButtonTemplate}"
-                        Style="{StaticResource ContactInfoButtonStyle}"/>
-                    
+                        Style="{StaticResource ContactInfoButtonStyle}">
+                        
+                    </Button>
+
                     <!--VideCall Button-->
                     <Button Grid.Column="1" 
                             Content="{StaticResource videocall}" Style="{StaticResource IconButtonStyle}"/>
@@ -242,7 +258,52 @@
                 
                 <!--Conversation Message Body-->
                 <customcontrols:Conversation Grid.Row="1"/>
+                
+                <!--#region TextBox to send message-->
+                <Grid Grid.Row="3">
+                    <Border
+                        Background="#dec1de" CornerRadius="15" Height="50" Margin="15,8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <!--TextBox Button-->
+                                <ColumnDefinition/>
+                                
+                                <!--Attachment Button & send Message Button-->
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Background="Transparent" BorderThickness="0"
+                                     Padding="12,0" Text="{Binding MessageText}"
+                                     VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                     x:Name="MessageBox">
+                                
+                            </TextBox>
+
+                            <!--Buttons-->
+                            <StackPanel Grid.Column="1"
+                                Orientation="Horizontal">
+                                <!--to do commands-->
+                                
+                                
+                                <Button Content="{StaticResource attach}"
+                                x:Name="AttachButton"
+                                Style="{StaticResource IconButtonStyle}"/>
+                                <Button Content="{StaticResource send}"
+                                x:Name="SendMsgButton"
+                                Style="{StaticResource IconButtonStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    
+                </Grid>
+                <!--#endregion -->
             </Grid>
+            
+            <!--Contact Info-->
+            <customcontrols:ContactInfo x:Name="ContactInfo"
+                                        Grid.Row="1"
+                                        Grid.Column="2"/>
         </Grid>
     </Border>
 

@@ -168,6 +168,8 @@ namespace WPF_LoginForm.ViewModels
         #endregion
 
         #region Conversation
+
+        #region Properties
         protected ObservableCollection<ChatConversation> mConversations;
         public ObservableCollection<ChatConversation> Conversations
         {
@@ -178,10 +180,17 @@ namespace WPF_LoginForm.ViewModels
                 OnPropertyChanged(nameof(Conversations));
             }
         }
-        #region Properties
 
-
-
+        protected string messageText;
+        public string MessageText
+        {
+            get => messageText;
+            set
+            {
+                messageText = value;
+                OnPropertyChanged(nameof(MessageText));
+            }
+        }
         #endregion
 
         #region Logics
