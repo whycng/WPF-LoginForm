@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WPF_LoginForm.Views.HomeView_reco"
+﻿<UserControl x:Class="WPF_LoginForm.Views.HomeView_frui"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,29 +6,15 @@
              xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:customerControl="clr-namespace:WPF_LoginForm.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-
     <Grid>
-        <!--<TextBlock Text="推荐" FontSize="50" Background="Green" />-->
-
 
         <ScrollViewer  
                       HorizontalScrollBarVisibility="Disabled">
-            
-            <!--<ScrollViewer>
-                <StackPanel Orientation="Horizontal">
-                    <customerControl:IndivItems/>
-                    <customerControl:IndivItems/>
-                    <customerControl:IndivItems/>
-                    <customerControl:IndivItems/>
-                </StackPanel>
-             
-            </ScrollViewer>-->
 
             <ItemsControl
                     Margin="0,20,0,0">
                 <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate> 
+                    <ItemsPanelTemplate>
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>

@@ -16,12 +16,11 @@ namespace WPF_LoginForm.ViewModels
     public class HomeViewModel : ViewModelBase
     {
         //Fields
-        private UserAccountModel _currentUserAccount;
-        private IUserRepository userRepository;
+        private UserAccountModel _currentUserAccount; 
         private ViewModelBase _currentChildView;
         private string _caption; // caption 右侧视图左上角-名称
         private IconChar _icon; // icon 右侧视图左上角-图标
-        private string _testN;
+   
 
 
         public UserAccountModel CurrentUserAccount
@@ -78,59 +77,58 @@ namespace WPF_LoginForm.ViewModels
 
         // --> Commands
         public ICommand ShowHomeViewCommand { get; }
-        public ICommand ShowCustomerViewCommand { get; }
-        public ICommand ShowMessageViewCommand { get; }
-        public ICommand ShowSettingViewCommand { get; }
-        public ICommand ShowCompassViewCommand { get; }
+        public ICommand ShowFoodViewCommand { get; }
+        public ICommand ShowFruitViewCommand { get; }
+        public ICommand ShowBookViewCommand { get; }
+        public ICommand ShowBhViewCommand { get; }
+        public ICommand ShowMedicineViewCommand { get; }
 
 
         public HomeViewModel() // 构造函数，初始化使用 view
         {
-
-
-            userRepository = new UserRepository();
-            CurrentUserAccount = new UserAccountModel();
-
+             
             // Initialize commands
+            // 推荐 recommend
             ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
-            ShowCustomerViewCommand = new ViewModelCommand(ExecuteShowCustomerViewCommand);
-            ShowMessageViewCommand = new ViewModelCommand(ExecuteShowMessageViewCommand);
-            ShowSettingViewCommand = new ViewModelCommand(ExecuteShowSettingViewCommand);
-            ShowCompassViewCommand = new ViewModelCommand(ExecuteShowCompassViewCommand);
+            // food 
+            ShowFoodViewCommand = new ViewModelCommand(ExecuteShowFoodViewCommand);
+            ShowFruitViewCommand = new ViewModelCommand(ExecuteShowFruitViewCommand);
+            ShowBookViewCommand = new ViewModelCommand(ExecuteShowBookViewCommand);
+            ShowBhViewCommand = new ViewModelCommand(ExecuteShowBhViewCommand);
+            ShowMedicineViewCommand = new ViewModelCommand(ExecuteShowMedicineViewCommand);
 
 
 
             // Default View
             ExecuteShowHomeViewCommand(null);
 
-
-            LoadCurrentUserData();
+             
         }
 
-        private void ExecuteShowCompassViewCommand(object obj)
+        private void ExecuteShowBookViewCommand(object obj)
         { 
-            CurrentChildView = new CompassViewModel();
-            Caption = "Compass-订单";
+            CurrentChildView = new HomeViewModel_book();
+            Caption = "Book";
             Icon = IconChar.Compass;
         }
 
-        private void ExecuteShowSettingViewCommand(object obj)
+        private void ExecuteShowBhViewCommand(object obj)
         { 
-            CurrentChildView = new SettingViewModel();
-            Caption = "Setting";
+            CurrentChildView = new HomeViewModel_bh();
+            Caption = "bh 百货";
             Icon = IconChar.Gear;
         }
 
-        private void ExecuteShowMessageViewCommand(object obj)
+        private void ExecuteShowFruitViewCommand(object obj)
         { 
-            CurrentChildView = new ForMessageViewModel();
+            CurrentChildView = new HomeViewModel_frui();
             Caption = "Message-MainViewModel";
             Icon = IconChar.Message;
         }
 
-        private void ExecuteShowCustomerViewCommand(object obj)
+        private void ExecuteShowFoodViewCommand(object obj)
         { 
-            CurrentChildView = new CustomerViewModel();
+            CurrentChildView = new HomeViewModel_food();
             Caption = "Customer";
             Icon = IconChar.UserGroup;
             // throw new NotImplementedException();
@@ -143,20 +141,10 @@ namespace WPF_LoginForm.ViewModels
             Icon = IconChar.Home;
         }
 
-        private void LoadCurrentUserData()
+        private void ExecuteShowMedicineViewCommand(object obj)
         {
-            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
-            if (user != null)
-            {
-                CurrentUserAccount.Username = user.Username;
-                CurrentUserAccount.DisplayName = $"Welcome {user.Name} {user.LastName} DisplayName<<<";
-                CurrentUserAccount.ProfilePicture = null;
-            }
-            else
-            {
-                CurrentUserAccount.DisplayName = "Invalid user, not logged in";
-                //Hide child views.
-            }
+            CurrentChildView = new HomeViewModel_medi(); // 推荐
         }
+ 
     }
 }

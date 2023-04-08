@@ -131,6 +131,9 @@
     <Compile Include="CustomControls\Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\IndivItems.xaml.cs">
+      <DependentUpon>IndivItems.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\StatusThumbs.xaml.cs">
       <DependentUpon>StatusThumbs.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,11 @@
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\ForMessageViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel_bh.cs" />
+    <Compile Include="ViewModels\HomeViewModel_book.cs" />
+    <Compile Include="ViewModels\HomeViewModel_food.cs" />
+    <Compile Include="ViewModels\HomeViewModel_frui.cs" />
+    <Compile Include="ViewModels\HomeViewModel_medi.cs" />
     <Compile Include="ViewModels\HomeViewModel_reco.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -166,6 +174,21 @@
     </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView_bh.xaml.cs">
+      <DependentUpon>HomeView_bh.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView_book.xaml.cs">
+      <DependentUpon>HomeView_book.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView_food.xaml.cs">
+      <DependentUpon>HomeView_food.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView_frui.xaml.cs">
+      <DependentUpon>HomeView_frui.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView_medi.xaml.cs">
+      <DependentUpon>HomeView_medi.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeView_reco.xaml.cs">
       <DependentUpon>HomeView_reco.xaml</DependentUpon>
@@ -209,6 +232,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\IndivItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\StatusThumbs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +261,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView_bh.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView_book.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView_food.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView_frui.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView_medi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

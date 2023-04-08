@@ -3,27 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
+             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
+             xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <!--<DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-            <local:HomeView />
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel_reco}">
+            <local:HomeView_reco />
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:CustomerViewModel}">
-            <local:CustomerView />
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel_bh}">
+            <local:HomeView_bh />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:ForMessageViewModel}">
-            <local:MessageView />
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel_book}">
+            <local:HomeView_book />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:SettingViewModel}">
-            <local:SettingView />
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel_frui}">
+            <local:HomeView_frui />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CompassViewModel}">
-            <local:CompassView />
-        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel_medi}">
+            <local:HomeView_medi />
+        </DataTemplate>
     </UserControl.Resources>
 
     <UserControl.DataContext>
@@ -102,7 +103,7 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowCustomerViewCommand}">
+                                 Command="{Binding ShowFoodViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="User" Style="{StaticResource menuButtonIcon}" />
@@ -113,7 +114,7 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowMessageViewCommand}">
+                                 Command="{Binding ShowFruitViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Message" Style="{StaticResource menuButtonIcon}" />
@@ -124,7 +125,7 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowSettingViewCommand}">
+                                 Command="{Binding ShowBookViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Gear" Style="{StaticResource menuButtonIcon}" />
@@ -135,7 +136,7 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowCompassViewCommand}">
+                                 Command="{Binding ShowBhViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Compass" Style="{StaticResource menuButtonIcon}" />
@@ -146,7 +147,7 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowCompassViewCommand}">
+                                 Command="{Binding ShowMedicineViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
@@ -161,34 +162,39 @@
             </Border>
 
             <!-- Main / Content section  -->
-            <Border CornerRadius="0,10,10,0"
-                    Grid.Column="1" Margin="0,0,0,0" Grid.RowSpan="2">
+            <Grid Grid.Column="1" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Border CornerRadius="0,10,10,0"
+                     Margin="0,0,0,0" >
 
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
-                        <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                            <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
+                            <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
 
-                    </LinearGradientBrush>
-                </Border.Background>
+                        </LinearGradientBrush>
+                    </Border.Background>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <!-- Control Bar -->
+                            <RowDefinition Height="25" />
+                            <!-- Header / Caption-->
+                            <RowDefinition Height="35" />
+                            <!-- Content sction / Child views -->
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
                         <!-- Control Bar -->
-                        <RowDefinition Height="25" />
-                        <!-- Header / Caption-->
-                        <RowDefinition Height="35" />
-                        <!-- Content sction / Child views -->
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <!-- Control Bar -->
-                    <StackPanel x:Name="pnlControlBar"
+                        <!--<StackPanel x:Name="pnlControlBar"
                                 Grid.Row="0"
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
@@ -198,21 +204,21 @@
                                 >
                         
 
-                    </StackPanel>
+                    </StackPanel>-->
 
-                    <!-- Header / Caption-->
-                    <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0.2,-0.4,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                        <!-- Header / Caption-->
+                        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0.2,-0.4,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                        <!-- Caption-->
-                        <StackPanel Grid.Column="0"
+                            <!-- Caption-->
+                            <StackPanel Grid.Column="0"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
-                            <!--<fa:IconImage Icon="{Binding Icon}" 
+                                <!--<fa:IconImage Icon="{Binding Icon}" 
                                           Height="20"
                                           Width="20"
                                           Foreground="{StaticResource titleColor2}"
@@ -232,19 +238,28 @@
                                        FontWeight="Medium"
                                        VerticalAlignment="Center"
                                        />-->
-                        </StackPanel>
- 
-                    </Grid>
+                            </StackPanel>
 
-                    <!-- Content sction / Child views -->
-                    <ContentControl Content="{Binding CurrentChildView}"
+                        </Grid>
+
+                        <!-- Content sction / Child views -->
+                        <ContentControl Content="{Binding CurrentChildView}"
                                     Grid.Row="2"
                                     Margin="25,25,24.6,25.4" Grid.ColumnSpan="2"/>
 
+                    </Grid>
+
+                </Border>
+                
+                <!-- 购物车栏 -->
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" >
+
+                        <Button Content="购物车" Width="80"/> 
+                    </StackPanel>
                 </Grid>
-
-            </Border>
-
+            </Grid>
+           
         </Grid>
 
     </Border>
