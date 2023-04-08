@@ -217,17 +217,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewModels\Assets\icons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\AddStuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Assets\icons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CompassView.xaml">
       <SubType>Designer</SubType>
@@ -306,26 +298,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
-    <Resource Include="Views\Assets\ok.png" />
-    <Resource Include="Views\Assets\connectedworld.png" />
-    <Resource Include="Views\Assets\8.jpg" />
-    <Resource Include="Views\Assets\7.png" />
-    <Resource Include="Views\Assets\6.jpg" />
-    <Resource Include="Views\Assets\5.jpg" />
-    <Resource Include="Views\Assets\4.jpg" />
-    <Resource Include="Views\Assets\3.jpg" />
-    <Resource Include="Views\Assets\2.jpg" />
-    <Resource Include="Views\Assets\1.png" />
-    <Resource Include="ViewModels\Assets\ok.png" />
-    <Resource Include="ViewModels\Assets\connectedworld.png" />
-    <Resource Include="ViewModels\Assets\8.jpg" />
-    <Resource Include="ViewModels\Assets\7.png" />
-    <Resource Include="ViewModels\Assets\6.jpg" />
-    <Resource Include="ViewModels\Assets\5.jpg" />
-    <Resource Include="ViewModels\Assets\4.jpg" />
-    <Resource Include="ViewModels\Assets\3.jpg" />
-    <Resource Include="ViewModels\Assets\2.jpg" />
-    <Resource Include="ViewModels\Assets\1.png" />
     <Resource Include="Assets\1.png" />
     <Resource Include="Assets\2.jpg" />
     <Resource Include="Assets\3.jpg" />

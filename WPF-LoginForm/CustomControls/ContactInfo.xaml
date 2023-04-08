@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_LoginForm.CustomControls"
+             xmlns:local="clr-namespace:WPF_LoginForm.CustomControls" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels" d:DataContext="{d:DesignInstance Type=viewModel:ForMessageViewModel}"
              mc:Ignorable="d"  
              MaxWidth="406">
 
@@ -12,6 +12,7 @@
             <Setter Property="Width" Value="105"/>
             <Setter Property="Height" Value="105"/>
             <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -19,7 +20,9 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="10">
                             <Border.Background>
-                                <ImageBrush ImageSource="{TemplateBinding Content}"
+                                <ImageBrush ImageSource="{Binding Content, 
+                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                    AncestorType={x:Type Button}}}"
                                             Stretch="UniformToFill"/>
                             </Border.Background>
                             
@@ -30,10 +33,10 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid>
+    <Grid Margin="0,0,0,10">
         <Grid.RowDefinitions>
             <!--Close Contact Button-->
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
             
             <!--Contact Info & Media-->
             <RowDefinition/>
@@ -53,8 +56,11 @@
                          Width="150"
                          Height="150"
                          Stretch="Uniform">
+                    <!--<Ellipse.DataContext>
+                        <viewModel:ForMessageViewModel/> --><!--p3 42:00 --><!--
+                    </Ellipse.DataContext>-->
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="/assets/1.png"
+                        <ImageBrush ImageSource="{Binding ContactPhoto}"  
                                     Stretch="UniformToFill"/>
                     </Ellipse.Fill>
                     
@@ -89,12 +95,12 @@
                             <WrapPanel/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <Button  Style="{StaticResource MediaButtonStyle}"/>
-                    <Button Style="{StaticResource MediaButtonStyle}"/>
-                    <Button Style="{StaticResource MediaButtonStyle}"/>
-                    <Button Style="{StaticResource MediaButtonStyle}"/>
-                    <Button Style="{StaticResource MediaButtonStyle}"/>
-                    <Button Style="{StaticResource MediaButtonStyle}"/>
+                    <Button Content="/assets/2.jpg" Style="{StaticResource MediaButtonStyle}"/>
+                    <Button Content="/assets/1.png" Style="{StaticResource MediaButtonStyle}"/>
+                    <Button Content="/assets/3.jpg" Style="{StaticResource MediaButtonStyle}"/>
+                    <Button Content="/assets/4.jpg" Style="{StaticResource MediaButtonStyle}"/>
+                    <Button Content="/assets/8.jpg" Style="{StaticResource MediaButtonStyle}"/>
+                    <Button Content="/assets/6.jpg" Style="{StaticResource MediaButtonStyle}"/>
                 </ItemsControl>
 
                 <!--Status / About-->
@@ -104,6 +110,14 @@
                     FontWeight="SemiBold"
                     Text="About"/>
                 <TextBlock Text="Available"/>
+                
+                <!--Contact Email-->
+                <TextBlock Margin="0,20,0,0"
+                       HorizontalAlignment="Left"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    Text="About"/>
+                <TextBlock Text="abc@s.upc.edu.cn"/>
             </StackPanel>
             
             

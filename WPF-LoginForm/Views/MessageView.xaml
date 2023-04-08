@@ -98,7 +98,9 @@
                 Grid.ColumnSpan="3"
                 Height="30"
                  />
-             
+            <!--<Grid>
+                
+            </Grid>-->
             
             <!-- Contact Chat List -->
             <Grid Grid.Row="1" MinWidth="406">
