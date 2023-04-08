@@ -31,7 +31,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-
+    
     <Grid Margin="0,0,0,10">
         <Grid.RowDefinitions>
             <!--Close Contact Button-->
@@ -54,14 +54,9 @@
                          Stroke="#49a078"
                          Width="150"
                          Height="150"
-                         Stretch="Uniform">
-                    <!--<Ellipse.DataContext>
-                        <viewModel:ForMessageViewModel/> -->
-                    <!--p3 42:00 -->
-                    <!--
-                    </Ellipse.DataContext>-->
+                         Stretch="Uniform"> 
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding ContactPhoto}"  
+                        <ImageBrush ImageSource="{Binding ItemPhoto}"  
                                     Stretch="UniformToFill"/>
                     </Ellipse.Fill>
 
@@ -72,16 +67,16 @@
                            HorizontalAlignment="Center"
                            FontSize="30"
                            FontWeight="Bold"
-                           Text="商品名称"/>
-                 
+                           Text="{Binding ItemName}"/>
+                <!-- 商家信息 -->
                 <TextBlock HorizontalAlignment="Center" 
-                           Text="商家信息"/>
- 
+                           Text="{Binding SellerName}"/>
+                <!-- 商品介绍 -->
                 <TextBlock Margin="0,20,0,0"
                            HorizontalAlignment="Center"
                            FontSize="15"
                            FontWeight="SemiBold"
-                           Text="商品参数"/>
+                           Text="{Binding ItemShowText}"/>
 
                
  
