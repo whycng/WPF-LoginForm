@@ -21,22 +21,7 @@ namespace WPF_LoginForm.ViewModels
         private string _caption; // caption 右侧视图左上角-名称
         private IconChar _icon; // icon 右侧视图左上角-图标
         private string _testN;
-
-        //private string _testname;
-
-        //public string Testname
-        //{
-        //    get
-        //    {
-        //        return _testname;
-        //    }
-
-        //    set
-        //    {
-        //        _testname = value;
-        //        OnPropertyChanged(nameof(_testname));
-        //    }
-        //}
+ 
 
         public UserAccountModel CurrentUserAccount
         {
