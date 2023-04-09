@@ -38,7 +38,7 @@ namespace WPF_LoginForm.Repositories
                             ItemName = reader[1].ToString(),
                             SellerName = reader[2].ToString(),
                             ItemShowText = reader[3].ToString(),
-                            ItemPhoto = reader[4].ToString(),
+                            ItemPhoto = new Uri("/assets/item/" + reader[4].ToString() , UriKind.RelativeOrAbsolute),
                         };
                         item.Add(item_tmp);
                     }

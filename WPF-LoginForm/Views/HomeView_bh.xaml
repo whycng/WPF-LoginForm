@@ -26,7 +26,14 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <customerControl:IndivItems/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <customerControl:IndivItems/>
+                                <CheckBox Checked="Checkbox_Checked" Grid.Row="1"/>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
