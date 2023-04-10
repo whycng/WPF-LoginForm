@@ -12,6 +12,7 @@ namespace WPF_LoginForm.Models
         List<ItemModel> GetById(int id);
         List<ItemModel> GetByGroup(string group); 
         List<ItemModel> GetByClassify(string classify);
-
+        void SetCart(string Id); // 塞进购物车数据库
+        List<ItemModel> GetCart();// 获取购物车数据库
     }
 }

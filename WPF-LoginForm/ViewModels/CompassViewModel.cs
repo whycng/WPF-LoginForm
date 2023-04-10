@@ -26,6 +26,9 @@ namespace WPF_LoginForm.ViewModels
             EditCommand = new RelayCommand<int>(t => Edit(t)); 
             DelCommand = new RelayCommand<int>(t => Del(t));
             AddCommand = new RelayCommand(Add);
+
+            // 购物车处理
+            LoadDataBh();
         }
 
         localDB localDB;
@@ -60,6 +63,23 @@ namespace WPF_LoginForm.ViewModels
 
         #endregion
 
+
+        #region 购物车处理
+
+        private IItemRepo itemRepo;
+        // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
+        public ObservableCollection<ItemModel> data_bh { get; set; }
+
+        public
+        void LoadDataBh()
+        {
+            var data_item = itemRepo.GetCart();
+            data_bh = new ObservableCollection<ItemModel>(data_item);
+
+            OnPropertyChanged("data_bh");
+
+        }
+        #endregion
 
         public void Query()
         {

@@ -114,7 +114,7 @@ namespace WPF_LoginForm.ViewModels
         private void ExcuteBuyCommand(object parameter)
         {
             string ItemId = parameter.ToString();// 加入购物车的商品id
-
+            itemRepo.SetCart(ItemId);
         }
         // public ICommand Buy(object par) => new RelayCommand(AddToCart);
 
