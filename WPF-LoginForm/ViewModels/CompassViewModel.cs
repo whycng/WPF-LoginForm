@@ -28,7 +28,9 @@ namespace WPF_LoginForm.ViewModels
             AddCommand = new RelayCommand(Add);
 
             // 购物车处理
+            itemRepo = new ItemRepository();
             LoadDataBh();
+            DelCommand_Cart = new RelayCommand<int>( t => Del_Cart(t));
         }
 
         localDB localDB;
@@ -65,18 +67,26 @@ namespace WPF_LoginForm.ViewModels
 
 
         #region 购物车处理
-
+        public RelayCommand<int> DelCommand_Cart { get; set; }
         private IItemRepo itemRepo;
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
-        public ObservableCollection<ItemModel> data_bh { get; set; }
+        public ObservableCollection<ItemModel> data_cart { get; set; }
 
         public
-        void LoadDataBh()
+        void LoadDataBh() // 加载购物车数据
         {
             var data_item = itemRepo.GetCart();
-            data_bh = new ObservableCollection<ItemModel>(data_item);
+            data_cart = new ObservableCollection<ItemModel>(data_item);
 
-            OnPropertyChanged("data_bh");
+            OnPropertyChanged("data_cart");
+
+        }
+
+        public void Del_Cart(int id)
+        {
+            itemRepo.DelCartById(id);
+            // OnPropertyChanged("data_cart");   
+            LoadDataBh();
 
         }
         #endregion

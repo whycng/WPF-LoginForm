@@ -8,7 +8,7 @@ namespace WPF_LoginForm.Models
 {
     public class ItemModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string ItemName { get; set; }
         public string SellerName { get; set; }
         public string ItemShowText { get; set; }

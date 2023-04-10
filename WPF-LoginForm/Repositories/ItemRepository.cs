@@ -37,7 +37,7 @@ namespace WPF_LoginForm.Repositories
                     {
                         var item_tmp = new ItemModel()
                         {
-                            Id = reader[0].ToString(),
+                            Id = (int)reader[0] ,
                             ItemName = reader[1].ToString(),
                             SellerName = reader[2].ToString(),
                             ItemShowText = reader[3].ToString(),
@@ -71,7 +71,7 @@ namespace WPF_LoginForm.Repositories
                     {
                         var item_tmp = new ItemModel()
                         {
-                            Id = reader[0].ToString(),
+                            Id = (int)reader[0],
                             ItemName = reader[1].ToString(),
                             SellerName = reader[2].ToString(),
                             ItemShowText = reader[3].ToString(),
@@ -87,23 +87,38 @@ namespace WPF_LoginForm.Repositories
             return item;
         }
 
-        public void SetCart(string Id)
+        public void SetCart(int Id) //根据商品id将商品信息插入购物车
         {
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             { 
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "Insert Into ItemCart(Id,ItemName,price) Select Id,ItemName,price From Item Where Id=@Id ";
+                command.CommandText = "Insert Into ItemCart(Id,ItemName,price) Select " +
+                    "Id,ItemName,price From Item Where Id=@Id " +
+                    "And Not Exists(Select Id From ItemCart where Id=@Id) ";
                 command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
                 using (var reader = command.ExecuteReader())
                 { 
                 }
             }
         }
+        public void DelCartById(int Id) // 根据商品id删除购物车中某商品
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Delete From ItemCart Where Id = @Id";
+                command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                using (var reader = command.ExecuteReader())
+                {
+                }
+            }
+        }
 
-
-        public List<ItemModel> GetCart()
+        public List<ItemModel> GetCart() // 获取购物车数据
         {
             List<ItemModel> item = null;
             using (var connection = GetConnection())
@@ -120,7 +135,7 @@ namespace WPF_LoginForm.Repositories
                     {
                         var item_tmp = new ItemModel()
                         {
-                            Id = reader[0].ToString(),
+                            Id = (int)reader[0],
                             ItemName = reader[1].ToString(), 
                             price = reader[2].ToString(),
                         };

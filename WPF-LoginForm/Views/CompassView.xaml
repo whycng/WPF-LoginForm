@@ -72,18 +72,18 @@
                     <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                       ScrollViewer.VerticalScrollBarVisibility="Visible" 
                       Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
-                      ItemsSource="{Binding BuyItemList}" Height="400">
+                      ItemsSource="{Binding data_cart}" Height="400">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="商品名称" Binding="{Binding ItemName}"/>
-                            <DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>
-                            <DataGridTextColumn Header="商品价格" Binding="{Binding ItemPrice}"/>
+                            <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
+                            <DataGridTextColumn Header="商品价格" Binding="{Binding price}"/>
                             <DataGridTemplateColumn Header="操作">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal"> 
                                             <Button Content="删除" 
-                                             CommandParameter="{Binding ItemName}" 
-                                            Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="Red" Foreground="White"/>
                                         </StackPanel>
                                     </DataTemplate>

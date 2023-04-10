@@ -21,69 +21,69 @@ namespace WPF_LoginForm.ViewModels
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
         public ObservableCollection<ItemModel> data_bh { get; set; }
 
-        #region CheckBox
-        private String checkInfo; 
+        //#region CheckBox
+        //private String checkInfo; 
 
-        private RelayCommand checkCommand;
+        //private RelayCommand checkCommand;
          
-        private List<CompBottonModel> checkButtons; 
-        public void loadCheck()
-        {
-            CheckButtons = new List<CompBottonModel>();
-            foreach (var ll in data_bh)
-            {
-                CheckButtons.Add(new CompBottonModel() { Id=ll.Id, IsCheck=false });
-            } 
-        }
-        public List<CompBottonModel> CheckButtons
-        {
-            get { return checkButtons; }
-            set
-            {
-                checkButtons = value; // OnPropertyChanged("CheckButtons"); 
-            }
-        }
+        //private List<CompBottonModel> checkButtons; 
+        //public void loadCheck()
+        //{
+        //    CheckButtons = new List<CompBottonModel>();
+        //    foreach (var ll in data_bh)
+        //    {
+        //        CheckButtons.Add(new CompBottonModel() { Id=ll.Id, IsCheck=false });
+        //    } 
+        //}
+        //public List<CompBottonModel> CheckButtons
+        //{
+        //    get { return checkButtons; }
+        //    set
+        //    {
+        //        checkButtons = value; // OnPropertyChanged("CheckButtons"); 
+        //    }
+        //}
 
 
-        public String CheckInfo
-        {
-            get { return checkInfo; }
-            set { checkInfo = value; OnPropertyChanged("CheckInfo"); }
-        } 
-        public RelayCommand CheckCommand
-        {
-            get
-            {
-                if (checkCommand == null)
-                    checkCommand = new RelayCommand(() => ExcuteCheckCommand());
-                return checkCommand;
+        //public String CheckInfo
+        //{
+        //    get { return checkInfo; }
+        //    set { checkInfo = value; OnPropertyChanged("CheckInfo"); }
+        //} 
+        //public RelayCommand CheckCommand
+        //{
+        //    get
+        //    {
+        //        if (checkCommand == null)
+        //            checkCommand = new RelayCommand(() => ExcuteCheckCommand());
+        //        return checkCommand;
 
-            }
-            set { checkCommand = value; }
-        }
+        //    }
+        //    set { checkCommand = value; }
+        //}
 
-        private void ExcuteCheckCommand()
-        {
-            CheckInfo = "";
-            if (CheckButtons != null && CheckButtons.Count > 0)
-            {
-                var list = CheckButtons.Where(p => p.IsCheck);
-                if (list.Count() > 0)
-                {
-                    foreach (var l in list)
-                    {
-                        CheckInfo += l.Id + ",";
-                    }
+        //private void ExcuteCheckCommand()
+        //{
+        //    CheckInfo = "";
+        //    if (CheckButtons != null && CheckButtons.Count > 0)
+        //    {
+        //        var list = CheckButtons.Where(p => p.IsCheck);
+        //        if (list.Count() > 0)
+        //        {
+        //            foreach (var l in list)
+        //            {
+        //                CheckInfo += l.Id + ",";
+        //            }
 
-                    CheckInfo = CheckInfo.TrimEnd(',');  // 把最后一个逗号删掉
-                }
-                else
-                {
-                    var x = "wrong";
-                }
-            }
-        }
-        #endregion
+        //            CheckInfo = CheckInfo.TrimEnd(',');  // 把最后一个逗号删掉
+        //        }
+        //        else
+        //        {
+        //            var x = "wrong";
+        //        }
+        //    }
+        //}
+        //#endregion
 
         //public RelayCommand<string> BuyCommand
         //{
@@ -100,20 +100,20 @@ namespace WPF_LoginForm.ViewModels
         //    }
         //}
 
-        private RelayCommand<string> _buyCommand;
-        public RelayCommand<string> BuyCommand
+        private RelayCommand<int> _buyCommand;
+        public RelayCommand<int> BuyCommand
         {
             get
             {
                 if (_buyCommand == null)
-                    _buyCommand = new RelayCommand<string>((parameter) => ExcuteBuyCommand(parameter));
+                    _buyCommand = new RelayCommand<int>((parameter) => ExcuteBuyCommand(parameter));
                 return _buyCommand;
             }
         }
 
         private void ExcuteBuyCommand(object parameter)
         {
-            string ItemId = parameter.ToString();// 加入购物车的商品id
+            int ItemId = (int)parameter;// 加入购物车的商品id
             itemRepo.SetCart(ItemId);
         }
         // public ICommand Buy(object par) => new RelayCommand(AddToCart);
