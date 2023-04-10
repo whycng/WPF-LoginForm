@@ -16,50 +16,88 @@
     </UserControl.DataContext>-->
     <StackPanel>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="400"/>
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="400"/>
+                </Grid.RowDefinitions>
 
 
-            
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="搜索条件:" Background="White" VerticalAlignment="Center"/>
-                <TextBox Width="200" Height="25" Text="{Binding Search}"  Margin="10 0 0 0"/>
-                <Button Content="查找" Command="{Binding QueryCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
-                <Button Content="重置" Command="{Binding ResetCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
-                <Button Content="新增" Command="{Binding AddCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
-                 
-            </StackPanel>
-            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="搜索条件:" Background="White" VerticalAlignment="Center"/>
+                    <TextBox Width="200" Height="25" Text="{Binding Search}"  Margin="10 0 0 0"/>
+                    <Button Content="查找" Command="{Binding QueryCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                    <Button Content="重置" Command="{Binding ResetCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                    <Button Content="新增" Command="{Binding AddCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+
+                </StackPanel>
+                <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                       ScrollViewer.VerticalScrollBarVisibility="Visible" 
                       Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
                       ItemsSource="{Binding GridModelList}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="序号" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
-                    <DataGridTemplateColumn Header="操作">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="修改" 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="序号" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                        <DataGridTemplateColumn Header="操作">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="修改" 
                                             CommandParameter="{Binding Id}" 
                                             Command="{Binding DataContext.EditCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="White" Foreground="Black"/>
-                                    <Button Content="删除" 
+                                        <Button Content="删除" 
                                              CommandParameter="{Binding Id}" 
                                             Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="Red" Foreground="White"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-                
-            </DataGrid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+
+                </DataGrid>
 
 
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel>
+                    <TextBlock Text="我的购物车" Background="AliceBlue"/>
+                    <!--购物车：商品名称，商品个数，商品价格-->
+                    <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding BuyItemList}" Height="400">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="商品名称" Binding="{Binding ItemName}"/>
+                            <DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>
+                            <DataGridTextColumn Header="商品价格" Binding="{Binding ItemPrice}"/>
+                            <DataGridTemplateColumn Header="操作">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal"> 
+                                            <Button Content="删除" 
+                                             CommandParameter="{Binding ItemName}" 
+                                            Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                    <Button Content="购买" Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
         </Grid>
+        
     
     </StackPanel>
 

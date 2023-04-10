@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Models\ChatConversation.cs" />
     <Compile Include="Models\ChatListData.cs" />
+    <Compile Include="Models\CompBottonModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\IItemRepo.cs" />
     <Compile Include="Models\IUserRepository.cs" />

@@ -18,7 +18,7 @@ namespace WPF_LoginForm.ViewModels
         public
         void LoadDataBh()
         {
-            var data_item = itemRepo.GetByGroup("upc");
+            var data_item = itemRepo.GetByClassify("bh");
             data_bh = new ObservableCollection<ItemModel>(data_item);
             //data_bh = new ObservableCollection<HomeModel_data_bh>()
             //{

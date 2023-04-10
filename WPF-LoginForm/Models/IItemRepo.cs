@@ -11,5 +11,7 @@ namespace WPF_LoginForm.Models
     {
         List<ItemModel> GetById(int id);
         List<ItemModel> GetByGroup(string group); 
+        List<ItemModel> GetByClassify(string classify);
+
     }
 }

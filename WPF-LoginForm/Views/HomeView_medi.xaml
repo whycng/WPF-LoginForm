@@ -3,30 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:customerControl="clr-namespace:WPF_LoginForm.CustomControls"
+             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:customerControl="clr-namespace:WPF_LoginForm.CustomControls" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModel:HomeViewModel_medi/>
+    </UserControl.DataContext>
+
     <Grid>
 
         <ScrollViewer  
                       HorizontalScrollBarVisibility="Disabled">
+            <customerControl:IndivItems x:Name="IndivItems">
+                <ItemsControl
+                ItemsSource="{Binding data_bh }"
+                Margin="0,20,0,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-            <ItemsControl
-                    Margin="0,20,0,0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-                <customerControl:IndivItems/>
-            </ItemsControl>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <customerControl:IndivItems/>
+                                <CheckBox Grid.Row="1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </customerControl:IndivItems>
+
         </ScrollViewer>
 
     </Grid>

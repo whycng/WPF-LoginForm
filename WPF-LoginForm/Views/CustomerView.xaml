@@ -8,14 +8,93 @@
 
              
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             FontSize="25">
 
     <UserControl.DataContext>
         <viewModel:CustomerViewModel/>
     </UserControl.DataContext>
     <Border Padding="20">
+  
 
-        <ScrollViewer>
+    <Border CornerRadius="10,0,0,10" >
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.7">
+                <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1"/>
+
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <!--Close Contact Button-->
+                <RowDefinition Height="50"/>
+
+                <!--Contact Info & Media-->
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button Margin="15,0"
+            HorizontalAlignment="Left"
+            Content="{StaticResource close}"
+            Style="{StaticResource IconButtonStyle}"/>
+
+            <ScrollViewer Grid.Row="1"
+                    HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="20">
+
+                    <Ellipse StrokeThickness="2"
+                        Stroke="#49a078"
+                        Width="150"
+                        Height="150"
+                        Stretch="Uniform">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding UserPhoto}"  
+                                Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+
+                    </Ellipse>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="上传头像"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource menuButtonText}">
+                        <Run Foreground="White" FontSize="25">
+                                你的用户名 
+                        </Run>
+                        </TextBlock>
+                        <Button Content="修改"/>
+                        <Button Content="确定"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="性别：" Style="{StaticResource menuButtonText}"/>
+                        <TextBlock Text="男" Style="{StaticResource menuButtonText}"/>
+                        <Button Content="修改"/>
+                        <Button Content="确定"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="地址" Background="Red"/>
+                        <Button Content="修改"/>
+                        <Button Content="确定"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="联系方式" Background="Red"/>
+                        <Button Content="修改"/>
+                        <Button Content="确定"/>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </ScrollViewer>
+
+
+
+        </Grid>
+    </Border>
+
+
+        <!--<ScrollViewer>
             <StackPanel>
                 <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
                 <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
@@ -34,7 +113,7 @@
                 <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
                 <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
             </StackPanel>
-        </ScrollViewer>
+        </ScrollViewer>-->
         
         <!--<StackPanel>
             

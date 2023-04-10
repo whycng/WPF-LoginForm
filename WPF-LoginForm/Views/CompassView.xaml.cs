@@ -33,6 +33,11 @@ namespace WPF_LoginForm.Views
 
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void UserControl_Loaded(object sender, RoutedEventArgs e)
         //{
         //    CompassViewModel viewModel = new CompassViewModel();

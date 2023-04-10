@@ -9,6 +9,7 @@
               
             Background="Transparent"
             >
+    <!-- 废弃 -->
     <UserControl.Resources>
         <Style x:Key="MediaButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="105"/>
