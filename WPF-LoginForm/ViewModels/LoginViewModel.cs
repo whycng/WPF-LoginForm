@@ -139,20 +139,20 @@ namespace WPF_LoginForm.ViewModels
         }
         private void ExecuteRecoverPassCommand(string username, string email)
         {
-            var model = new UserModel();
-            AddUserView view = new AddUserView(model);
-            var r = view.ShowDialog(); //返回值r就是 AddStuView页面【确定/取消】的结果
-            if (r.Value)
-            {
-                // 不需要，sql NEWID()生成
-                //string user_id = GenerateCheckCodeNum(20);
-                //model.Id = user_id;
-                userRepository.Add(model);
-                //var x = model.Username;
-                //var y = model.Email;
-            }
-            else
-            throw new NotImplementedException();
+            //var model = new UserModel();
+            //AddUserView view = new AddUserView(model);
+            //var r = view.ShowDialog(); //返回值r就是 AddStuView页面【确定/取消】的结果
+            //if (r.Value)
+            //{
+            //    // 不需要，sql NEWID()生成
+            //    //string user_id = GenerateCheckCodeNum(20);
+            //    //model.Id = user_id;
+            //    userRepository.Add(model);
+            //    //var x = model.Username;
+            //    //var y = model.Email;
+            //}
+            //else
+            //throw new NotImplementedException();
         }
     }
 }

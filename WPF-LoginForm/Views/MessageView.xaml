@@ -24,22 +24,22 @@
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 >
-            <Grid VerticalAlignment="Center">
-                <Grid.DataContext>
-                    <ViewModel:ForMessageViewModel/>
-                </Grid.DataContext>
-                <Grid.ColumnDefinitions>
-                    <!--Profile photo-->
-                    <ColumnDefinition Width="75"/>
-                    <!--Name & Online status-->
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                <Grid VerticalAlignment="Center">
+                    <Grid.DataContext>
+                        <ViewModel:ForMessageViewModel/>
+                    </Grid.DataContext>
+                    <Grid.ColumnDefinitions>
+                        <!--Profile photo-->
+                        <ColumnDefinition Width="75"/>
+                        <!--Name & Online status-->
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                <Ellipse Height="40" Width="40">
-                        <Ellipse.DataContext> 
-                            <ViewModel:ForMessageViewModel/> 
+                    <Ellipse Height="40" Width="40">
+                        <Ellipse.DataContext>
+                            <ViewModel:ForMessageViewModel/>
                         </Ellipse.DataContext>
-                    <Ellipse.Fill>
+                        <Ellipse.Fill>
                             <ImageBrush
                                 Stretch="UniformToFill"
                                 ImageSource="{Binding ContactPhoto,
@@ -50,15 +50,15 @@
                             FallbackValue=/assets/5.jpg,TargetNullValue=/assets/5.jpg,
                             UpdateSourceTrigger=PropertyChanged}"
                                     Stretch="UniformToFill"/>-->
-                    </Ellipse.Fill>
-                </Ellipse>
+                        </Ellipse.Fill>
+                    </Ellipse>
 
-                <Grid Grid.Column="1">
-                    
-                    <TextBlock>
-                        <TextBlock.DataContext>
-                            <ViewModel:ForMessageViewModel/>
-                        </TextBlock.DataContext>
+                    <Grid Grid.Column="1">
+
+                        <TextBlock>
+                            <TextBlock.DataContext>
+                                <ViewModel:ForMessageViewModel/>
+                            </TextBlock.DataContext>
                         <!--name-->
                         <Run Text="{Binding ContactName, 
                             FallbackValue='ContactName',
@@ -72,13 +72,13 @@
                             TargetNullValue='Last Seen',
                             UpdateSourceTrigger=PropertyChanged}"
                              FontSize="15"/>
-                    </TextBlock>
+                        </TextBlock>
+                    </Grid>
                 </Grid>
-            </Grid>
             </Border>
         </ControlTemplate>
     </UserControl.Resources>
-    
+
     <Border CornerRadius="20" Background="WhiteSmoke">
         <Grid>
             <Grid.RowDefinitions>
@@ -98,10 +98,7 @@
                 Grid.ColumnSpan="3"
                 Height="30"
                  />
-            <!--<Grid>
-                
-            </Grid>-->
-            
+
             <!-- Contact Chat List -->
             <Grid Grid.Row="1" MinWidth="406">
                 <Grid.RowDefinitions>
@@ -123,13 +120,13 @@
                     <Grid.ColumnDefinitions>
                         <!-- Title-->
                         <ColumnDefinition Width="Auto"/>
-                        
+
                         <!-- Blank-->
                         <ColumnDefinition Width="Auto"/>
-                        
+
                         <!-- Search -->
                         <ColumnDefinition Width="40"/>
-                        
+
                         <!-- more -->
                         <ColumnDefinition Width="40"/>
                     </Grid.ColumnDefinitions>
@@ -140,20 +137,20 @@
                         VerticalAlignment="Center"
                         FontSize="20"
                         FontWeight="SemiBold"/>
-                    
-                    <!--Search Button 23:00 --> 
+
+                    <!--Search Button 23:00 -->
                     <Button 
                         Grid.Column="2"
                         x:Name="btnChatSearchButton"
                         Content="{StaticResource search}" Style="{StaticResource IconButtonStyle}">
                     </Button>
-                    <!--More option--> 
+                    <!--More option-->
                     <ToggleButton Grid.Column="3"
                         x:Name="btnMoreOptions" 
                         Content="{StaticResource more}" Style="{StaticResource ToggleIconButtonStyle}" >
                     </ToggleButton>
-                    
-                    
+
+
                 </Grid>
 
                 <!-- #region SerachBox-->
@@ -178,37 +175,17 @@
                         />
                 </Border>
                 <!-- #endregion-->
-                
+
                 <!--#region Status Thumbnails-->
                 <customcontrols:StatusThumbs Grid.Row="2"/>
                 <!--#endregion-->
-                
+
                 <!-- #region Cahts List -->
                 <customcontrols:ChatList Grid.Row="3"/>
-                <!--<ScrollViewer Grid.Row="3">
-                    <StackPanel>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                        <TextBlock Text="xxxxxxxxxxxxxxxx" FontSize="30"/>
-                    </StackPanel>
-                </ScrollViewer>-->
 
                 <!-- #endregion -->
             </Grid>
-            
+
             <!--#region Conversion Screen-->
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -219,9 +196,9 @@
                     <!--Reply popup-->
                     <RowDefinition Height="Auto"/>
                     <!--SendMessage Box-->
-                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid Height="75" Margin="0,0,15,0" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <!--Conatct Header Name & Online Status-->
@@ -235,12 +212,12 @@
                         <!--More option-->
                         <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <!--Conatact Info Button-->
                     <Button  
                         Template="{StaticResource ContactInfoButtonTemplate}"
                         Style="{StaticResource ContactInfoButtonStyle}">
-                        
+
                     </Button>
 
                     <!--VideCall Button-->
@@ -257,10 +234,10 @@
                         Content="{StaticResource more}" Style="{StaticResource ToggleIconButtonStyle}" >
                     </ToggleButton>
                 </Grid>
-                
+
                 <!--Conversation Message Body-->
                 <customcontrols:Conversation Grid.Row="1"/>
-                
+
                 <!--#region TextBox to send message-->
                 <Grid Grid.Row="3">
                     <Border
@@ -269,7 +246,7 @@
                             <Grid.ColumnDefinitions>
                                 <!--TextBox Button-->
                                 <ColumnDefinition/>
-                                
+
                                 <!--Attachment Button & send Message Button-->
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
@@ -278,15 +255,15 @@
                                      Padding="12,0" Text="{Binding MessageText}"
                                      VerticalAlignment="Stretch" VerticalContentAlignment="Center"
                                      x:Name="MessageBox">
-                                
+
                             </TextBox>
 
                             <!--Buttons-->
                             <StackPanel Grid.Column="1"
                                 Orientation="Horizontal">
                                 <!--to do commands-->
-                                
-                                
+
+
                                 <Button Content="{StaticResource attach}"
                                 x:Name="AttachButton"
                                 Style="{StaticResource IconButtonStyle}"/>
@@ -296,12 +273,12 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-                    
-                    
+
+
                 </Grid>
                 <!--#endregion -->
             </Grid>
-            
+
             <!--Contact Info-->
             <customcontrols:ContactInfo x:Name="ContactInfo"
                                         Grid.Row="1"
