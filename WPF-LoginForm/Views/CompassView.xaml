@@ -14,13 +14,22 @@
         
         <viewModels:CompassViewModel/>
     </UserControl.DataContext>
-    <StackPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="200"/>
-            </Grid.ColumnDefinitions>
+    <Border CornerRadius="10,0,0,10" >
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.7">
+                <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1"/>
+
+            </LinearGradientBrush>
+        </Border.Background>
+        <StackPanel>
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <!--<Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="400"/>
@@ -62,28 +71,47 @@
                     </DataGrid.Columns>
 
                 </DataGrid>
+ 
+            </Grid>-->
+
+                <!--历史订单-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="400"/>
+                    </Grid.RowDefinitions>
 
 
-            </Grid>
-            <Grid Grid.Column="1">
-                <StackPanel>
-                    <TextBlock Text="我的购物车" Background="AliceBlue"/>
-                    <!--购物车：商品名称，商品个数，商品价格-->
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="搜索条件:" Background="White" VerticalAlignment="Center"/>
+                        <TextBox Width="200" Height="25" Text="{Binding Search}"  Margin="10 0 0 0"/>
+                        <Button Content="查找" Command="{Binding QueryCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                        <Button Content="重置" Command="{Binding ResetCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+                        <Button Content="新增" Command="{Binding AddCommand}" Width="70" Height="25" Margin="10 0 0 0"/>
+
+                    </StackPanel>
                     <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                       ScrollViewer.VerticalScrollBarVisibility="Visible" 
                       Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
-                      ItemsSource="{Binding data_cart}" Height="400">
+                      ItemsSource="{Binding data_histItem}"
+                          FontSize="18" Background="Transparent">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="商品名称" Binding="{Binding ItemName}"/>
-                            <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
-                            <DataGridTextColumn Header="商品价格" Binding="{Binding price}"/>
+                            <DataGridTextColumn Header="卖家" Binding="{Binding SellerName}"/>
+                            <DataGridTextColumn Header="商品分类" Binding="{Binding ItemClassify}"/>
+                            <DataGridTextColumn Header="价格" Binding="{Binding price}"/>
                             <DataGridTemplateColumn Header="操作">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal"> 
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="申诉" 
+                                            CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.EditCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="White" Foreground="Black"/>
                                             <Button Content="删除" 
                                              CommandParameter="{Binding Id}" 
-                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="Red" Foreground="White"/>
                                         </StackPanel>
                                     </DataTemplate>
@@ -93,12 +121,56 @@
 
                     </DataGrid>
 
-                    <Button Content="购买" Click="Button_Click"/>
-                </StackPanel>
+                </Grid>
+                <!--我的购物车-->
+                <Grid Grid.Column="1">
+                    <StackPanel>
+                        <TextBlock Block.TextAlignment="Center" 
+                                   Background="Transparent">
+                            <Run Foreground="{StaticResource plainTextColor1}" 
+                                 FontSize="20" 
+                                 Text="我的购物车"
+                                 ></Run>
+                        </TextBlock>
+                        <!--购物车：商品名称，商品个数，商品价格-->
+                        <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                            ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                            Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
+                            ItemsSource="{Binding data_cart}" Height="400"
+                            FontSize="16" Background="Transparent" Foreground="#784DFD">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn 
+                                    Header="商品名称" 
+                                    Binding="{Binding ItemName}"
+                                    Foreground="#784DFD"/>
+                                <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
+                                <DataGridTextColumn 
+                                    Header="商品价格" 
+                                    Binding="{Binding price}"/>
+                                <DataGridTemplateColumn Header="操作">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <Button Content="购买" Command="{Binding BuyCommand}"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </Grid>
-        
-    
-    </StackPanel>
+
+
+        </StackPanel>
+    </Border>
+ 
 
 </UserControl>
