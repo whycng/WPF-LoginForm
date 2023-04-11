@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_LoginForm.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace WPF_LoginForm.Repositories
 {
@@ -14,7 +15,31 @@ namespace WPF_LoginForm.Repositories
     {
         public void Add(UserModel userModel)
         {
-            throw new NotImplementedException();
+            // var Id = userModel.Id;
+            var Username = userModel.Username;
+            var Password = userModel.Password;
+            var Name = userModel.Name;
+            var LastName = userModel.LastName;
+            var Email = userModel.Email;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Insert Into [User](Id,Username,Password,Name,LastName,Email) " +
+                    "Values( NEWID(),@Username,@Password,@Name,@LastName,@Email)";
+                // command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = Username;
+                command.Parameters.Add("@Password", SqlDbType.NVarChar).Value = Password;
+                command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                command.Parameters.Add("@LastName", SqlDbType.NVarChar).Value = LastName;
+                command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = Email; 
+                using (var reader = command.ExecuteReader())
+                {
+
+                }
+            }
+            
         }
 
         public bool AuthenticateUser(NetworkCredential credential)
