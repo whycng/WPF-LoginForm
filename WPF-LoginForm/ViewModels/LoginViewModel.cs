@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -124,6 +125,15 @@ namespace WPF_LoginForm.ViewModels
 
         private void ExecuteRecoverPassCommand(string username, string email)
         {
+            var model = new UserModel();
+            AddUserView view = new AddUserView(model);
+            var r = view.ShowDialog(); //返回值r就是 AddStuView页面【确定/取消】的结果
+            if (r.Value)
+            {
+                var x = model.Username;
+                var y = model.Email;
+            }
+            else
             throw new NotImplementedException();
         }
     }
