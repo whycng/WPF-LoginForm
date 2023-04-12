@@ -29,7 +29,9 @@ namespace WPF_LoginForm.ViewModels
         // test
         public string defaultContactPhoto;
         private IUserRepository userRepository; 
+        private IMessRepository messRepository;
         private UserAccountModel _currentUserAccount;
+        private MessModel _messModel;
         public string DefaultContactPhoto { 
             get => defaultContactPhoto; set {
                 defaultContactPhoto = "/assets/5.jpg";
@@ -67,11 +69,12 @@ namespace WPF_LoginForm.ViewModels
             statusThumbsCollection = new ObservableCollection<StatusDataModel>();// 该集合用于展示
             foreach ( var f in fri )
             {
-
+                
                 StatusDataModel t = new StatusDataModel()
                 {
-                    ContactName = userRepository.GetByUsername(f).Username,
-                    ContactPhoto = userRepository.GetByUsername(f).UserPhoto,
+                    ContactName = userRepository.GetByUsername(f).Username, 
+                    ContactPhoto = new Uri(userRepository.GetByUsername(f).UserPhoto, UriKind.RelativeOrAbsolute),
+                    // 应该是在线状态
                     StatusImage = new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
                     IsMeAddStatus = false,
                 };
@@ -126,53 +129,81 @@ namespace WPF_LoginForm.ViewModels
         #region Logics
         void LoadChats()
         {
-            Chats = new ObservableCollection<ChatListData>()
+            // 拿到当前用户和其正在聊天的人的对话的最后一句
+            List<string> nameList = new List<string>();
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            nameList = userRepository.GetFriByUsername(user.Username);// 当前用户所有朋友Username
+            Chats = new ObservableCollection<ChatListData>();// 该集合用于展示
+            string fromId = userRepository.GetByUsername(user.Username).Id;
+            foreach (var f in nameList)
             {
-                new ChatListData()
-                {
+                string toId = userRepository.GetByUsername(f).Id;
+                _messModel = messRepository.LastMessageModel(fromId, toId);
+                if (_messModel != null) {
+                    ChatListData t = new ChatListData()
+                    {
+                        // 取和朋友聊天的最后一句
 
-                    ContactName = "Billy",
-                    ContactPhoto = new Uri("/Assets/6.jpg",UriKind.RelativeOrAbsolute),
-                    Message = "Hey,Whats up? 你好，你好，你end",
-                    LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
-                    ChatIsSelected=true,
-                },
-                new ChatListData()
-                {
-                    ContactName = "Mike",
-                    ContactPhoto = new Uri("/Assets/6.jpg",UriKind.RelativeOrAbsolute),
-                    Message = "小小英雄",
-                    LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
-                    ChatIsSelected=true,
+                        ContactName = userRepository.GetByUsername(f).Username, 
+                        ContactPhoto = new Uri(userRepository.GetByUsername(f).UserPhoto, UriKind.RelativeOrAbsolute),
+                        Message = _messModel.M_Message,
+                        LastMessageTime = _messModel.M_Time,
+                        ChatIsSelected = true,
 
-                },
-                new ChatListData()
-                {
-                    ContactName = "大卫在此",
-                    ContactPhoto = new Uri("/Assets/6.jpg",UriKind.RelativeOrAbsolute),
-                    Message = "在？---xx--x-x-x-x-x-x-xx-x-x-xx-xx-x-x-x-x-x-xx-x-",
-                    LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
-                    ChatIsSelected=true,
+                    };
+                    Chats.Add(t);
+                } 
+               
+            }
 
-                },
-                new ChatListData()
-                {
-                    ContactName = "Billy",
-                    ContactPhoto = new Uri("/Assets/7.png",UriKind.RelativeOrAbsolute),
-                    Message = "小明同学你好啊",
-                    LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
-                    ChatIsSelected=true,
 
-                },
-                new ChatListData()
-                {
-                    ContactName = "Billy",
-                    ContactPhoto = new Uri("/Assets/8.jpg",UriKind.RelativeOrAbsolute),
-                    Message = "Hey,Whats up? 你好，你好，你",
-                    LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
-                    ChatIsSelected=true,
-                },
-            };
+            //Chats = new ObservableCollection<ChatListData>()
+            //{
+            //    new ChatListData()
+            //    {
+
+            //        ContactName = "Billy",
+            //        ContactPhoto = new Uri("Assets/userHead/头像1.png                           ",UriKind.RelativeOrAbsolute),
+            //        Message = "Hey,Whats up? 你好，你好，你end",
+            //        LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
+            //        ChatIsSelected=true,
+            //    },
+            //    new ChatListData()
+            //    {
+            //        ContactName = "Mike",
+            //        ContactPhoto = new Uri("/Assets/6.jpg",UriKind.RelativeOrAbsolute),
+            //        Message = "小小英雄",
+            //        LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
+            //        ChatIsSelected=true,
+
+            //    },
+            //    new ChatListData()
+            //    {
+            //        ContactName = "大卫在此",
+            //        ContactPhoto = new Uri("/Assets/6.jpg",UriKind.RelativeOrAbsolute),
+            //        Message = "在？---xx--x-x-x-x-x-x-xx-x-x-xx-xx-x-x-x-x-x-xx-x-",
+            //        LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
+            //        ChatIsSelected=true,
+
+            //    },
+            //    new ChatListData()
+            //    {
+            //        ContactName = "Billy",
+            //        ContactPhoto = new Uri("/Assets/7.png",UriKind.RelativeOrAbsolute),
+            //        Message = "小明同学你好啊",
+            //        LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
+            //        ChatIsSelected=true,
+
+            //    },
+            //    new ChatListData()
+            //    {
+            //        ContactName = "Billy",
+            //        ContactPhoto = new Uri("/Assets/8.jpg",UriKind.RelativeOrAbsolute),
+            //        Message = "Hey,Whats up? 你好，你好，你",
+            //        LastMessageTime = "Tue, 12:58 PM 北京时间7点整",
+            //        ChatIsSelected=true,
+            //    },
+            //};
             OnPropertyChanged(nameof(Chats)); // ??
         }
         #endregion
@@ -278,7 +309,8 @@ namespace WPF_LoginForm.ViewModels
         {
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
-
+            messRepository = new MessRepository();
+            _messModel = new MessModel();
 
             LoadChats();
             LoadStatusThumbs();

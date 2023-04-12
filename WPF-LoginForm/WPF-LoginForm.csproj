@@ -140,15 +140,18 @@
     <Compile Include="Models\ChatConversation.cs" />
     <Compile Include="Models\ChatListData.cs" />
     <Compile Include="Models\CompBottonModel.cs" />
+    <Compile Include="Models\IMessRepository.cs" />
     <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\IItemRepo.cs" />
     <Compile Include="Models\IUserRepository.cs" />
+    <Compile Include="Models\MessModel.cs" />
     <Compile Include="Models\StatusDataModel.cs" />
     <Compile Include="Models\Sutdent.cs" />
     <Compile Include="Models\UserAccountModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\localDB.cs" />
+    <Compile Include="Repositories\MessRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="ViewModels\CompassViewModel.cs" />
@@ -365,6 +368,11 @@
     <Resource Include="Assets\item\食物2.jpg" />
     <Resource Include="Assets\item\gtx.jpg" />
     <Resource Include="Assets\item\树叶.jpg" />
+    <Resource Include="Assets\userHead\头像1.png" />
+    <Resource Include="Assets\userHead\头像2.png" />
+    <Resource Include="Assets\userHead\头像3.png" />
+    <Resource Include="Assets\userHead\头像4.png" />
+    <Resource Include="Assets\userHead\头像5.png" />
     <Content Include="Database\Database1.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -390,5 +398,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

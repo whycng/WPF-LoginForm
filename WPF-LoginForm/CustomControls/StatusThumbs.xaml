@@ -45,7 +45,7 @@
                                         <Setter Property="Fill">
                                             <Setter.Value>
                                                 <ImageBrush Stretch="UniformToFill" 
-                                                            ImageSource="{Binding StatusImage}"/>
+                                                            ImageSource="{Binding ContactPhoto}"/>
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -88,7 +88,7 @@
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right">
                     <Ellipse.Fill>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ContactPhoto}"/>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="{Binding StatusImage }"/>
                     </Ellipse.Fill>
                     <!--Also hide profile photo if the IsMeAddStatus=true -->
                     <Ellipse.Style>

@@ -14,7 +14,7 @@ namespace WPF_LoginForm.Models
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public Uri UserPhoto { get; set; } // 用户头像
+        public string UserPhoto { get; set; } // 用户头像
         public string Sex { get; set; }//性别
         public string Address { get; set; } //收货地址
         public string Phone { get; set; }//电话号码
