@@ -1,0 +1,60 @@
+﻿<Window x:Class="WPF_LoginForm.Views.AddCart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
+        mc:Ignorable="d"
+        Title="AddCart" Height="450" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--  三行 -->
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="我的购物车" FontSize="30" FontWeight="Bold" Margin="10 0 0 0" VerticalAlignment="Center"/>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <!--购物车：商品名称，商品个数，商品价格-->
+            <StackPanel.DataContext>
+                <viewModel:CompassViewModel/>
+            </StackPanel.DataContext>
+            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                            ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                            Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
+                            ItemsSource="{Binding data_cart}" Height="400"
+                            FontSize="16" Background="Transparent" Foreground="#784DFD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                                    Header="商品名称" 
+                                    Binding="{Binding ItemName}"
+                                    Foreground="#784DFD"/>
+                    <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
+                    <DataGridTextColumn 
+                                    Header="商品价格" 
+                                    Binding="{Binding price}"/>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+            <Button Width="70" Height="25" Content="确定" Click="btnSave" />
+            <Button Width="70" Height="25" Content="取消" Click="btnCancel" Margin="10 0 10 0"/>
+        </StackPanel>
+    </Grid>
+</Window>

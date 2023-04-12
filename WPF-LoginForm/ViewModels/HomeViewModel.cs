@@ -1,5 +1,6 @@
 ﻿using FontAwesome.Sharp;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
- 
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -85,7 +86,7 @@ namespace WPF_LoginForm.ViewModels
         public ICommand ShowBhViewCommand { get; }
         public ICommand ShowMedicineViewCommand { get; }
         #endregion
-
+        public ICommand CartCommand { get; }
         public HomeViewModel() // 构造函数，初始化使用 view
         {
              
@@ -99,7 +100,7 @@ namespace WPF_LoginForm.ViewModels
             ShowBhViewCommand = new ViewModelCommand(ExecuteShowBhViewCommand);
             ShowMedicineViewCommand = new ViewModelCommand(ExecuteShowMedicineViewCommand);
 
-
+            CartCommand = new ViewModelCommand(ExecuteCartCommand);
 
             // Default View
             ExecuteShowHomeViewCommand(null);
@@ -128,6 +129,11 @@ namespace WPF_LoginForm.ViewModels
         }
 
         #region Command
+        private void ExecuteCartCommand(object obj)
+        {
+            AddCart view = new AddCart();
+            var r = view.ShowDialog();
+        }
         private void ExecuteShowBookViewCommand(object obj)
         { 
             CurrentChildView = new HomeViewModel_book();

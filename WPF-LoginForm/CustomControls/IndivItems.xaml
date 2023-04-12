@@ -67,19 +67,29 @@
                            HorizontalAlignment="Center"
                            FontSize="30"
                            FontWeight="Bold"
-                           Text="{Binding ItemName}"/>
+                           >
+                    <Run Text="{Binding ItemName}" Foreground="{StaticResource plainTextColor1}">
+                        
+                    </Run>
+                </TextBlock>
                 <!-- 商家信息 -->
                 <TextBlock HorizontalAlignment="Center" 
-                           Text="{Binding SellerName}"/>
+                          >
+                    <Run  Text="{Binding SellerName}" 
+                          Foreground="{StaticResource plainTextColor1}" 
+                          FontSize="16"/>
+                </TextBlock>
                 <!-- 商品介绍 -->
                 <TextBlock Margin="0,20,0,0"
                            HorizontalAlignment="Center"
                            FontSize="15"
                            FontWeight="SemiBold"
-                           Text="{Binding ItemShowText}"/>
+                           >
+                    <Run Text="{Binding ItemShowText}" Foreground="{StaticResource plainTextColor3}" />
+                </TextBlock>
 
-               
- 
+
+
             </StackPanel>
 
 

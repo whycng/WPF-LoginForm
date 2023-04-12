@@ -165,7 +165,7 @@
             <Grid Grid.Column="1" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Border CornerRadius="0,10,10,0"
                      Margin="0,0,0,0" >
@@ -250,13 +250,95 @@
                     </Grid>
 
                 </Border>
-                
+  
                 <!-- 购物车栏 -->
                 <Grid Grid.Row="1">
-                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <Button Content="购物车" Width="80"/> 
-                    </StackPanel>
+                        <TextBlock Background="#24105F">
+                            <Run ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                 Text="今日特卖：今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日" 
+                                 Foreground="AliceBlue" FontSize="12"/>
+                        </TextBlock>
+                        <Button Grid.Column="1"
+                            Command="{Binding CartCommand}"
+                            BorderThickness="0"
+                            Content="购物车"
+                            Foreground="White"
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    >
+
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#462AD8"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="80" Height="40"
+                                        CornerRadius="12"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                    <!--<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button 
+                            Command="{Binding CartCommand}"
+                            BorderThickness="0"
+                            Content="购物车"
+                            Foreground="White"
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    >
+
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#462AD8"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#28AEED"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="80" Height="40"
+                                        CornerRadius="12"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Grid.Column="1"/>
+                        </Grid>
+                        --><!--<Button Content="购物车" Width="80" Command="{Binding CartCommand}"/>--><!--
+                        
+                        
+                    </StackPanel>-->
                 </Grid>
             </Grid>
            
