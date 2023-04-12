@@ -17,5 +17,8 @@ namespace WPF_LoginForm.Models
         UserModel GetByUsername(string username);
         IEnumerable<UserModel> GetByAll();
         //...
+
+        // 根据Username获取其朋友id列表/Username;
+        List<string> GetFriByUsername(string username);
     }
 }

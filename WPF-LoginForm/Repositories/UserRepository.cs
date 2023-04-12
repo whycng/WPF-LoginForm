@@ -102,5 +102,30 @@ namespace WPF_LoginForm.Repositories
         {
             throw new NotImplementedException();
         }
+
+        // 根据Username获取其朋友id列表/Username;
+        public List<string> GetFriByUsername(string Username)
+        {
+            List<string> fri_username_list = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                fri_username_list = new List<string>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select FUsername from [Friend] where Username=@Username";
+                command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = Username;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var fri_username = reader[0].ToString();
+
+                        fri_username_list.Add(fri_username);
+                    }
+                }
+            }
+            return fri_username_list;
+        }
     }
 }

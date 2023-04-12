@@ -12,6 +12,8 @@ using WPF_LoginForm.CustomControls;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Commands;
 using GalaSoft.MvvmLight.Command;
+using WPF_LoginForm.Repositories;
+using System.Threading;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -26,12 +28,26 @@ namespace WPF_LoginForm.ViewModels
         public string LastSeen { get; set; }
         // test
         public string defaultContactPhoto;
+        private IUserRepository userRepository; 
+        private UserAccountModel _currentUserAccount;
         public string DefaultContactPhoto { 
             get => defaultContactPhoto; set {
                 defaultContactPhoto = "/assets/5.jpg";
             }
         }
+        public UserAccountModel CurrentUserAccount
+        {
+            get
+            {
+                return _currentUserAccount;
+            }
 
+            set
+            {
+                _currentUserAccount = value;
+                OnPropertyChanged(nameof(CurrentUserAccount));
+            }
+        }
 
         #endregion
 
@@ -44,40 +60,59 @@ namespace WPF_LoginForm.ViewModels
         #region Logics
         void LoadStatusThumbs()
         {
-            statusThumbsCollection = new ObservableCollection<StatusDataModel>()
+            // 数据修改为来自数据库 获取当前用户的朋友-Friend Tbale -->获取 ContactName,ContactPhoto
+            List<string> fri;// 
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            fri = userRepository.GetFriByUsername(user.Username);// 当前用户所有朋友Username
+            statusThumbsCollection = new ObservableCollection<StatusDataModel>();// 该集合用于展示
+            foreach ( var f in fri )
             {
-                new StatusDataModel() {
-                    IsMeAddStatus = true,
-                },
-                new StatusDataModel()
+
+                StatusDataModel t = new StatusDataModel()
                 {
-                    ContactName="Mike",
-                    ContactPhoto=new Uri("/assets/1.png", UriKind.RelativeOrAbsolute) ,
-                    StatusImage=new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
-                    IsMeAddStatus=false,
-                },
-                new StatusDataModel()
-                {
-                    ContactName="Steve",
-                    ContactPhoto=new Uri("/assets/2.jpg", UriKind.RelativeOrAbsolute) ,
-                    StatusImage=new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
-                    IsMeAddStatus=false,
-                },
-                new StatusDataModel()
-                {
-                    ContactName="DaaVV",
-                    ContactPhoto=new Uri("/assets/3.jpg", UriKind.RelativeOrAbsolute) ,
-                    StatusImage=new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
-                    IsMeAddStatus=false,
-                },
-                new StatusDataModel()
-                {
-                    ContactName="Miles",
-                    ContactPhoto=new Uri("/assets/4.jpg", UriKind.RelativeOrAbsolute) ,
-                    StatusImage=new Uri("/assets/3.jpg", UriKind.RelativeOrAbsolute),
-                    IsMeAddStatus=false,
-                }
-            };
+                    ContactName = userRepository.GetByUsername(f).Username,
+                    ContactPhoto = userRepository.GetByUsername(f).UserPhoto,
+                    StatusImage = new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
+                    IsMeAddStatus = false,
+                };
+                statusThumbsCollection.Add(t);
+            }
+
+
+            //statusThumbsCollection = new ObservableCollection<StatusDataModel>()
+            //{
+            //    new StatusDataModel() {
+            //        IsMeAddStatus = true,
+            //    },
+            //    new StatusDataModel()
+            //    {
+            //        ContactName="Mike",
+            //        ContactPhoto=new Uri("/assets/1.png", UriKind.RelativeOrAbsolute) ,
+            //        StatusImage=new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
+            //        IsMeAddStatus=false,
+            //    },
+            //    new StatusDataModel()
+            //    {
+            //        ContactName="Steve",
+            //        ContactPhoto=new Uri("/assets/2.jpg", UriKind.RelativeOrAbsolute) ,
+            //        StatusImage=new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
+            //        IsMeAddStatus=false,
+            //    },
+            //    new StatusDataModel()
+            //    {
+            //        ContactName="DaaVV",
+            //        ContactPhoto=new Uri("/assets/3.jpg", UriKind.RelativeOrAbsolute) ,
+            //        StatusImage=new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
+            //        IsMeAddStatus=false,
+            //    },
+            //    new StatusDataModel()
+            //    {
+            //        ContactName="Miles",
+            //        ContactPhoto=new Uri("/assets/4.jpg", UriKind.RelativeOrAbsolute) ,
+            //        StatusImage=new Uri("/assets/3.jpg", UriKind.RelativeOrAbsolute),
+            //        IsMeAddStatus=false,
+            //    }
+            //};
             OnPropertyChanged("statusThumbsCollection");
 
         }
@@ -241,6 +276,10 @@ namespace WPF_LoginForm.ViewModels
         SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\abc\毕设\项目\Login-In-WPF-MVVM-C-Sharp-and-SQL-Server-main\ligub2\loogin2\WPF-LoginForm\Database\Database1.mdf;Integrated Security=True");
         public ForMessageViewModel() 
         {
+            userRepository = new UserRepository();
+            CurrentUserAccount = new UserAccountModel();
+
+
             LoadChats();
             LoadStatusThumbs();
             LoadChatConversation();

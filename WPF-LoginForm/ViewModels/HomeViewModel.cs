@@ -16,6 +16,7 @@ namespace WPF_LoginForm.ViewModels
     public class HomeViewModel : ViewModelBase
     {
         //Fields
+        private IUserRepository userRepository;
         private UserAccountModel _currentUserAccount; 
         private ViewModelBase _currentChildView;
         private string _caption; // caption 右侧视图左上角-名称
@@ -75,14 +76,15 @@ namespace WPF_LoginForm.ViewModels
             } // => _icon = value;
         }
 
-        // --> Commands
+         
+        #region Command Fields
         public ICommand ShowHomeViewCommand { get; }
         public ICommand ShowFoodViewCommand { get; }
         public ICommand ShowFruitViewCommand { get; }
         public ICommand ShowBookViewCommand { get; }
         public ICommand ShowBhViewCommand { get; }
         public ICommand ShowMedicineViewCommand { get; }
-
+        #endregion
 
         public HomeViewModel() // 构造函数，初始化使用 view
         {
@@ -102,9 +104,30 @@ namespace WPF_LoginForm.ViewModels
             // Default View
             ExecuteShowHomeViewCommand(null);
 
-             
+
+            userRepository = new UserRepository();
+            CurrentUserAccount = new UserAccountModel();
+            LoadCurrentUserData();
+
         }
 
+        private void LoadCurrentUserData()
+        {
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            if (user != null)
+            {
+                CurrentUserAccount.Username = user.Username;
+                CurrentUserAccount.DisplayName = $"Welcome {user.Name} {user.LastName} DisplayName<<<";
+                CurrentUserAccount.ProfilePicture = null;
+            }
+            else
+            {
+                CurrentUserAccount.DisplayName = "Invalid user, not logged in";
+                //Hide child views.
+            }
+        }
+
+        #region Command
         private void ExecuteShowBookViewCommand(object obj)
         { 
             CurrentChildView = new HomeViewModel_book();
@@ -145,6 +168,7 @@ namespace WPF_LoginForm.ViewModels
         {
             CurrentChildView = new HomeViewModel_medi(); // 推荐
         }
- 
+        #endregion
+
     }
 }
