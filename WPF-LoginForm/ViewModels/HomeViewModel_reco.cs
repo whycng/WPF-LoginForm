@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -101,6 +102,16 @@ namespace WPF_LoginForm.ViewModels
         //}
 
         private RelayCommand<int> _buyCommand;
+        private RelayCommand _detailsCommand;
+        public RelayCommand DetailsCommand
+        {
+            get
+            {
+                if (_detailsCommand == null)
+                    _detailsCommand = new RelayCommand(() => ExcuteDetailsCommand());
+                return _detailsCommand;
+            }
+        }
         public RelayCommand<int> BuyCommand
         {
             get
@@ -109,6 +120,11 @@ namespace WPF_LoginForm.ViewModels
                     _buyCommand = new RelayCommand<int>((parameter) => ExcuteBuyCommand(parameter));
                 return _buyCommand;
             }
+        }
+        private void ExcuteDetailsCommand()
+        {
+            AddDetails view = new AddDetails();
+            var r = view.ShowDialog();
         }
 
         private void ExcuteBuyCommand(object parameter)

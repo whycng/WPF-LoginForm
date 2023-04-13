@@ -1,0 +1,96 @@
+﻿<Window x:Class="WPF_LoginForm.Views.AddDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_LoginForm.Views"
+        mc:Ignorable="d"
+        
+        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
+        
+        Title="AddDetails" Height="600" Width="800">
+    <Grid>
+        <Grid ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+              ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="30"/> 
+            </Grid.RowDefinitions>
+            <!--商品图片轮播-->
+            <pu:Carousel Width="500"
+             Height="300"
+             Animation="Slide,Fade"
+             TextBlock.Foreground="White"
+             TextBlock.FontSize="40"
+             TextBlock.TextAlignment="Center">
+                <Border Background="#1ABBEA">
+                    <TextBlock Text="Item 1"
+                   VerticalAlignment="Center" />
+                </Border>
+                <Border Background="#F6AC0C">
+                    <TextBlock Text="Item 2"
+                   VerticalAlignment="Center" />
+                </Border>
+                <Border Background="#FF5CAC">
+                    <TextBlock Text="Item 3"
+                   VerticalAlignment="Center" />
+                </Border>
+            </pu:Carousel>
+            <!--商品介绍详情/拼单-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    
+                </Grid.ColumnDefinitions>
+                <!--介绍详情-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!--价格-->
+                    <TextBlock Text="50元"/>
+                    <!--介绍-->
+                    <TextBlock Grid.Column="1" Text="不甜不要钱"/>
+                    <!--评价标签-->
+                    <StackPanel Grid.Column="2">
+                        <Button Content="品相出众"/>
+                    </StackPanel>
+
+                </Grid>
+                <!--发起拼单-->
+                <Grid Grid.Column="1">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+                        <Button Content="头像"/>
+                        <TextBlock Text="还差1人拼成"/>
+                        <Button Content="去拼单"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <!--评论-->
+            <Grid Grid.Row="2">
+                <StackPanel ScrollViewer.VerticalScrollBarVisibility="Visible"> 
+                    <Button Content="1评价"/>
+                    <Button Content="1评价"/>
+                    <Button Content="1评价"/>
+                    <Button Content="1评价"/>
+                </StackPanel>
+            </Grid>
+            <!--底部导航栏-->
+            <Grid Grid.Row="3">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="店铺"/>
+                    <Button Content="收藏"/>
+                    <Button Content="客服"/>
+                    <Button Content="单独购买"/>
+                    <Button Content="发起拼单1"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+    </Grid>
+</Window>

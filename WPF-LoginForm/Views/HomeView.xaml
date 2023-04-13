@@ -164,10 +164,18 @@
             <!-- Main / Content section  -->
             <Grid Grid.Column="1" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
                     <RowDefinition/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="0,10,10,0"
+                <!--顶部栏  -->
+                <Grid>
+                    
+                </Grid>
+                
+                <!-- 主要内容-->
+                <Border Grid.Row="1"
+                    CornerRadius="0,10,10,0"
                      Margin="0,0,0,0" >
 
                     <Border.Background>
@@ -252,7 +260,7 @@
                 </Border>
   
                 <!-- 购物车栏 -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

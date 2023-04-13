@@ -9,7 +9,6 @@
                 <ResourceDictionary Source="/Assets/icons.xaml" />
                 <ResourceDictionary Source="/Styles/UIColors.xaml"/>
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
-                
             </ResourceDictionary.MergedDictionaries>
             <!-- For Chat-->
              
@@ -182,7 +181,6 @@
                 </Setter>
             </Style>
         </ResourceDictionary>
-        
-
+       
     </Application.Resources>
 </Application>

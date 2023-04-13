@@ -94,6 +94,12 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Panuon.WPF, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Panuon.WPF.1.0.1\lib\net45\Panuon.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Panuon.WPF.UI, Version=1.1.9.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Panuon.WPF.UI.1.1.9.3\lib\net45\Panuon.WPF.UI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -172,6 +178,9 @@
     <Compile Include="ViewModels\ViewModelCommand.cs" />
     <Compile Include="Views\AddCart.xaml.cs">
       <DependentUpon>AddCart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddDetails.xaml.cs">
+      <DependentUpon>AddDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddStuView.xaml.cs">
       <DependentUpon>AddStuView.xaml</DependentUpon>
@@ -265,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddCart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
