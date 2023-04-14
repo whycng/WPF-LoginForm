@@ -5,23 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
         mc:Ignorable="d"
-        Title="AddCart" Height="450" Width="600" WindowStartupLocation="CenterScreen">
+        Title="AddCart" Height="600" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <!--  三行 -->
             <RowDefinition Height="60"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <TextBlock Text="我的购物车" FontSize="30" FontWeight="Bold" Margin="10 0 0 0" VerticalAlignment="Center"/>
 
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="1"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">
             <!--购物车：商品名称，商品个数，商品价格-->
             <StackPanel.DataContext>
                 <viewModel:CompassViewModel/>
             </StackPanel.DataContext>
-            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                            ScrollViewer.VerticalScrollBarVisibility="Visible" 
+            <DataGrid  
                             Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
                             ItemsSource="{Binding data_cart}" Height="400"
                             FontSize="16" Background="Transparent" Foreground="#784DFD">

@@ -106,6 +106,7 @@
                                         RelativeSource={RelativeSource 
                                         Mode=FindAncestor,
                                         AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding Id}"
                                         BorderThickness="0"
                                         Content="查看详情"
                                         Foreground="White"

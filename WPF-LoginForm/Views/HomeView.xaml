@@ -22,6 +22,9 @@
         <DataTemplate DataType="{x:Type viewModel:HomeViewModel_frui}">
             <local:HomeView_frui />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel_food}">
+            <local:HomeView_food />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:HomeViewModel_medi}">
             <local:HomeView_medi />
         </DataTemplate>
@@ -78,7 +81,7 @@
                                 Height="35"
                                 Margin="15,25,0,40">
                         <Image Source="/Images/Logo.png" Height="30" />
-                        <TextBlock Text="商城"
+                        <TextBlock Text="UPC商城"
                                    Foreground="{StaticResource titleColor2}"
                                    FontSize="20"
                                    FontFamily="Montserrat"
@@ -267,8 +270,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Background="#24105F">
-                            <Run ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                        <TextBlock TextWrapping = "Wrap" Background="#24105F">
+                            <Run  ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                                  Text="今日特卖：今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日今日" 
                                  Foreground="AliceBlue" FontSize="12"/>
                         </TextBlock>

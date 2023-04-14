@@ -26,7 +26,7 @@ namespace WPF_LoginForm.ViewModels
         //private String checkInfo; 
 
         //private RelayCommand checkCommand;
-         
+
         //private List<CompBottonModel> checkButtons; 
         //public void loadCheck()
         //{
@@ -101,18 +101,19 @@ namespace WPF_LoginForm.ViewModels
         //    }
         //}
 
+        #region Command
         private RelayCommand<int> _buyCommand;
         private RelayCommand _detailsCommand;
-        public RelayCommand DetailsCommand
+        public RelayCommand<int> DetailsCommand // 应该传进id
         {
             get
             {
                 if (_detailsCommand == null)
-                    _detailsCommand = new RelayCommand(() => ExcuteDetailsCommand());
+                    _detailsCommand = new RelayCommand<int>((parameter) => ExcuteDetailsCommand(parameter));
                 return _detailsCommand;
             }
         }
-        public RelayCommand<int> BuyCommand
+        public RelayCommand<int> BuyCommand // int 传进了商品id
         {
             get
             {
@@ -121,9 +122,10 @@ namespace WPF_LoginForm.ViewModels
                 return _buyCommand;
             }
         }
-        private void ExcuteDetailsCommand()
+        private void ExcuteDetailsCommand(object parameter)
         {
-            AddDetails view = new AddDetails();
+            int ItemId = (int)parameter;// 加入购物车的商品id 
+            AddDetails view = new AddDetails();//id 应该传进来
             var r = view.ShowDialog();
         }
 
@@ -149,7 +151,7 @@ namespace WPF_LoginForm.ViewModels
         //    }
         //    return current as T;
         //}
-
+        #endregion
 
         public void LoadDataBh()
         {

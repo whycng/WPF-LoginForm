@@ -11,17 +11,32 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_LoginForm.Models;
 
 namespace WPF_LoginForm.Views
 {
     /// <summary>
     /// AddDetails.xaml 的交互逻辑
     /// </summary>
-    public partial class AddDetails : Window
+    public partial class AddDetails : Window // DetailsModel
     {
-        public AddDetails()
+        public AddDetails(DetailsModel details)
         {
             InitializeComponent();
+            this.DataContext = new
+            {
+                Model_details = details
+            };
+        }
+
+        private void btnSave(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        private void btnCancel(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }
