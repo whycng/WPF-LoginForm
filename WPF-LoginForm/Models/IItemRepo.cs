@@ -9,8 +9,8 @@ namespace WPF_LoginForm.Models
 {
     public interface IItemRepo
     {
-        List<ItemModel> GetById(int id);
-        List<ItemModel> GetByGroup(string group); 
+        ItemModel GetById(int id);
+        List<ItemModel> GetBySellerName(string group); 
         List<ItemModel> GetByClassify(string classify);
         void SetCart(int Id); // 塞进购物车数据库
         List<ItemModel> GetCart();// 获取购物车数据库

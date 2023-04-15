@@ -154,7 +154,7 @@ namespace WPF_LoginForm.ViewModels
             }
         }
 
-        public void Add()
+        public void Add() // 测试学生表
         {
             Sutdent student = new Sutdent();
             AddStuView view = new AddStuView(student);

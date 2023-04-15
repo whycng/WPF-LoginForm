@@ -74,10 +74,7 @@
 
                                     <!--查看详情-->
                                     <Button    
-                                        Command="{Binding DataContext.DetailsCommand,
-                                        RelativeSource={RelativeSource 
-                                        Mode=FindAncestor,
-                                        AncestorType=ItemsControl}}"
+                                         
                                         BorderThickness="0"
                                         Content="查看详情"
                                         Foreground="White"

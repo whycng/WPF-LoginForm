@@ -149,6 +149,7 @@
     <Compile Include="Models\DetailsModel.cs" />
     <Compile Include="Models\IDetailsRepo.cs" />
     <Compile Include="Models\IMessRepository.cs" />
+    <Compile Include="Models\ItemCommentModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\IItemRepo.cs" />
     <Compile Include="Models\IUserRepository.cs" />

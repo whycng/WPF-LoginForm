@@ -12,6 +12,8 @@ namespace WPF_LoginForm.Models
         public UserModel seller { get; set; } //商家
         // 店铺页面
         //正在拼单
-        public List<UserModel> consumers { get; set; }//应该对应评论表-评论区消费者
+
+        //应该对应评论表-评论区消费者，从ItemComment表拿
+        public List<ItemCommentModel> comments { get; set; }
     }
 }

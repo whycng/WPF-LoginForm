@@ -17,20 +17,28 @@ namespace WPF_LoginForm.ViewModels
     public class HomeViewModel_book : ViewModelBase
     {
         private IItemRepo itemRepo;
+        private DetailsRepository detailsRepository;
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
         public ObservableCollection<ItemModel> data_bh { get; set; }
 
         #region Command
         private RelayCommand<int> _buyCommand;
-        private RelayCommand _detailsCommand;
-        public RelayCommand DetailsCommand // 应该传进id
+        private RelayCommand<int> _detailsCommand;
+        public RelayCommand<int> DetailsCommand // 应该传进id
         {
             get
             {
                 if (_detailsCommand == null)
-                    _detailsCommand = new RelayCommand(() => ExcuteDetailsCommand());
+                    _detailsCommand = new RelayCommand<int>((parameter) => ExcuteDetailsCommand(parameter));
                 return _detailsCommand;
             }
+        }
+        private void ExcuteDetailsCommand(object parameter)
+        {
+            int ItemId = (int)parameter;// 加入购物车的商品id 
+            var model = detailsRepository.GetDetails(ItemId);
+            AddDetails view = new AddDetails(model);//id 应该传进来
+            var r = view.ShowDialog();
         }
         public RelayCommand<int> BuyCommand // int 传进了商品id
         {
@@ -41,11 +49,7 @@ namespace WPF_LoginForm.ViewModels
                 return _buyCommand;
             }
         }
-        private void ExcuteDetailsCommand()
-        {
-            AddDetails view = new AddDetails();
-            var r = view.ShowDialog();
-        }
+ 
 
         private void ExcuteBuyCommand(object parameter)
         {
@@ -68,6 +72,7 @@ namespace WPF_LoginForm.ViewModels
         public HomeViewModel_book()
         {
             itemRepo = new ItemRepository();
+            detailsRepository = new DetailsRepository();
             LoadDataBh();
         }
     }

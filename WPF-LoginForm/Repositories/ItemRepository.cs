@@ -11,16 +11,58 @@ namespace WPF_LoginForm.Repositories
 {
     public class ItemRepository: RepositoryBase, IItemRepo 
     {
-        public List<ItemModel> GetById(int id)
+        public ItemModel GetById(int Id)
         {
-            throw new NotImplementedException();
-
+            ItemModel item = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                 
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from [Item] where Id=@Id";
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = Id; // 一个bug ：SqlDbType.Int
+                using (var reader = command.ExecuteReader())
+                {
+                    if(reader.Read())
+                    {
+                        item = new ItemModel()
+                        {
+                            Id = (int)reader[0],
+                            ItemName = reader[1].ToString(),
+                            SellerName = reader[2].ToString(),
+                            ItemShowText = reader[3].ToString(),
+                            ItemPhoto = new Uri("/assets/item/" + reader[4].ToString(), UriKind.RelativeOrAbsolute),
+                            ItemClassify = reader[5].ToString(),
+                            reco = reader[6].ToString(),
+                            price = reader[7].ToString(),
+                        };
+                    }
+                    else
+                    {
+                        throw new Exception("WR");
+                    }
+                    //var x1 = (int)reader[0];
+                    //item = new ItemModel()
+                    //{
+                    //    Id = (int)reader[0],
+                    //    ItemName = reader[1].ToString(),
+                    //    SellerName = reader[2].ToString(),
+                    //    ItemShowText = reader[3].ToString(),
+                    //    ItemPhoto = new Uri("/assets/item/" + reader[4].ToString(), UriKind.RelativeOrAbsolute),
+                    //    ItemClassify = reader[5].ToString(),
+                    //    reco = reader[6].ToString(),
+                    //    price = reader[7].ToString(),
+                    //};
+                }
+            }
+            return item;
         }
 
-       
 
-        // 根据商品卖家选择
-        public List<ItemModel> GetByGroup(string group)
+
+        // 根据商品卖家选择  
+        public List<ItemModel> GetBySellerName(string group)
         {
             List<ItemModel> item = null;
             using (var connection = GetConnection())

@@ -19,6 +19,7 @@ namespace WPF_LoginForm.ViewModels
     public class HomeViewModel_reco : ViewModelBase
     {
         private IItemRepo itemRepo;
+        private DetailsRepository detailsRepository;// 未用接口
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
         public ObservableCollection<ItemModel> data_bh { get; set; }
 
@@ -103,7 +104,7 @@ namespace WPF_LoginForm.ViewModels
 
         #region Command
         private RelayCommand<int> _buyCommand;
-        private RelayCommand _detailsCommand;
+        private RelayCommand<int>  _detailsCommand;
         public RelayCommand<int> DetailsCommand // 应该传进id
         {
             get
@@ -112,6 +113,13 @@ namespace WPF_LoginForm.ViewModels
                     _detailsCommand = new RelayCommand<int>((parameter) => ExcuteDetailsCommand(parameter));
                 return _detailsCommand;
             }
+        }
+        private void ExcuteDetailsCommand(object parameter)
+        {
+            int ItemId = (int)parameter;// 加入购物车的商品id 
+            var model = detailsRepository.GetDetails(ItemId);
+            AddDetails view = new AddDetails(model);//id 应该传进来
+            var r = view.ShowDialog();
         }
         public RelayCommand<int> BuyCommand // int 传进了商品id
         {
@@ -122,12 +130,7 @@ namespace WPF_LoginForm.ViewModels
                 return _buyCommand;
             }
         }
-        private void ExcuteDetailsCommand(object parameter)
-        {
-            int ItemId = (int)parameter;// 加入购物车的商品id 
-            AddDetails view = new AddDetails();//id 应该传进来
-            var r = view.ShowDialog();
-        }
+
 
         private void ExcuteBuyCommand(object parameter)
         {
@@ -155,7 +158,7 @@ namespace WPF_LoginForm.ViewModels
 
         public void LoadDataBh()
         {
-            var data_item = itemRepo.GetByGroup("upc");
+            var data_item = itemRepo.GetBySellerName("admin");
             data_bh = new ObservableCollection<ItemModel>(data_item);
  
             OnPropertyChanged("data_bh");
@@ -164,6 +167,7 @@ namespace WPF_LoginForm.ViewModels
         public HomeViewModel_reco()
         {
             itemRepo = new ItemRepository();
+            detailsRepository = new DetailsRepository();
             LoadDataBh();
             // loadCheck();
         }
