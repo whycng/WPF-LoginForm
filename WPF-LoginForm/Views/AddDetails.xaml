@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:WPF_LoginForm.Views"
         mc:Ignorable="d"
         
-        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
-        
+        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
         Title="AddDetails" Height="600" Width="800"
           
          >
-
+    <Window.DataContext>
+        <viewModel:DetailsViewModel/>
+    </Window.DataContext>
     <Border CornerRadius="10"                    
             BorderThickness="2"
             >
@@ -111,17 +112,13 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-
-                        <Button Content="1评价"/>
-                        <Button Content="1评价"/>
-                        <Button Content="1评价"/>
-                        <Button Content="1评价"/>
+ 
                     </StackPanel>
                 </Grid>
                 <!--底部导航栏-->
                 <Grid Grid.Row="3">
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="店铺"/>
+                        <Button  Content="店铺"/>
                         <Button Content="收藏"/>
                         <Button Content="客服"/>
                         <Button Content="单独购买"/>

@@ -56,7 +56,7 @@
 
                     </Ellipse>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="上传头像"/>
+                            <Button Content="上传头像" Command="{Binding UploadImageCommand}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Style="{StaticResource menuButtonText}">
