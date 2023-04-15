@@ -69,11 +69,11 @@ namespace WPF_LoginForm.ViewModels
             statusThumbsCollection = new ObservableCollection<StatusDataModel>();// 该集合用于展示
             foreach ( var f in fri )
             {
-                
+
                 StatusDataModel t = new StatusDataModel()
                 {
-                    ContactName = userRepository.GetByUsername(f).Username, 
-                    ContactPhoto = new Uri(userRepository.GetByUsername(f).UserPhoto, UriKind.RelativeOrAbsolute),
+                    ContactName = userRepository.GetByUsername(f).Username,
+                    ContactPhoto = userRepository.GetByUsername(f).UserPhoto, //new Uri(userRepository.GetByUsername(f).UserPhoto, UriKind.RelativeOrAbsolute),
                     // 应该是在线状态
                     StatusImage = new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
                     IsMeAddStatus = false,
@@ -145,7 +145,7 @@ namespace WPF_LoginForm.ViewModels
                         // 取和朋友聊天的最后一句
 
                         ContactName = userRepository.GetByUsername(f).Username, 
-                        ContactPhoto = new Uri(userRepository.GetByUsername(f).UserPhoto, UriKind.RelativeOrAbsolute),
+                        ContactPhoto = userRepository.GetByUsername(f).UserPhoto,
                         Message = _messModel.M_Message,
                         LastMessageTime = _messModel.M_Time,
                         ChatIsSelected = true,

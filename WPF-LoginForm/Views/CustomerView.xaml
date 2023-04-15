@@ -59,13 +59,8 @@
                             <Button Content="上传头像" Command="{Binding UploadImageCommand}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Style="{StaticResource menuButtonText}">
-                        <Run Foreground="White" FontSize="25">
-                                你的用户名 
-                        </Run>
-                        </TextBlock>
-                        <Button Content="修改"/>
-                        <Button Content="确定"/>
+                            <TextBox x:Name="NameTextBox" Text="{Binding TextBoxName}" Width="100"/>
+                            <Button Content="修改" Command="{Binding ConfirmNameCommand}"/> 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="性别：" Style="{StaticResource menuButtonText}"/>

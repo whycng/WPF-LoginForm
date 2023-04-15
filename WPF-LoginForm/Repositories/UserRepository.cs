@@ -92,7 +92,8 @@ namespace WPF_LoginForm.Repositories
                             Name = reader[3].ToString(),
                             LastName = reader[4].ToString(),
                             Email = reader[5].ToString(),
-                            UserPhoto = reader[6].ToString(), 
+                            UserPhoto =  
+                            new Uri("/assets/userHead/" + reader[6].ToString(), UriKind.RelativeOrAbsolute),
                             // sex.....
                         };
                     }
@@ -129,5 +130,49 @@ namespace WPF_LoginForm.Repositories
             }
             return fri_username_list;
         }
+
+        public void SetUserPhoto(string username, string filename)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET UserPhoto=@filename WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@filename", SqlDbType.NVarChar).Value = filename;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }// end using
+        }//end public
+
+        public void SetNameByUserName(string username, string name)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET Name=@name WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@name", SqlDbType.NVarChar).Value = name;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    } 
+                }
+            }// end using
+        }//end public
     }
 }

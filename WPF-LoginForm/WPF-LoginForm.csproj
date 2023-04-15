@@ -405,6 +405,8 @@
     <Resource Include="Assets\userHead\头像3.png" />
     <Resource Include="Assets\userHead\头像4.png" />
     <Resource Include="Assets\userHead\头像5.png" />
+    <Resource Include="Assets\userHead\testHead.png" />
+    <Resource Include="Assets\userHead\测试头像.png" />
     <Content Include="Database\Database1.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

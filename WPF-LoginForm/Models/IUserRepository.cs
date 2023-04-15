@@ -20,5 +20,8 @@ namespace WPF_LoginForm.Models
 
         // 根据Username获取其朋友id列表/Username;
         List<string> GetFriByUsername(string username);
+        // 根据用户名修改其UserPhoto
+        void SetUserPhoto(string username, string filename);
+        void SetNameByUserName(string username, string name);
     }
 }
