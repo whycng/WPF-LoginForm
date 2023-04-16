@@ -20,6 +20,8 @@ namespace WPF_LoginForm.Models
 
         void SetHisOrd(); // 直接把购物车塞进历史订单
         List<ItemModel> GetHisOrd();// 获取历史订单数据
+        void DelHistById(int Id);//根据商品id删除历史订单中某商品
+        List<ItemModel> GetHisOrdByVague(string vage);// 根据商品名获取
     }
 }
  

@@ -15,6 +15,8 @@ using WPF_LoginForm.Repositories;
 using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Xml.Linq;
+using System.ComponentModel;
+using System.Windows.Controls.Primitives;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -38,6 +40,100 @@ namespace WPF_LoginForm.ViewModels
                 }
 
                 return _uploadImageCommand;
+            }
+        }
+        // ConfirmSexCommand
+
+        private bool _isMale;
+
+
+        private bool _isFemale;
+
+        private string _textBoxName;
+        private string _address;
+        private string _phone;
+        private string _email;
+        //Properties
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged(nameof(Email));
+                }
+            }
+        }
+        public string Address
+        {
+            get { return _address; }
+            set
+            {
+                if (_address != value)
+                {
+                    _address = value;
+                    OnPropertyChanged(nameof(Address));
+                }
+            }
+        }
+        public string Phone
+        {
+            get { return _phone; }
+            set
+            {
+                if (_phone != value)
+                {
+                    _phone = value;
+                    OnPropertyChanged(nameof(Phone));
+                }
+            }
+        }
+
+        public bool IsMale
+        {
+            get { return _isMale; }
+            set
+            {
+                if (_isMale != value)
+                {
+                    _isMale = value;
+                    OnPropertyChanged(nameof(IsMale));
+                }
+            }
+        }
+        public bool IsFemale
+        {
+            get { return _isFemale; }
+            set
+            {
+                if (_isFemale != value)
+                {
+                    _isFemale = value;
+                    OnPropertyChanged(nameof(IsFemale));
+                }
+            }
+        }
+        public Uri UserPhoto
+        {
+            get => _userPhoto;
+            set
+            {
+                _userPhoto = value;
+                OnPropertyChanged(nameof(UserPhoto));
+            }//=> _testusername = value;
+        }
+        public string TextBoxName // name
+        {
+            get { return _textBoxName; }
+            set
+            {
+                if (_textBoxName != value)
+                {
+                    _textBoxName = value;
+                    OnPropertyChanged(nameof(TextBoxName));
+                }
             }
         }
 
@@ -106,39 +202,37 @@ namespace WPF_LoginForm.ViewModels
 
 
         }
-        private string _textBoxName;
-        public string TextBoxName // name
-        {
-            get { return _textBoxName; }
-            set
-            {
-                if (_textBoxName != value)
-                {
-                    _textBoxName = value;
-                    OnPropertyChanged(nameof(TextBoxName));
-                }
-            }
-        }
+
+        public ICommand ConfirmSexCommand => new RelayCommand(() => {
+            var sex = IsFemale ? '女'.ToString() : '男'.ToString() ;
+            userRepository.SetSexByUserName(User.Username, sex);
+
+        });
         public ICommand ConfirmNameCommand => new RelayCommand(() =>
         {
-            string name = TextBoxName; // 获取Name属性的值 
+            var name = TextBoxName; // 获取Name属性的值 
             userRepository.SetNameByUserName(User.Username, name);
 
         });
-
-
-
-        //Properties
-
-        public Uri UserPhoto
+        public ICommand ConfirmAddressCommand => new RelayCommand(() =>
         {
-            get => _userPhoto;
-            set
-            {
-                _userPhoto = value;
-                OnPropertyChanged(nameof(UserPhoto));
-            }//=> _testusername = value;
-        }
+            var address = Address;  
+            userRepository.SetAddressByUserName(User.Username, address);
+
+        }); 
+        public ICommand ConfirmPhoneCommand => new RelayCommand(() =>
+        {
+            var phone = Phone;  
+            userRepository.SetPhoneByUserName(User.Username, phone);
+
+        });
+        public ICommand ConfirmEmailCommand => new RelayCommand(() =>
+        {
+            var email = Email;
+            userRepository.SetEmailByUserName(User.Username, email);
+
+        });
+
 
 
         // -------------
@@ -147,8 +241,23 @@ namespace WPF_LoginForm.ViewModels
             userRepository = new UserRepository();
             User = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             // 加载数据
-            UserPhoto = User.UserPhoto; 
+            TextBoxName = User.Name;
+            UserPhoto = User.UserPhoto;
+            Address = User.Address;
+            var sex = User.Sex.Replace(" ","");
+            if (sex == '男'.ToString())
+            { 
+                IsMale = true; 
+                IsFemale = false; 
+            }
+            else {
+                IsFemale = true;
+                IsMale = false;
+            }
+            Email = User.Email;
+            Phone = User.Phone;
 
+               
         }
  
     }

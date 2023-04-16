@@ -35,10 +35,10 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button Margin="15,0"
+            <!--<Button Margin="15,0"
             HorizontalAlignment="Left"
             Content="{StaticResource close}"
-            Style="{StaticResource IconButtonStyle}"/>
+            Style="{StaticResource IconButtonStyle}"/>-->
 
             <ScrollViewer Grid.Row="1"
                     HorizontalScrollBarVisibility="Disabled">
@@ -59,26 +59,42 @@
                             <Button Content="上传头像" Command="{Binding UploadImageCommand}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="NameTextBox" Text="{Binding TextBoxName}" Width="100"/>
+                            <Button Width="150" Content="名字："/>
+                            <TextBox x:Name="NameTextBox" Text="{Binding TextBoxName}" Width="200"/>
                             <Button Content="修改" Command="{Binding ConfirmNameCommand}"/> 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="性别：" Style="{StaticResource menuButtonText}"/>
-                        <TextBlock Text="男" Style="{StaticResource menuButtonText}"/>
-                        <Button Content="修改"/>
-                        <Button Content="确定"/>
+                         <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="maleRadioButton" 
+                                             Content="男" 
+                                             GroupName="genderGroup" 
+                                             Foreground="White"
+                                             IsChecked="{Binding IsMale}"/>
+                                <RadioButton x:Name="femaleRadioButton" 
+                                             Content="女" 
+                                             GroupName="genderGroup" 
+                                             Foreground="White"
+                                             IsChecked="{Binding IsFemale}"/>
+                        </StackPanel>
+
+                            <Button Content="确定" Command="{Binding ConfirmSexCommand}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="地址" Background="Red"/>
-                        <Button Content="修改"/>
-                        <Button Content="确定"/>
+                            <Button Width="150" Content="地址："/>
+                            <TextBox Width="200" Text="{Binding Address}"  />
+                            <Button Content="修改" Command="{Binding ConfirmAddressCommand}"/> 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="联系方式" Background="Red"/>
-                        <Button Content="修改"/>
-                        <Button Content="确定"/>
+                        <Button Width="150" Content="联系电话："/>
+                        <TextBox Width="200" Text="{Binding Phone}"  />
+                        <Button Content="修改" Command="{Binding ConfirmPhoneCommand}"/> 
                     </StackPanel>
-                </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Width="150" Content="Email："/>
+                            <TextBox Width="200" Text="{Binding Email}"  />
+                            <Button Content="修改" Command="{Binding ConfirmEmailCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
 
 
             </ScrollViewer>

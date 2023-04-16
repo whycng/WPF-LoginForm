@@ -23,5 +23,9 @@ namespace WPF_LoginForm.Models
         // 根据用户名修改其UserPhoto
         void SetUserPhoto(string username, string filename);
         void SetNameByUserName(string username, string name);
+        void SetSexByUserName(string username, string sex);
+        void SetAddressByUserName(string username, string address);
+        void SetPhoneByUserName(string username, string phone);
+        void SetEmailByUserName(string username, string email);
     }
 }

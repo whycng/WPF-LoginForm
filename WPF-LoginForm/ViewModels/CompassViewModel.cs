@@ -16,6 +16,7 @@ namespace WPF_LoginForm.ViewModels
     {
         public CompassViewModel() //初始化
         {
+            #region Stu测试
             localDB = new localDB();
             QueryCommand = new RelayCommand(Query);
             ResetCommand = new RelayCommand(() => // 重置的明命令
@@ -26,57 +27,41 @@ namespace WPF_LoginForm.ViewModels
             EditCommand = new RelayCommand<int>(t => Edit(t)); 
             DelCommand = new RelayCommand<int>(t => Del(t));
             AddCommand = new RelayCommand(Add);
+            #endregion
 
-            // 购物车处理
+
+            QueryHistCommand = new RelayCommand(QueryHist);
+            ResetHistCommand = new RelayCommand(() => // 重置的明命令
+            {
+                SearchHist = string.Empty; //搜索条件置为空
+                LoadHistData();
+            });
             itemRepo = new ItemRepository();
-            LoadDataBh();
-            DelCommand_Cart = new RelayCommand<int>( t => Del_Cart(t));
+            DelCommand_Cart = new RelayCommand<int>(t => Del_Cart(t));
+            DelCommand_Hist = new RelayCommand<int>(t => Del_Hist(t));//
+            AppealCommand = new RelayCommand<int>(t => Appeal_Hist(t));//AppealCommand
+            // 购物车处理 
+            LoadCartData(); 
             // 历史订单处理
             LoadHistData();
         }
 
-        localDB localDB;
-        private string search =string.Empty;
-       
-        private ObservableCollection<Sutdent> gridModelList;
-        
-
-        public ObservableCollection<Sutdent> GridModelList
-        {
-            get { return gridModelList; }
-            set { gridModelList = value; OnPropertyChanged(nameof(gridModelList)); }
-        }
-
-        public string Search
-        {
-            get => search;
-            set
-            {
-                search = value;
-                OnPropertyChanged(nameof(Search));
-            }// => search = value; }
-        }
-        #region Command
-
-        public RelayCommand QueryCommand { get; set; }
-        public RelayCommand ResetCommand { get; set; }
-        public RelayCommand<int> EditCommand { get; set; }
-        public RelayCommand<int> DelCommand { get; set; }
-
-        public RelayCommand AddCommand { get; set; }
-
-        #endregion
 
 
         #region 购物车，历史订单处理
         public RelayCommand<int> DelCommand_Cart { get; set; }
+        public RelayCommand<int> DelCommand_Hist { get; set; }
+        public RelayCommand<int> AppealCommand { get; set; }
         private IItemRepo itemRepo;
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
         public ObservableCollection<ItemModel> data_cart { get; set; } // 购物车数据
         public ObservableCollection<ItemModel> data_histItem { get; set; } //历史订单数据  
 
+        public RelayCommand QueryHistCommand { get; set; } 
+        public RelayCommand ResetHistCommand { get; set; }
         // BuyCommand
         private RelayCommand _buyCommand;
+        private string searchHist = string.Empty;
         public RelayCommand BuyCommand // 购物车购买按钮
         {
             get
@@ -85,6 +70,17 @@ namespace WPF_LoginForm.ViewModels
                     _buyCommand = new RelayCommand(() => ExcuteBuyCommand());
                 return _buyCommand;
             }
+        }
+
+
+        public string SearchHist
+        {
+            get => searchHist;
+            set
+            {
+                searchHist = value;
+                OnPropertyChanged(nameof(SearchHist));
+            } 
         }
 
         private void ExcuteBuyCommand()
@@ -104,7 +100,7 @@ namespace WPF_LoginForm.ViewModels
 
             OnPropertyChanged("data_histItem");
         }
-        public void LoadDataBh() // 加载购物车数据
+        public void LoadCartData() // 加载购物车数据
         {
             var data_item = itemRepo.GetCart();
             data_cart = new ObservableCollection<ItemModel>(data_item);
@@ -113,15 +109,76 @@ namespace WPF_LoginForm.ViewModels
 
         }
 
+
         public void Del_Cart(int id)
         {
             itemRepo.DelCartById(id);
             // OnPropertyChanged("data_cart");   
-            LoadDataBh();
+            LoadCartData();
 
+        }
+        public void Del_Hist(int id)
+        {
+            itemRepo.DelHistById(id);
+            LoadHistData();
+        }//
+        public void Appeal_Hist(int id)
+        {
+            // 申诉逻辑...
+            // 申诉逻辑...
+            System.Windows.MessageBox.Show("申诉成功");
+        }//Appeal_Hist
+
+        public void QueryHist()
+        {
+            // var models = localDB.GetSutdentsByName(Search);
+            if(String.IsNullOrEmpty(SearchHist)) 
+            { LoadHistData(); }
+            else
+            { // 应该是一个模糊搜索
+                var t = itemRepo.GetHisOrdByVague(SearchHist);
+                data_histItem = new ObservableCollection<ItemModel>(t);
+            } 
+            OnPropertyChanged("data_histItem");
         }
         #endregion
 
+
+        #region Stu测试
+        #region Stu测试命令Command
+
+        public RelayCommand QueryCommand { get; set; } 
+        public RelayCommand ResetCommand { get; set; }
+        public RelayCommand<int> EditCommand { get; set; }
+        public RelayCommand<int> DelCommand { get; set; }
+
+        public RelayCommand AddCommand { get; set; }
+        localDB localDB;
+        private string search = string.Empty;
+
+        private ObservableCollection<Sutdent> gridModelList;
+
+
+        public ObservableCollection<Sutdent> GridModelList
+        {
+            get { return gridModelList; }
+            set { gridModelList = value; OnPropertyChanged(nameof(gridModelList)); }
+        }
+    
+
+        public string Search
+        {
+            get => search;
+            set
+            {
+                search = value;
+                OnPropertyChanged(nameof(Search));
+            }// => search = value; }
+        }
+
+        #endregion
+
+        #region Stu测试表
         public void Query()
         {
             var models = localDB.GetSutdentsByName(Search); //通过打断点发现，Search即为查找输入框内的内容
@@ -181,5 +238,7 @@ namespace WPF_LoginForm.ViewModels
             }
 
         }
+        #endregion
+        #endregion
     }
 }

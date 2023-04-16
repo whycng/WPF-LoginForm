@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WPF_LoginForm.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -95,6 +96,9 @@ namespace WPF_LoginForm.Repositories
                             UserPhoto =  
                             new Uri("/assets/userHead/" + reader[6].ToString(), UriKind.RelativeOrAbsolute),
                             // sex.....
+                            Sex = reader[7].ToString(),
+                            Address = reader[8].ToString(),
+                            Phone = reader[9].ToString(),   
                         };
                     }
                 }
@@ -171,6 +175,83 @@ namespace WPF_LoginForm.Repositories
                     {
 
                     } 
+                }
+            }// end using
+        }//end public
+        public void SetSexByUserName(string username, string sex)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET Sex=@sex WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@sex", SqlDbType.NVarChar).Value = sex;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }//end public
+        public void SetAddressByUserName(string username, string address)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET Address=@address WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@address", SqlDbType.NVarChar).Value = address;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }//end public
+        public void SetPhoneByUserName(string username, string phone)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET Phone=@phone WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@phone", SqlDbType.NVarChar).Value = phone;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+
+        }//end public
+        public void SetEmailByUserName(string username, string email)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET Email=@email WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
                 }
             }// end using
         }//end public

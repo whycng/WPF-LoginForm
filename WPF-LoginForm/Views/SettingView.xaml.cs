@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,5 +25,11 @@ namespace WPF_LoginForm.Views
         {
             InitializeComponent();
         }
+
+        private void OpenWebPage(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/whycng/WPF-LoginForm");
+        }
+
     }
 }

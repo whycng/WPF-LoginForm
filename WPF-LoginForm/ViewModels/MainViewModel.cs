@@ -21,7 +21,16 @@ namespace WPF_LoginForm.ViewModels
         private string _caption; // caption 右侧视图左上角-名称
         private IconChar _icon; // icon 右侧视图左上角-图标
         private string _testN;
- 
+        private Uri _userPhoto;
+        public Uri UserPhoto
+        {
+            get => _userPhoto;
+            set
+            {
+                _userPhoto = value;
+                OnPropertyChanged(nameof(UserPhoto));
+            }//=> _testusername = value;
+        }
 
         public UserAccountModel CurrentUserAccount
         {
@@ -155,8 +164,9 @@ namespace WPF_LoginForm.ViewModels
             var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             if (user != null)
             {
+                UserPhoto = user.UserPhoto;
                 CurrentUserAccount.Username = user.Username;
-                CurrentUserAccount.DisplayName = $"Welcome {user.Name} {user.LastName} DisplayName<<<";
+                CurrentUserAccount.DisplayName = $"{user.Name} @{user.Username}";
                 CurrentUserAccount.ProfilePicture = null;               
             }
             else

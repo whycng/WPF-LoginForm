@@ -157,7 +157,7 @@ namespace WPF_LoginForm.Repositories
                 using (var reader = command.ExecuteReader())
                 {
                 }
-            }
+            }//end using
         }
         
         public void SetHisOrd()// 直接把购物车塞进历史订单
@@ -249,6 +249,53 @@ namespace WPF_LoginForm.Repositories
                             Id = (int)reader[0],
                             ItemName = reader[1].ToString(), 
                             price = reader[2].ToString(),
+                        };
+                        item.Add(item_tmp);
+                    }
+                }
+            }
+            return item;
+        }
+
+        public void DelHistById(int Id) { //根据商品id删除历史订单中某商品
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Delete From HistoricalOrders Where Id = @Id";
+                command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                using (var reader = command.ExecuteReader())
+                {
+                }
+            }//end using
+        }// end public
+        public List<ItemModel> GetHisOrdByVague(string vage)
+        {
+
+            List<ItemModel> item = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                item = new List<ItemModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM HistoricalOrders WHERE CONCAT_WS(',', Id, ItemName, SellerName, ItemShowText, ItemClassify, price) LIKE '%' + @vage + '%';";
+                command.Parameters.Add("@vage", SqlDbType.NVarChar).Value = vage; 
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item_tmp = new ItemModel()
+                        {
+                            Id = (int)reader[0],
+                            ItemName = reader[1].ToString(),
+                            SellerName = reader[2].ToString(),
+                            ItemShowText = reader[3].ToString(),
+                            ItemPhoto = new Uri("/assets/item/" + reader[4].ToString(), UriKind.RelativeOrAbsolute),
+                            ItemClassify = reader[5].ToString(),
+                            reco = reader[6].ToString(),
+                            price = reader[7].ToString(),
                         };
                         item.Add(item_tmp);
                     }
