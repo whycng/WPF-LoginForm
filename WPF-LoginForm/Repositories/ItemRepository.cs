@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_LoginForm.Models;
+using System.Diagnostics;
+using System.Windows.Controls.Primitives;
+using System.Windows;
 
 namespace WPF_LoginForm.Repositories
 {
@@ -129,17 +132,22 @@ namespace WPF_LoginForm.Repositories
             return item;
         }
 
-        public void SetCart(int Id) //根据商品id将商品信息插入购物车
+        public void SetCart(int ItemId,string Username) //根据商品id将商品信息插入购物车
         {
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             { 
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "Insert Into ItemCart(Id,ItemName,price) Select " +
-                    "Id,ItemName,price From Item Where Id=@Id " +
-                    "And Not Exists(Select Id From ItemCart where Id=@Id) ";
-                command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                //command.CommandText = "Insert Into ItemCart(Id,ItemName,price) Select " +
+                //    "Id,ItemName,price From Item Where Id=@Id " +
+                //    "And Not Exists(Select Id From ItemCart where Id=@Id) ";
+                command.CommandText = " INSERT INTO ItemCart(Id,ItemName,price,UserId,Username,Amount) " +
+                    "SELECT Id, ItemName, price, (SELECT Id FROM [User] WHERE Username=@Username), @Username,1 " +
+                    "FROM Item WHERE Id=@ItemId AND NOT EXISTS (SELECT Id FROM ItemCart " +
+                    "WHERE Id=@ItemId AND UserId=(SELECT Id FROM [User] WHERE Username=@Username)) ";
+                command.Parameters.Add("@ItemId", SqlDbType.NVarChar).Value = ItemId;
+                command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = Username;
                 using (var reader = command.ExecuteReader())
                 { 
                 }
@@ -159,7 +167,36 @@ namespace WPF_LoginForm.Repositories
                 }
             }//end using
         }
-        
+
+        public void AddCartById(int Id)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Update ItemCart Set Amount = Amount+1   Where Id=@Id ";
+                command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                using (var reader = command.ExecuteReader())
+                {
+                }
+            }//end using
+        }
+        public void SubCartById(int Id)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE ItemCart\r\nSET Amount = CASE WHEN Amount > 0 THEN Amount - 1 ELSE 0 END\r\nWHERE Id = @Id\r\n";
+                command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                using (var reader = command.ExecuteReader())
+                {
+                }
+            }//end using
+        }
+
         public void SetHisOrd()// 直接把购物车塞进历史订单
         {
             using (var connection = GetConnection())
@@ -168,9 +205,10 @@ namespace WPF_LoginForm.Repositories
                 connection.Open();
                 command.Connection = connection;
                 // 向HistoricalOrders表中插入值，值来自item，约束条件：Item.Id in ItemCart.Id AND Item.Id not in HistoricalOrders.Id
-                command.CommandText = "Insert Into HistoricalOrders(Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price) Select " +
-                    "Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price From Item Where Item.Id in (Select Id From ItemCart) And Item.Id Not In (Select Id From HistoricalOrders)";
-                   
+                //command.CommandText = "Insert Into HistoricalOrders(Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price,Amount) Select " +
+                //    "Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price,(select Amount From ItemCart Where ItemCart.Id=Id) From Item Where Item.Id in (Select Id From ItemCart) And Item.Id Not In (Select Id From HistoricalOrders)";
+                command.CommandText = "INSERT INTO HistoricalOrders\r\n(Id, ItemName, SellerName, ItemShowText, ItemPhoto, ItemClassify, reco, price, Amount)\r\nSELECT i.Id, i.ItemName, i.SellerName, i.ItemShowText, i.ItemPhoto, i.ItemClassify, i.reco, i.price, c.Amount\r\nFROM Item i\r\nJOIN ItemCart c ON i.Id = c.Id\r\nLEFT JOIN HistoricalOrders h ON i.Id = h.Id\r\nWHERE h.Id IS NULL;";
+
                 // command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
                 using (var reader = command.ExecuteReader())
                 {
@@ -203,6 +241,7 @@ namespace WPF_LoginForm.Repositories
                             ItemClassify = reader[5].ToString(),
                             reco = reader[6].ToString(),
                             price = reader[7].ToString(),
+                            Amount = (int)reader[8],
                         };
                         item.Add(item_tmp);
                     }
@@ -228,7 +267,20 @@ namespace WPF_LoginForm.Repositories
         //    }
         //}
 
-
+        public void EmptyCart()
+        {
+             
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Delete From ItemCart ";
+                using (var reader = command.ExecuteReader())
+                {
+                }
+            }//end using
+        }
         public List<ItemModel> GetCart() // 获取购物车数据
         {
             List<ItemModel> item = null;
@@ -249,11 +301,12 @@ namespace WPF_LoginForm.Repositories
                             Id = (int)reader[0],
                             ItemName = reader[1].ToString(), 
                             price = reader[2].ToString(),
+                            Amount = (int)reader[5],
                         };
                         item.Add(item_tmp);
                     }
                 }
-            }
+            }// end using
             return item;
         }
 
@@ -296,6 +349,7 @@ namespace WPF_LoginForm.Repositories
                             ItemClassify = reader[5].ToString(),
                             reco = reader[6].ToString(),
                             price = reader[7].ToString(),
+                            Amount = (int)reader[8],
                         };
                         item.Add(item_tmp);
                     }

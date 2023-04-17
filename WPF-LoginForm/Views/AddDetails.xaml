@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:WPF_LoginForm.Views"
         mc:Ignorable="d"
         
-        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
-        Title="AddDetails" Height="600" Width="800"
+        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" 
+        xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
+        Title="AddDetails" Height="650" Width="800"
           
          >
     <Window.DataContext>
@@ -33,7 +34,7 @@
                     <RowDefinition Height="300"/>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="170"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
                 <!--商品图片轮播-->
                 <pu:Carousel Width="500"
@@ -87,15 +88,46 @@
                     <!--发起拼单-->
                     <Grid Grid.Column="1">
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-                            <Button Content="头像"/>
+                            <!--<Button Content="头像"/>-->
                             <TextBlock Text="还差1人拼成"/>
-                            <Button Content="去拼单"/>
+                             
+                            <Button    
+                                     
+                                BorderThickness="0"
+                                Content="去拼单"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    > 
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#462AD8"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#28AEED"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Grid>
                 <!--评论-->
-                <Grid Grid.Row="2">
-                    <StackPanel ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ScrollViewer Height="170" Grid.Row="2">
+                    <StackPanel  >
                         <!--<ItemsControl ItemsSource="{Binding Model_details.comments}"
                     Margin="0,20,0,0">
                             <ItemsControl.ItemsPanel>
@@ -105,24 +137,206 @@
                             </ItemsControl.ItemsPanel>
                             <Button Content="{Binding Comment}"/>
                         </ItemsControl>-->
-                        <ItemsControl ItemsSource="{Binding Model_details.comments}">
+                        <ItemsControl 
+                            ItemsSource="{Binding Model_details.comments}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Content="{Binding Comment}" />
+                                    <!--<Button Content="{Binding Comment}" />-->
+                                    <Button    
+                                     Content="{Binding Comment}"
+                                    BorderThickness="0" 
+                                    Foreground="White"
+                                    FontSize="16"
+                                    FontFamily="Montserrat"
+                                    Cursor="Hand"    >
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="#502327"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#28AEED"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Width="Auto" Height="Auto"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+
+                                    </Button>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
  
                     </StackPanel>
-                </Grid>
+                </ScrollViewer>
                 <!--底部导航栏-->
-                <Grid Grid.Row="3">
+                <Grid Panel.ZIndex="0"  Grid.Row="3">
                     <StackPanel Orientation="Horizontal">
-                        <Button  Content="店铺"/>
-                        <Button Content="收藏"/>
-                        <Button Content="客服"/>
-                        <Button Content="单独购买"/>
-                        <Button Content="发起拼单1"/>
+                        <Button    
+                                     
+                                BorderThickness="0"
+                                Content="店铺"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#5a847f"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                        <Button    
+                                     
+                                BorderThickness="0"
+                                Content="收藏"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#462AD8"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="Red">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                        <Button    
+                                     
+                                BorderThickness="0"
+                                Content="客服"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#d1a583"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                        <Button    
+                                     
+                                BorderThickness="0"
+                                Content="单独购买"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#809e7e"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                        <Button    
+                                     
+                                BorderThickness="0"
+                                Content="发起拼单"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#462AD8"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                     
                     </StackPanel>
                 </Grid>
             </Grid>

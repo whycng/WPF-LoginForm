@@ -8,6 +8,8 @@ namespace WPF_LoginForm.Models
 {
     public class DetailsModel
     {
+ 
+
         public ItemModel item {  get; set; } // 该商品的基本信息
         public UserModel seller { get; set; } //商家
         // 店铺页面

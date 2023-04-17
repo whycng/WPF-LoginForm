@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:customerControl="clr-namespace:WPF_LoginForm.CustomControls" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" >
     <UserControl.DataContext>
         <viewModel:HomeViewModel_reco/>
     </UserControl.DataContext>
@@ -62,8 +63,15 @@
                                         Mode=FindAncestor,
                                         AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding Id}">加入购物车</Button>-->
-
-                                    <Button    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                    </Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <!--加入购物车-->
+                                        <Button    
                                         Command="{Binding DataContext.BuyCommand,
                                         RelativeSource={RelativeSource 
                                         Mode=FindAncestor,
@@ -76,32 +84,31 @@
                                         FontFamily="Montserrat"
                                         Cursor="Hand"    >
 
-                                        <Button.Style>
-                                            <Style TargetType="Button">
-                                                <Setter Property="Background" Value="#462AD8"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="#28AEED"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="#462AD8"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#28AEED"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
 
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Width="120" Height="40"
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Width="120" Height="40"
                                         CornerRadius="7"
                                         Background="{TemplateBinding Background}">
-                                                    <ContentPresenter VerticalAlignment="Center"
+                                                        <ContentPresenter VerticalAlignment="Center"
                                                       HorizontalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                         
-                                    </Button>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
 
-                                    <!--查看详情-->
-                                    <Button    
+                                        </Button>
+                                        <!--查看详情-->
+                                        <Button    
                                         Command="{Binding DataContext.DetailsCommand,
                                         RelativeSource={RelativeSource 
                                         Mode=FindAncestor,
@@ -114,29 +121,48 @@
                                         FontFamily="Montserrat"
                                         Cursor="Hand"    >
 
-                                        <Button.Style>
-                                            <Style TargetType="Button">
-                                                <Setter Property="Background" Value="#462AD8"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="#28AEED"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="#462AD8"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#28AEED"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
 
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Width="120" Height="40"
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Width="120" Height="40"
                                         CornerRadius="7"
                                         Background="{TemplateBinding Background}">
-                                                    <ContentPresenter VerticalAlignment="Center"
+                                                        <ContentPresenter VerticalAlignment="Center"
                                                       HorizontalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
 
-                                    </Button>
+                                        </Button>
+                                    </StackPanel>
+
+                                    <!--数量  ValueChanged="NumberInput_ValueChanged"-->
+                                    <StackPanel Grid.Column="1">
+                                        <!-- Value="1"-->
+                                        <!--<pu:NumberInput 
+                                            Height="30"
+                                            Width="180"
+                                            Minimum="0"
+                                            Maximum="100"
+                                            Interval="1"
+                                             Value="{Binding Path=DataContext.Quantities[ItemsControl.Index], 
+                                                     RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            Watermark="Input number"
+                                            
+                                        />-->
+                                       
+                                    </StackPanel>
+                                   
 
                                 </StackPanel>
                                 

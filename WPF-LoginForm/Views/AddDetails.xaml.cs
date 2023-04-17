@@ -20,14 +20,19 @@ namespace WPF_LoginForm.Views
     /// </summary>
     public partial class AddDetails : Window // DetailsModel
     {
-        public AddDetails(DetailsModel details)
+        public AddDetails()
         {
             InitializeComponent();
-            this.DataContext = new
-            {
-                Model_details = details
-            };
+ 
         }
+        //public AddDetails(DetailsModel details)
+        //{
+        //    InitializeComponent();
+        //    this.DataContext = new
+        //    {
+        //        Model_details = details
+        //    };
+        //}
 
         private void btnSave(object sender, RoutedEventArgs e)
         {

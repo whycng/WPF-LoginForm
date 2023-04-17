@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Panuon.WPF.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,16 +14,37 @@ using System.Windows.Media;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
 using WPF_LoginForm.Views;
+using System.Windows.Controls.Primitives;
+
+
 
 namespace WPF_LoginForm.ViewModels
 {
   
     public class HomeViewModel_reco : ViewModelBase
     {
+        private IUserRepository userRepository;
         private IItemRepo itemRepo;
         private DetailsRepository detailsRepository;// 未用接口
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
         public ObservableCollection<ItemModel> data_bh { get; set; }
+        private ObservableCollection<int> _quantities;
+        public ObservableCollection<int> Quantities
+        {
+            get { 
+                return _quantities; 
+            }
+            set
+            {
+                if (_quantities != value)
+                {
+                    _quantities = value;
+                    OnPropertyChanged(nameof(Quantities));
+                }
+            }
+        }
+        
+
 
         //#region CheckBox
         //private String checkInfo; 
@@ -117,9 +140,18 @@ namespace WPF_LoginForm.ViewModels
         private void ExcuteDetailsCommand(object parameter)
         {
             int ItemId = (int)parameter;// 加入购物车的商品id 
-            var model = detailsRepository.GetDetails(ItemId);
-            AddDetails view = new AddDetails(model);//id 应该传进来
+            base.DetailsModelTmp = detailsRepository.GetDetails(ItemId);
+            GetInstace();
+            AddDetails view = new AddDetails();
+
+            //var model = detailsRepository.GetDetails(ItemId);
+            // AddDetails view = new AddDetails(model);//id 应该传进来
             var r = view.ShowDialog();
+        }
+
+        public DetailsViewModel GetInstace()
+        {
+            return new DetailsViewModel(base.DetailsModelTmp);
         }
         public RelayCommand<int> BuyCommand // int 传进了商品id
         {
@@ -134,8 +166,10 @@ namespace WPF_LoginForm.ViewModels
 
         private void ExcuteBuyCommand(object parameter)
         {
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             int ItemId = (int)parameter;// 加入购物车的商品id
-            itemRepo.SetCart(ItemId);
+            itemRepo.SetCart(ItemId, user.Username);
+            var x = Quantities;
         }
         // public ICommand Buy(object par) => new RelayCommand(AddToCart);
 
@@ -166,10 +200,12 @@ namespace WPF_LoginForm.ViewModels
         }
         public HomeViewModel_reco()
         {
+            userRepository = new UserRepository();
             itemRepo = new ItemRepository();
             detailsRepository = new DetailsRepository();
             LoadDataBh();
             // loadCheck();
+            Quantities = new ObservableCollection<int>();
         }
     }
 }

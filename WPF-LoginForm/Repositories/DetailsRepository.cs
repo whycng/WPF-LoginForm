@@ -50,6 +50,43 @@ namespace WPF_LoginForm.Repositories
                 }
             }
             return detailsModel;
-        }
+        }// end public
+
+        public void TmpSet(int ItemId)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "truncate table TmpDetails;Insert Into TmpDetails Values(@ItemId)";
+                command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read()) { }
+                }
+            }//end using
+        }// end public
+        public int TmpGet()
+        {
+            int ItemId = -1;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Select * from TmpDetails";
+                // command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read()) {
+                        ItemId = (int)reader[0];
+                    }
+                }
+            }//end using
+            return ItemId;
+        }// end public
     }
 }

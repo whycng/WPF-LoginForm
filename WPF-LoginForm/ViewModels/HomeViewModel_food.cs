@@ -8,6 +8,7 @@ using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
 using GalaSoft.MvvmLight.Command;
 using WPF_LoginForm.Views;
+using System.Threading;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -15,6 +16,7 @@ namespace WPF_LoginForm.ViewModels
 
     public class HomeViewModel_food : ViewModelBase
     {
+        private IUserRepository userRepository;
         private IItemRepo itemRepo;
         private DetailsRepository detailsRepository;
         // public ObservableCollection<HomeModel_data_bh> data_bh { get; set; }
@@ -36,8 +38,8 @@ namespace WPF_LoginForm.ViewModels
         private void ExcuteDetailsCommand(object parameter)
         {
             int ItemId = (int)parameter;// 加入购物车的商品id 
-            var model = detailsRepository.GetDetails(ItemId);
-            AddDetails view = new AddDetails(model);//id 应该传进来
+            DetailsModelTmp = detailsRepository.GetDetails(ItemId);
+            AddDetails view = new AddDetails();
             var r = view.ShowDialog();
         }
         public RelayCommand<int> BuyCommand // int 传进了商品id
@@ -53,8 +55,9 @@ namespace WPF_LoginForm.ViewModels
 
         private void ExcuteBuyCommand(object parameter)
         {
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             int ItemId = (int)parameter;// 加入购物车的商品id
-            itemRepo.SetCart(ItemId);
+            itemRepo.SetCart(ItemId, user.Username);
         }
 
         #endregion
@@ -70,6 +73,7 @@ namespace WPF_LoginForm.ViewModels
         }
         public HomeViewModel_food()
         {
+            userRepository = new UserRepository();
             itemRepo = new ItemRepository();
             detailsRepository = new DetailsRepository();
             LoadDataBh();

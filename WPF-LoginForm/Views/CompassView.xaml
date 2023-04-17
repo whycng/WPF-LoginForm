@@ -27,7 +27,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="400"/>
                 </Grid.ColumnDefinitions>
                 <!--<Grid>
                 <Grid.RowDefinitions>
@@ -75,7 +75,7 @@
             </Grid>-->
 
                 <!--历史订单-->
-                <Grid>
+                <Grid  >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
                         <RowDefinition Height="400"/>
@@ -99,7 +99,8 @@
                             <DataGridTextColumn Header="商品名称" Binding="{Binding ItemName}"/>
                             <DataGridTextColumn Header="卖家" Binding="{Binding SellerName}"/>
                             <DataGridTextColumn Header="商品分类" Binding="{Binding ItemClassify}"/>
-                            <DataGridTextColumn Header="价格" Binding="{Binding price}"/>
+                            <DataGridTextColumn Header="单价" Binding="{Binding price}"/>
+                            <DataGridTextColumn Header="个数" Binding="{Binding Amount}"/>
                             <DataGridTemplateColumn Header="操作">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -135,7 +136,7 @@
                         <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                             ScrollViewer.VerticalScrollBarVisibility="Visible" 
                             Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
-                            ItemsSource="{Binding data_cart}" Height="400"
+                            ItemsSource="{Binding data_cart}" Height="380"
                             FontSize="16" Background="Transparent" Foreground="#784DFD">
                             <DataGrid.Columns>
                                 <DataGridTextColumn 
@@ -144,8 +145,11 @@
                                     Foreground="#784DFD"/>
                                 <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
                                 <DataGridTextColumn 
-                                    Header="商品价格" 
+                                    Header="商品单价" 
                                     Binding="{Binding price}"/>
+                                <DataGridTextColumn 
+                                    Header="商品个数" 
+                                    Binding="{Binding Amount}"/>
                                 <DataGridTemplateColumn Header="操作">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -154,6 +158,14 @@
                                              CommandParameter="{Binding Id}" 
                                             Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="Red" Foreground="White"/>
+                                                <!--<Button Content="个数"/>-->
+                                                <Button Content="+"  CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.AddCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                          />
+                                                <Button Content="-"  CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.SubCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                          />
+                                                
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -161,8 +173,74 @@
                             </DataGrid.Columns>
 
                         </DataGrid>
+                        <StackPanel Orientation="Horizontal">
+                            <Button    
+                            Command="{Binding BuyCommand}"
+                            BorderThickness="0"
+                            Content="购买"
+                            Foreground="White"
+                            FontSize="16"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    >
 
-                        <Button Content="购买" Command="{Binding BuyCommand}"/>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#462AD8"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#28AEED"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                            </Button>
+                            <Button    
+                            Command="{Binding EmptyCartCommand}"
+                            BorderThickness="0"
+                            Content="清空"
+                            Foreground="White"
+                            FontSize="16"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    >
+
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#462AD8"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#28AEED"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                            </Button>
+                        </StackPanel>
+                        
+                        <!--<Button Content="购买" Command="{Binding BuyCommand}"/>-->
                     </StackPanel>
                 </Grid>
             </Grid>

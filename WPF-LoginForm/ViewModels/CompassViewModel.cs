@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,10 +37,19 @@ namespace WPF_LoginForm.ViewModels
                 SearchHist = string.Empty; //搜索条件置为空
                 LoadHistData();
             });
+
             itemRepo = new ItemRepository();
+            AddCommand_Cart = new RelayCommand<int>(t => Add_Cart(t));
+            SubCommand_Cart = new RelayCommand<int>(t => Sub_Cart(t));
             DelCommand_Cart = new RelayCommand<int>(t => Del_Cart(t));
             DelCommand_Hist = new RelayCommand<int>(t => Del_Hist(t));//
             AppealCommand = new RelayCommand<int>(t => Appeal_Hist(t));//AppealCommand
+            EmptyCartCommand = new RelayCommand(() => // 重置的明命令
+            {
+                itemRepo.EmptyCart();
+                LoadCartData();
+            });
+
             // 购物车处理 
             LoadCartData(); 
             // 历史订单处理
@@ -49,6 +59,9 @@ namespace WPF_LoginForm.ViewModels
 
 
         #region 购物车，历史订单处理
+        // AddCommand_Cart
+        public RelayCommand<int> AddCommand_Cart { get; set; } // 个数加
+        public RelayCommand<int> SubCommand_Cart { get; set; } // 个数减
         public RelayCommand<int> DelCommand_Cart { get; set; }
         public RelayCommand<int> DelCommand_Hist { get; set; }
         public RelayCommand<int> AppealCommand { get; set; }
@@ -59,8 +72,10 @@ namespace WPF_LoginForm.ViewModels
 
         public RelayCommand QueryHistCommand { get; set; } 
         public RelayCommand ResetHistCommand { get; set; }
-        // BuyCommand
+        public RelayCommand EmptyCartCommand { get; set; }
+        // BuyCommand 
         private RelayCommand _buyCommand;
+        private int _buyAmount = 0;
         private string searchHist = string.Empty;
         public RelayCommand BuyCommand // 购物车购买按钮
         {
@@ -86,10 +101,12 @@ namespace WPF_LoginForm.ViewModels
         private void ExcuteBuyCommand()
         {
             // 1.正在发货 2.塞进历史订单
-
+            // 扫描微信二维码
+            Process.Start("https://i.328888.xyz/2023/04/17/iekViJ.png");
+            // 如果购买成功 则：
             //2.直接把购物车塞进历史订单 
             itemRepo.SetHisOrd();
-
+            LoadHistData();
         }
 
         void LoadHistData()// 历史订数据加载
@@ -109,7 +126,20 @@ namespace WPF_LoginForm.ViewModels
 
         }
 
+        public void Add_Cart(int id)  
+        {
+            itemRepo.AddCartById(id);
+            // OnPropertyChanged("data_cart");   
+            LoadCartData();
 
+        }
+        public void Sub_Cart(int id)
+        {
+            itemRepo.SubCartById(id);
+            // OnPropertyChanged("data_cart");   
+            LoadCartData();
+
+        }
         public void Del_Cart(int id)
         {
             itemRepo.DelCartById(id);

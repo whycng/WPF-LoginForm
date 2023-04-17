@@ -16,7 +16,8 @@ namespace WPF_LoginForm.Models
         public string ItemClassify{ get; set; }
         public string reco { get; set; }
         public string price { get; set;}
- 
+        // 历史订单使用
+        public int Amount { get; set; }
 
     }
 }
