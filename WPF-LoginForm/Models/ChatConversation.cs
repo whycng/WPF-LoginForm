@@ -8,6 +8,7 @@ namespace WPF_LoginForm.Models
 {
     public class ChatConversation
     {
+        public int Id { get; set; }
         public string ContactName { get; set; } 
         public string ReceivedMessage { get; set; } 
         public string MsgReceivedOn { get; set; } 

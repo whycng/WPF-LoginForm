@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
              xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls" 
-             xmlns:ViewModel="clr-namespace:WPF_LoginForm.ViewModels"
+             xmlns:ViewModel="clr-namespace:WPF_LoginForm.ViewModels" xmlns:local1="clr-namespace:WPF_LoginForm.Commands" xmlns:converters="clr-namespace:WPF_LoginForm.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <ViewModel:ForMessageViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
+        <converters:StringToImageConverter x:Key="StringToImageConverterX" />
         <Style x:Key="ContactInfoButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -40,11 +41,14 @@
                             <ViewModel:ForMessageViewModel/>
                         </Ellipse.DataContext>
                         <Ellipse.Fill>
+                            <!-- FallbackValue='/assets/5.jpg',
+                                TargetNullValue='/assets/5.jpg',-->
                             <ImageBrush
                                 Stretch="UniformToFill"
                                 ImageSource="{Binding ContactPhoto,
                                 FallbackValue='/assets/5.jpg',
                                 TargetNullValue='/assets/5.jpg',
+                                Converter={StaticResource StringToImageConverterX},
                                 UpdateSourceTrigger=PropertyChanged}"/>
                             <!--<ImageBrush ImageSource="{Binding ContactPhoto, 
                             FallbackValue=/assets/5.jpg,TargetNullValue=/assets/5.jpg,

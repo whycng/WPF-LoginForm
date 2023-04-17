@@ -30,7 +30,7 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsMessageReceived}" Value="False">
                     <Setter Property="Text" Value="{Binding SentMessage}"/>
-                </DataTrigger>
+                </DataTrigger> 
             </Style.Triggers>
         </Style>
 

@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_LoginForm.CustomControls" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
+             xmlns:local="clr-namespace:WPF_LoginForm.CustomControls" 
+             xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels" 
+             xmlns:converters="clr-namespace:WPF_LoginForm.Converters"
+
              mc:Ignorable="d"   >
     <UserControl.Resources>
+        <converters:StringToImageConverter x:Key="StringToImageConverterX" />
+        <!--<
+        s:StringToImageConverter x:Key="StringToImageConverter" />-->
         <DataTemplate x:Key="ChatButtonItemTemplate">
             <RadioButton GroupName="ChatButton">
                 <RadioButton.Style>
@@ -55,11 +61,14 @@
 
                                                 <Ellipse Grid.Column="0" Width="50" Height="50">
                                                     <Ellipse.Fill>
+                                                        <!-- FallbackValue=ContactPhoto,
+                                                            TargetNullValue=ContactPhoto,-->
                                                         <ImageBrush
                                                             Stretch="UniformToFill"
                                                             ImageSource="{Binding ContactPhoto,
-                                                            FallbackValue='/assets/5.jpg',
+                                                             FallbackValue='/assets/5.jpg',
                                                             TargetNullValue='/assets/5.jpg',
+                                                            Converter={StaticResource StringToImageConverterX},
                                                             UpdateSourceTrigger=PropertyChanged}"/>
                                                     </Ellipse.Fill>
                                                 </Ellipse>

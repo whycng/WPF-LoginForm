@@ -11,7 +11,7 @@ namespace WPF_LoginForm.ViewModels
     public class DetailsViewModel : ViewModelBase
     {
         public DetailsRepository detailsRepository;
-        private DetailsModel tmp;
+        //private DetailsModel tmp;
         public DetailsModel _model_details;
         public DetailsModel Model_details
         {

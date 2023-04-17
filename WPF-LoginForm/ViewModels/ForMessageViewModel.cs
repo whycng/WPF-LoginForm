@@ -27,16 +27,16 @@ namespace WPF_LoginForm.ViewModels
         public Uri ContactPhoto { get; set; }
         public string LastSeen { get; set; }
         // test
-        public string defaultContactPhoto;
+        // public string defaultContactPhoto;
         private IUserRepository userRepository; 
         private IMessRepository messRepository;
         private UserAccountModel _currentUserAccount;
         private MessModel _messModel;
-        public string DefaultContactPhoto { 
-            get => defaultContactPhoto; set {
-                defaultContactPhoto = "/assets/5.jpg";
-            }
-        }
+        //public string DefaultContactPhoto {  
+        //    get => defaultContactPhoto; set {
+        //        defaultContactPhoto =  "/assets/5.jpg";
+        //    }
+        //}
         public UserAccountModel CurrentUserAccount
         {
             get
@@ -75,7 +75,7 @@ namespace WPF_LoginForm.ViewModels
                     ContactName = userRepository.GetByUsername(f).Username,
                     ContactPhoto = userRepository.GetByUsername(f).UserPhoto, //new Uri(userRepository.GetByUsername(f).UserPhoto, UriKind.RelativeOrAbsolute),
                     // 应该是在线状态
-                    StatusImage = new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
+                    StatusImage = ContactPhoto,// new Uri("/assets/5.jpg", UriKind.RelativeOrAbsolute),
                     IsMeAddStatus = false,
                 };
                 statusThumbsCollection.Add(t);
@@ -269,42 +269,140 @@ namespace WPF_LoginForm.ViewModels
             {
                 Conversations = new ObservableCollection<ChatConversation>();
             }
-            using (SqlCommand com = new SqlCommand("select * from conversations where ContactName='Mike'",connection))
+            using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername='test' And M_FromUsername='admin'", connection))
             {
-                using(SqlDataReader reader = com.ExecuteReader())
+                using (SqlDataReader reader = com.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         // to set data format
                         // Like this   Jun 15, 01:15 PM = MMM dd, hh:mm tt
-                        string MsgReceivedOn = !string.IsNullOrEmpty(reader["MsgReceivedOn"].ToString()) ?
-                            Convert.ToDateTime(reader["MsgReceivedOn"].ToString()).ToString("MMM dd, hh:mm tt") : "";
-                        string MsgSentOn = !string.IsNullOrEmpty(reader["MsgSentOn"].ToString()) ?
-                            Convert.ToDateTime(reader["MsgSentOn"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+                        //string MsgReceivedOn = !string.IsNullOrEmpty(reader["MsgReceivedOn"].ToString()) ?
+                        //    Convert.ToDateTime(reader["MsgReceivedOn"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+                        string MsgSentOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+                            Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+                        string MsgReceivedOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+                          Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
 
-                        var conversation = new ChatConversation() { 
-                        
-                            ContactName = reader["ContactName"].ToString(),
-                            ReceivedMessage = reader["ReceivedMsgs"].ToString(),
+                        var conversation = new ChatConversation()
+                        {
+                            Id = (int)reader["M_ID"],
+                            ContactName = reader["M_ToUsername"].ToString(),
+                            ReceivedMessage = reader["M_Message"].ToString(),
+                            SentMessage = "".ToString(),
+
+
                             MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
-                            SentMessage = reader["SentMsgs"].ToString(),
+
                             MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
-                            IsMessageReceived = string.IsNullOrEmpty(reader["ReceivedMsgs"].ToString()) ? false:true
+                            IsMessageReceived = true,//string.IsNullOrEmpty(SentMessage) ? false : true
+
                         };
                         Conversations.Add(conversation);
-                        OnPropertyChanged(nameof(Conversation));
+                        OnPropertyChanged(nameof(Conversations));
                     }
                 }
-                    
-            }
-            
+
+            }// end using 
+            using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername='admin' And M_FromUsername='test'", connection))
+            {
+                using (SqlDataReader reader = com.ExecuteReader())
+                {
+                    // var i = 0;
+                    while (reader.Read())
+                    {
+                          string MsgSentOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+                            Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+                        string MsgReceivedOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+                          Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+                        var M_ID = (int)reader["M_ID"];
+                        var conversation = new ChatConversation()
+                        {
+
+                            ContactName = reader["M_ToUsername"].ToString(),
+                            SentMessage = reader["M_Message"].ToString(),
+                            ReceivedMessage  = "".ToString(),
+
+
+                            MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
+
+                            MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
+                            IsMessageReceived = false,//string.IsNullOrEmpty(reader["SentMessage"].ToString()) ? false : true
+
+                        };
+                        int j;
+                        for (j = 0; j < Conversations.Count; j++)
+                        {
+                            if (M_ID > Conversations[j].Id)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                Conversations.Insert(j, conversation); 
+                                break;
+                            }
+                        }
+                        if(j >= Conversations.Count)
+                        {
+                            Conversations.Add(conversation);
+                        }
+
+                        //if(M_ID > Conversations[i].Id)
+                        //{
+                        //    Conversations.Add(conversation);
+                        //}
+                        //else
+                        //{
+                        //    var con = Conversations[i];
+                        //    Conversations[i] = conversation;
+                        //    Conversations.Add(con);
+                        //}
+                        //i++;
+                        OnPropertyChanged(nameof(Conversations));
+                    }
+                }
+
+            }// end using
+
+            // 原
+            //using (SqlCommand com = new SqlCommand("select * from conversations where ContactName='Mike'", connection))
+            //{
+            //    using (SqlDataReader reader = com.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            // to set data format
+            //            // Like this   Jun 15, 01:15 PM = MMM dd, hh:mm tt
+            //            string MsgReceivedOn = !string.IsNullOrEmpty(reader["MsgReceivedOn"].ToString()) ?
+            //                Convert.ToDateTime(reader["MsgReceivedOn"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+            //            string MsgSentOn = !string.IsNullOrEmpty(reader["MsgSentOn"].ToString()) ?
+            //                Convert.ToDateTime(reader["MsgSentOn"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+
+            //            var conversation = new ChatConversation()
+            //            {
+
+            //                ContactName = reader["ContactName"].ToString(),
+            //                ReceivedMessage = reader["ReceivedMsgs"].ToString(),
+            //                MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
+            //                SentMessage = reader["SentMsgs"].ToString(),
+            //                MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
+            //                IsMessageReceived = string.IsNullOrEmpty(reader["ReceivedMsgs"].ToString()) ? false : true
+            //            };
+            //            Conversations.Add(conversation);
+            //            OnPropertyChanged(nameof(Conversation));
+            //        }
+            //    }
+
+            //}// end using
+
         }
         #endregion
 
 
         #endregion
-
-        SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\abc\毕设\项目\Login-In-WPF-MVVM-C-Sharp-and-SQL-Server-main\ligub2\loogin2\WPF-LoginForm\Database\Database1.mdf;Integrated Security=True");
+        SqlConnection connection = new SqlConnection("Server=(local); Database=MVVMLoginDb; Integrated Security=true");// "Server=(local); Database=MVVMLoginDb; Integrated Security=true";
+        // SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\abc\毕设\项目\Login-In-WPF-MVVM-C-Sharp-and-SQL-Server-main\ligub2\loogin2\WPF-LoginForm\Database\Database1.mdf;Integrated Security=True");
         public ForMessageViewModel() 
         {
             userRepository = new UserRepository();
