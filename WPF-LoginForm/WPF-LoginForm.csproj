@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Models\ChatConversation.cs" />
     <Compile Include="Models\ChatListData.cs" />
+    <Compile Include="Models\CollageModel.cs" />
     <Compile Include="Models\CompBottonModel.cs" />
     <Compile Include="Models\DetailsModel.cs" />
     <Compile Include="Models\IDetailsRepo.cs" />
@@ -187,6 +188,9 @@
     <Compile Include="ViewModels\ViewModelCommand.cs" />
     <Compile Include="Views\AddCart.xaml.cs">
       <DependentUpon>AddCart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddCollage.xaml.cs">
+      <DependentUpon>AddCollage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddDetails.xaml.cs">
       <DependentUpon>AddDetails.xaml</DependentUpon>
@@ -283,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddCart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddCollage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

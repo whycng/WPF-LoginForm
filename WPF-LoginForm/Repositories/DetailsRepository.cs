@@ -88,5 +88,91 @@ namespace WPF_LoginForm.Repositories
             }//end using
             return ItemId;
         }// end public
+
+        public void TmpCollageSet(int ItemId)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "truncate table TmpCollage;Insert Into TmpCollage Values(@ItemId)";
+                command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read()) { }
+                }
+            }//end using
+        }
+
+        public int TmpCollageGet()
+        {
+            int ItemId = -1;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Select * from TmpCollage";
+                // command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        ItemId = (int)reader[0];
+                    }
+                }
+            }//end using
+            return ItemId;
+        }// end public
+
+        // 拼单表
+        public List<CollageModel> GetCollage()
+        {
+            List<CollageModel> item = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                item = new List<CollageModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from [ItemCollage] ";
+               // command.Parameters.Add("@group", SqlDbType.NVarChar).Value = group;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item_tmp = new CollageModel()
+                        {
+                            ItemId = (int)reader[0],
+                            UserId = reader[1].ToString(),
+                            Username = reader[2].ToString(), 
+                        };
+                        item.Add(item_tmp);
+                    }
+                }
+            }
+            return item;
+        }
+        // 写入拼单表
+        public void SetCollageById(int ItemId,string Username)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Insert Into ItemCollage Values(@ItemId,(Select Id From [User] Where Username=@Username),@Username) ";
+                command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
+                command.Parameters.Add("@Username", SqlDbType.NChar).Value = Username;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read()) { }
+                }
+            }//end using
+        }
     }
 }

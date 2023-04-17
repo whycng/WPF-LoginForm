@@ -5,14 +5,56 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
+using GalaSoft.MvvmLight.Command;
+using WPF_LoginForm.Views;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace WPF_LoginForm.ViewModels
 {
     public class DetailsViewModel : ViewModelBase
     {
+        int CollageItemId = -1;
         public DetailsRepository detailsRepository;
+        public UserRepository userRepository;
         //private DetailsModel tmp;
+        // CollageCommand
+        private RelayCommand<int> _collageCommand;//拼单命令
         public DetailsModel _model_details;
+
+        public RelayCommand<int> CollageCommand // int 传进了商品id
+        {
+            get
+            {
+                if (_collageCommand == null)
+                    _collageCommand = new RelayCommand<int>((parameter) => ExcuteCollageCommand(parameter));
+                return _collageCommand;
+            }
+        }
+
+        void ExcuteCollageCommand(object parameter)
+        {
+            CollageItemId = (int)parameter;
+
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+
+            // 写入拼单表
+            detailsRepository.SetCollageById(CollageItemId, user.Username);
+            // 打开拼单页面  可以将其上下文设置在此
+            AddCollage view = new AddCollage();
+            var r = view.ShowDialog();
+        }
+        #region Collage 拼单
+        public ObservableCollection<CollageModel> data_collage { get; set; }
+        public void LoadDataCollage()
+        {
+            var data_item = detailsRepository.GetCollage();
+            data_collage = new ObservableCollection<CollageModel>(data_item);
+
+            OnPropertyChanged("data_bh");
+
+        }
+        #endregion
         public DetailsModel Model_details
         {
             get { 
@@ -36,7 +78,10 @@ namespace WPF_LoginForm.ViewModels
         {
             // Model_details = DetailsModelTmp;// tmp也不行
             detailsRepository = new DetailsRepository();
+            userRepository = new UserRepository();
             Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
+            //拼单
+            LoadDataCollage();
         }
 
 

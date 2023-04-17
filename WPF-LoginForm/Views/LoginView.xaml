@@ -262,7 +262,7 @@
                                FontWeight="Medium"
                                FontFamily="Montserrat"/>
 
-                        <TextBlock Text="Reset"
+                        <TextBlock Text="Forgot Password!"
                                Foreground="White"
                                FontSize="12"
                                FontWeight="Medium"

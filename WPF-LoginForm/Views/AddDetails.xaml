@@ -92,7 +92,7 @@
                             <TextBlock Text="还差1人拼成"/>
                              
                             <Button    
-                                     
+                                Command="{Binding CollageCommand}"
                                 BorderThickness="0"
                                 Content="去拼单"
                                 Foreground="White"
@@ -181,7 +181,7 @@
                 <!--底部导航栏-->
                 <Grid Panel.ZIndex="0"  Grid.Row="3">
                     <StackPanel Orientation="Horizontal">
-                        <Button    
+                        <!--<Button    
                                      
                                 BorderThickness="0"
                                 Content="店铺"
@@ -273,70 +273,8 @@
                                 </ControlTemplate>
                             </Button.Template>
 
-                        </Button>
-                        <Button    
-                                     
-                                BorderThickness="0"
-                                Content="单独购买"
-                                Foreground="White"
-                                FontSize="16"
-                                FontFamily="Montserrat"
-                                Cursor="Hand"    >
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="#809e7e"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#28AEED"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="120" Height="40"
-                                        CornerRadius="7"
-                                        Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-
-                        </Button>
-                        <Button    
-                                     
-                                BorderThickness="0"
-                                Content="发起拼单"
-                                Foreground="White"
-                                FontSize="16"
-                                FontFamily="Montserrat"
-                                Cursor="Hand"    >
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="#462AD8"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#28AEED"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="120" Height="40"
-                                        CornerRadius="7"
-                                        Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-
-                        </Button>
-                     
+                        </Button>-->
+                        
                     </StackPanel>
                 </Grid>
             </Grid>
