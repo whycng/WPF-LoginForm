@@ -38,6 +38,9 @@
         <DataTemplate DataType="{x:Type viewModel:CompassViewModel}">
             <local:CompassView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:MerchantViewModel}">
+            <local:MerchantView />
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="10"                    
@@ -154,23 +157,23 @@
                         </StackPanel>
                     </RadioButton>
 
-                    <!--<RadioButton Style="{StaticResource menuButton}"
+                    <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowCompassViewCommand}">
+                                 Command="{Binding ShowMerchantViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
+                            <TextBlock Text="商家" Style="{StaticResource menuButtonText}" />
 
                         </StackPanel>
-                    </RadioButton>-->
+                    </RadioButton>
                     <!-- 发现被钉到了区域外 -->
-                    <!--<RadioButton Style="{StaticResource menuButton}"
+                    <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
+                            <fa:IconImage Icon="Cat" Style="{StaticResource menuButtonIcon}" />
+                            <TextBlock Text="申诉" Style="{StaticResource menuButtonText}" />
 
                         </StackPanel>
                     </RadioButton>
@@ -227,7 +230,7 @@
                             <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
 
                         </StackPanel>
-                    </RadioButton>-->
+                    </RadioButton>
 
                 </StackPanel>
 

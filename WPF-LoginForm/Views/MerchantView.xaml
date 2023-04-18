@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="WPF_LoginForm.Views.MerchantView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_LoginForm.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel>
+            <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                            ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                            Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
+                            ItemsSource="{Binding data_item}" Height="380"
+                            FontSize="16" Background="Transparent" Foreground="#784DFD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                                    Header="商品名称" 
+                                    Binding="{Binding ItemName}"
+                                    Foreground="#784DFD"/>
+                    <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
+                    <DataGridTextColumn 
+                                    Header="商品单价" 
+                                    Binding="{Binding price}"/>
+                    <DataGridTextColumn 
+                                    Header="商品个数" 
+                                    Binding="{Binding Amount}"/>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+                                    <Button Content="个数"/>
+                                    <TextBox Text="{Binding Amount}"/>
+                                    <Button Content="确定个数"
+                                                    CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DefineAmountCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=DataGrid}}" />
+                                    <Button Content="单价"/>
+                                    <TextBox Text="{Binding price}"/>
+                                    <Button Content="确定单价"
+                                                    CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DefineProceCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=DataGrid}}" />
+                                    <TextBox/>
+                                    <!--<Button Content="+"  CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.AddCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                          />
+                                    <Button Content="-"  CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.SubCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                          />-->
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

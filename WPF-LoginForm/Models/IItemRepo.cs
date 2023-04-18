@@ -24,7 +24,8 @@ namespace WPF_LoginForm.Models
         List<ItemModel> GetHisOrd();// 获取历史订单数据
         void DelHistById(int Id);//根据商品id删除历史订单中某商品
         List<ItemModel> GetHisOrdByVague(string vage);// 根据商品名获取
-
+        bool IsMerchant(string username); // 判断为商家
+        void DelItemById(int Id);
     }
 }
  

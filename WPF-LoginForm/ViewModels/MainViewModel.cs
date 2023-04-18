@@ -10,7 +10,7 @@ using System.Windows.Input;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
 
-namespace WPF_LoginForm.ViewModels
+namespace WPF_LoginForm.ViewModels //
 {
     public class MainViewModel : ViewModelBase
     {
@@ -91,7 +91,9 @@ namespace WPF_LoginForm.ViewModels
         public ICommand ShowCustomerViewCommand { get; }
         public ICommand ShowMessageViewCommand { get; }
         public ICommand ShowSettingViewCommand { get; }
-        public ICommand ShowCompassViewCommand { get; }
+        public ICommand ShowCompassViewCommand { get; }//
+        public ICommand ShowMerchantViewCommand { get; }// 
+        public ICommand ShowAppealViewCommand { get; }//ShowMerchantViewCommand
 
 
         public MainViewModel() // 构造函数，初始化使用 view
@@ -107,27 +109,41 @@ namespace WPF_LoginForm.ViewModels
             ShowMessageViewCommand = new ViewModelCommand(ExecuteShowMessageViewCommand);
             ShowSettingViewCommand = new ViewModelCommand(ExecuteShowSettingViewCommand);
             ShowCompassViewCommand = new ViewModelCommand(ExecuteShowCompassViewCommand);
+            ShowMerchantViewCommand = new ViewModelCommand(ExecuteShowMerchantViewCommand);
+            ShowAppealViewCommand = new ViewModelCommand(ExecuteShowAppealViewCommand);
 
-            
 
             // Default View
             ExecuteShowHomeViewCommand(null);
 
 
             LoadCurrentUserData();
-        }
+        }//
+        private void ExecuteShowAppealViewCommand(object obj)
+        {
 
+            CurrentChildView = new MerchantViewModel();
+            Caption = "申诉";
+            Icon = IconChar.Cat;
+        }
+        private void ExecuteShowMerchantViewCommand(object obj)
+        {
+           
+            CurrentChildView = new MerchantViewModel();
+            Caption = "商家";
+            Icon = IconChar.Fish;
+        }
         private void ExecuteShowCompassViewCommand(object obj)
         {
-            TestN = "testname in Compass";
+             
             CurrentChildView = new CompassViewModel();
-            Caption = "Compass-订单";
+            Caption = "订单";
             Icon = IconChar.Compass;
         }
 
         private void ExecuteShowSettingViewCommand(object obj)
         {
-            TestN = "testname in Setting";
+            
             CurrentChildView = new SettingViewModel();
             Caption = "Setting";
             Icon = IconChar.Gear;
@@ -135,16 +151,15 @@ namespace WPF_LoginForm.ViewModels
 
         private void ExecuteShowMessageViewCommand(object obj)
         {
-            TestN = "testname in Message";
+          
             CurrentChildView = new ForMessageViewModel();
-            Caption = "Message-MainViewModel";  
+            Caption = "Message";  
             Icon = IconChar.Message;
         }
 
         private void ExecuteShowCustomerViewCommand(object obj)
         {
-
-            TestN = "testname in Customer";
+             
             CurrentChildView = new CustomerViewModel();
             Caption = "Customer";
             Icon = IconChar.UserGroup;  

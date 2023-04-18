@@ -9,6 +9,7 @@ using WPF_LoginForm.Models;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace WPF_LoginForm.Repositories
 {
@@ -357,5 +358,47 @@ namespace WPF_LoginForm.Repositories
             }
             return item;
         }
+
+        public bool IsMerchant(string username)
+        {
+            bool isMerchant = false;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM Item WHERE SellerName=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                using (var reader = command.ExecuteReader())
+                {
+                    if(reader.Read())
+                    {
+                        isMerchant = true; 
+                    } 
+                }
+            }
+            return isMerchant;
+        }// end public 
+
+        public void DelItemById(int Id)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM Item WHERE Id = @Id;\r\n;";
+                command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                         
+                    }
+                }
+            }// end using
+        }// end public
     }
 }
