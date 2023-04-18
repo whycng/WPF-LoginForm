@@ -169,7 +169,7 @@ namespace WPF_LoginForm.ViewModels
             var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             int ItemId = (int)parameter;// 加入购物车的商品id
             itemRepo.SetCart(ItemId, user.Username);
-            var x = Quantities;
+            
         }
         // public ICommand Buy(object par) => new RelayCommand(AddToCart);
 

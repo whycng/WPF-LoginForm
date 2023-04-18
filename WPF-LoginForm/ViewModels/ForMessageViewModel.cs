@@ -14,6 +14,9 @@ using WPF_LoginForm.Commands;
 using GalaSoft.MvvmLight.Command;
 using WPF_LoginForm.Repositories;
 using System.Threading;
+using System.Runtime.Remoting.Proxies;
+using System.Data;
+using System.Windows.Forms;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -25,7 +28,19 @@ namespace WPF_LoginForm.ViewModels
         #region Properties
         public string ContactName { get; set; }
         public Uri ContactPhoto { get; set; }
-        public string LastSeen { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string LastSeen { get; set; }//
+        //private string _fcontactName;//
+                                     
+        //public string FContactName
+        //{
+        //    get { return _fcontactName; }
+        //    set { _fcontactName = "";
+        //        OnPropertyChanged(nameof(FContactName)); }
+        //}
+        public string NowUsername { get; set; }// 
+        public string FContactName { get; set; }// 
         // test
         // public string defaultContactPhoto;
         private IUserRepository userRepository; 
@@ -65,6 +80,7 @@ namespace WPF_LoginForm.ViewModels
             // 数据修改为来自数据库 获取当前用户的朋友-Friend Tbale -->获取 ContactName,ContactPhoto
             List<string> fri;// 
             var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            NowUsername = user.Username;
             fri = userRepository.GetFriByUsername(user.Username);// 当前用户所有朋友Username
             statusThumbsCollection = new ObservableCollection<StatusDataModel>();// 该集合用于展示
             foreach ( var f in fri )
@@ -127,6 +143,16 @@ namespace WPF_LoginForm.ViewModels
         public ObservableCollection<ChatListData> Chats { get; set; }
         #endregion
         #region Logics
+
+        void LoadContactInfo()
+        {
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            ContactPhoto = user.UserPhoto;
+            ContactName = user.Name + "@" + user.Username;
+            Email = user.Email;
+            Phone = user.Phone;
+        }
+
         void LoadChats()
         {
             // 拿到当前用户和其正在聊天的人的对话的最后一句
@@ -155,6 +181,7 @@ namespace WPF_LoginForm.ViewModels
                 } 
                
             }
+            FContactName = Chats[0].ContactName;
 
 
             //Chats = new ObservableCollection<ChatListData>()
@@ -209,9 +236,19 @@ namespace WPF_LoginForm.ViewModels
         #endregion
 
         #region Commands
-
+        public GalaSoft.MvvmLight.Command.RelayCommand<string> _chageChatCommand;
         // to get the contactName of selected chat so that we can open corresponding conversation
-        protected ICommand _getSelectedChatCommand; 
+        protected ICommand _getSelectedChatCommand;
+
+        public GalaSoft.MvvmLight.Command.RelayCommand<string> ChageChatCommand  
+        {
+            get
+            {
+                if (_chageChatCommand == null)
+                    _chageChatCommand = new GalaSoft.MvvmLight.Command.RelayCommand<string>((parameter) => ExcuteChangeCommand(parameter));
+                return _chageChatCommand;
+            }
+        }
 
         public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new Commands.RelayCommand(parameterX =>
         {   
@@ -228,7 +265,12 @@ namespace WPF_LoginForm.ViewModels
             
         });
 
-
+        void ExcuteChangeCommand(object parameter) // 点击左侧聊天用户切换聊天人
+        {
+            FContactName = parameter.ToString(); //聊天对象名
+            Conversations = new ObservableCollection<ChatConversation>();
+            LoadChatConversation();
+        }
         #endregion
 
         #endregion
@@ -239,7 +281,9 @@ namespace WPF_LoginForm.ViewModels
         protected ObservableCollection<ChatConversation> mConversations;
         public ObservableCollection<ChatConversation> Conversations
         {
-            get => mConversations;
+            get { 
+                return mConversations;
+            }  
             set
             {
                 mConversations = value;
@@ -269,9 +313,17 @@ namespace WPF_LoginForm.ViewModels
             {
                 Conversations = new ObservableCollection<ChatConversation>();
             }
-            using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername='test' And M_FromUsername='admin'", connection))
+
+           
+            using (var command = new SqlCommand())
             {
-                using (SqlDataReader reader = com.ExecuteReader())
+                
+               // connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from Message where M_ToUsername = @FContactName And M_FromUsername = @NowUsername";
+                command.Parameters.Add("@FContactName", SqlDbType.NVarChar).Value = FContactName;
+                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -302,17 +354,21 @@ namespace WPF_LoginForm.ViewModels
                         OnPropertyChanged(nameof(Conversations));
                     }
                 }
-
-            }// end using 
-            using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername='admin' And M_FromUsername='test'", connection))
+            }
+            using (var command = new SqlCommand())
             {
-                using (SqlDataReader reader = com.ExecuteReader())
+
+              //  connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from Message where M_ToUsername = @NowUsername And M_FromUsername = @FcontactName";
+                command.Parameters.Add("@FcontactName", SqlDbType.NVarChar).Value = FContactName;
+                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+                using (var reader = command.ExecuteReader())
                 {
-                    // var i = 0;
                     while (reader.Read())
                     {
-                          string MsgSentOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
-                            Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+                        string MsgSentOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+                          Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
                         string MsgReceivedOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
                           Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
                         var M_ID = (int)reader["M_ID"];
@@ -321,7 +377,7 @@ namespace WPF_LoginForm.ViewModels
 
                             ContactName = reader["M_ToUsername"].ToString(),
                             SentMessage = reader["M_Message"].ToString(),
-                            ReceivedMessage  = "".ToString(),
+                            ReceivedMessage = "".ToString(),
 
 
                             MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
@@ -339,11 +395,11 @@ namespace WPF_LoginForm.ViewModels
                             }
                             else
                             {
-                                Conversations.Insert(j, conversation); 
+                                Conversations.Insert(j, conversation);
                                 break;
                             }
                         }
-                        if(j >= Conversations.Count)
+                        if (j >= Conversations.Count)
                         {
                             Conversations.Add(conversation);
                         }
@@ -362,10 +418,107 @@ namespace WPF_LoginForm.ViewModels
                         OnPropertyChanged(nameof(Conversations));
                     }
                 }
+            }
 
-            }// end using
 
-            // 原
+            // 2 SQL
+            //using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername=@FcontactName And M_FromUsername=@NowUsername", connection))
+            //{
+            //    using (SqlDataReader reader = com.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            // to set data format
+            //            // Like this   Jun 15, 01:15 PM = MMM dd, hh:mm tt
+            //            //string MsgReceivedOn = !string.IsNullOrEmpty(reader["MsgReceivedOn"].ToString()) ?
+            //            //    Convert.ToDateTime(reader["MsgReceivedOn"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+            //            string MsgSentOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+            //                Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+            //            string MsgReceivedOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+            //              Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+
+            //            var conversation = new ChatConversation()
+            //            {
+            //                Id = (int)reader["M_ID"],
+            //                ContactName = reader["M_ToUsername"].ToString(),
+            //                ReceivedMessage = reader["M_Message"].ToString(),
+            //                SentMessage = "".ToString(),
+
+
+            //                MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
+
+            //                MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
+            //                IsMessageReceived = true,//string.IsNullOrEmpty(SentMessage) ? false : true
+
+            //            };
+            //            Conversations.Add(conversation);
+            //            OnPropertyChanged(nameof(Conversations));
+            //        }
+            //    }
+
+            //}// end using 
+            //using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername='admin' And M_FromUsername='test'", connection))
+            //{
+            //    using (SqlDataReader reader = com.ExecuteReader())
+            //    {
+            //        // var i = 0;
+            //        while (reader.Read())
+            //        {
+            //              string MsgSentOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+            //                Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+            //            string MsgReceivedOn = !string.IsNullOrEmpty(reader["M_Time"].ToString()) ?
+            //              Convert.ToDateTime(reader["M_Time"].ToString()).ToString("MMM dd, hh:mm tt") : "";
+            //            var M_ID = (int)reader["M_ID"];
+            //            var conversation = new ChatConversation()
+            //            {
+
+            //                ContactName = reader["M_ToUsername"].ToString(),
+            //                SentMessage = reader["M_Message"].ToString(),
+            //                ReceivedMessage  = "".ToString(),
+
+
+            //                MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
+
+            //                MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
+            //                IsMessageReceived = false,//string.IsNullOrEmpty(reader["SentMessage"].ToString()) ? false : true
+
+            //            };
+            //            int j;
+            //            for (j = 0; j < Conversations.Count; j++)
+            //            {
+            //                if (M_ID > Conversations[j].Id)
+            //                {
+            //                    continue;
+            //                }
+            //                else
+            //                {
+            //                    Conversations.Insert(j, conversation); 
+            //                    break;
+            //                }
+            //            }
+            //            if(j >= Conversations.Count)
+            //            {
+            //                Conversations.Add(conversation);
+            //            }
+
+            //            //if(M_ID > Conversations[i].Id)
+            //            //{
+            //            //    Conversations.Add(conversation);
+            //            //}
+            //            //else
+            //            //{
+            //            //    var con = Conversations[i];
+            //            //    Conversations[i] = conversation;
+            //            //    Conversations.Add(con);
+            //            //}
+            //            //i++;
+            //            OnPropertyChanged(nameof(Conversations));
+            //        }
+            //    }
+
+            //}// end using
+
+            // 原 SQL
             //using (SqlCommand com = new SqlCommand("select * from conversations where ContactName='Mike'", connection))
             //{
             //    using (SqlDataReader reader = com.ExecuteReader())
@@ -409,10 +562,12 @@ namespace WPF_LoginForm.ViewModels
             CurrentUserAccount = new UserAccountModel();
             messRepository = new MessRepository();
             _messModel = new MessModel();
+            Conversations = null;
 
             LoadChats();
             LoadStatusThumbs();
             LoadChatConversation();
+            LoadContactInfo();
         }
         
     }

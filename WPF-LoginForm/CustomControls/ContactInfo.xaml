@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:WPF_LoginForm.CustomControls" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels" d:DataContext="{d:DesignInstance Type=viewModel:ForMessageViewModel}"
              mc:Ignorable="d"  
              MaxWidth="406">
-
+    <!--<UserControl.DataContext>
+        <viewModel:ForMessageViewModel/>
+    </UserControl.DataContext>-->
     <UserControl.Resources>
         <Style x:Key="MediaButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="105"/>
@@ -109,7 +111,7 @@
                     FontSize="15"
                     FontWeight="SemiBold"
                     Text="About"/>
-                <TextBlock Text="Available"/>
+                <TextBlock Text="{Binding Phone}"/>
                 
                 <!--Contact Email-->
                 <TextBlock Margin="0,20,0,0"
@@ -117,7 +119,7 @@
                     FontSize="15"
                     FontWeight="SemiBold"
                     Text="About"/>
-                <TextBlock Text="abc@s.upc.edu.cn"/>
+                <TextBlock Text="{Binding Email}"/>
             </StackPanel>
             
             

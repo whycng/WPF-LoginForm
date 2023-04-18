@@ -190,7 +190,7 @@
                 <!-- #endregion -->
             </Grid>
 
-            <!--#region Conversion Screen-->
+            <!--#region Conversion Screen 中间聊天信息-->
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <!--Convesation Header-->
@@ -283,7 +283,7 @@
                 <!--#endregion -->
             </Grid>
 
-            <!--Contact Info-->
+            <!--Contact Info 右侧联系信息-->
             <customcontrols:ContactInfo x:Name="ContactInfo"
                                         Grid.Row="1"
                                         Grid.Column="2"/>

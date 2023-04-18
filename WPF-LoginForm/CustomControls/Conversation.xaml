@@ -217,7 +217,7 @@
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                
-                
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
 

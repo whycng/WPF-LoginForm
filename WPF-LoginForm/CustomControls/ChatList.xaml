@@ -13,7 +13,14 @@
         <!--<
         s:StringToImageConverter x:Key="StringToImageConverter" />-->
         <DataTemplate x:Key="ChatButtonItemTemplate">
-            <RadioButton GroupName="ChatButton">
+            <RadioButton GroupName="ChatButton" 
+                         
+                         Command="{Binding DataContext.ChageChatCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding ContactName}">
+                         
                 <RadioButton.Style>
                     <Style TargetType="{x:Type ToggleButton}">
                         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -154,6 +161,7 @@
                         
                     </Style>
                 </RadioButton.Style>
+               
             </RadioButton>
         </DataTemplate>
     </UserControl.Resources>
@@ -168,7 +176,7 @@
                 </StackPanel>
                 <!--ChatList-->
             <ScrollViewer Height="400" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-                <ItemsControl  ItemsSource="{Binding Chats}" 
+                <ItemsControl  ItemsSource="{Binding Chats,UpdateSourceTrigger=PropertyChanged}" 
                               ItemTemplate="{StaticResource ChatButtonItemTemplate}"
                               Padding="0,15"  Width="400">
                     <ItemsControl.DataContext>
