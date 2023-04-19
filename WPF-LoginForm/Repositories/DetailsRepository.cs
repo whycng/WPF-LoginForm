@@ -165,7 +165,7 @@ namespace WPF_LoginForm.Repositories
 
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "Insert Into ItemCollage Values(@ItemId,(Select Id From [User] Where Username=@Username),@Username) ";
+                command.CommandText = "Insert Into ItemCollage(ItemId, UserId, Username) \r\nSELECT @ItemId, Id, @Username\r\nFROM [User]\r\nWHERE Username = @Username\r\n    AND NOT EXISTS (\r\n        SELECT * FROM ItemCollage WHERE Username = @Username\r\n    ); ";
                 command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
                 command.Parameters.Add("@Username", SqlDbType.NChar).Value = Username;
                 using (var reader = command.ExecuteReader())

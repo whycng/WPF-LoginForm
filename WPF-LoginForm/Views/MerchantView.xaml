@@ -11,7 +11,7 @@
             <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                             ScrollViewer.VerticalScrollBarVisibility="Visible" 
                             Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
-                            ItemsSource="{Binding data_item}" Height="380"
+                            ItemsSource="{Binding data_item ,UpdateSourceTrigger=PropertyChanged}" Height="380"
                             FontSize="16" Background="Transparent" Foreground="#784DFD">
                 <DataGrid.Columns>
                     <DataGridTextColumn 
@@ -25,7 +25,7 @@
                     <DataGridTextColumn 
                                     Header="商品个数" 
                                     Binding="{Binding Amount}"/>
-                    <DataGridTemplateColumn Header="操作">
+                    <DataGridTemplateColumn Width="400" Header="操作">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -36,18 +36,24 @@
                                         Mode=FindAncestor,
                                         AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="Red" Foreground="White"/>
+                                    <Button Content="选中"
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.ChooseCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=DataGrid}}" />
                                     <Button Content="个数"/>
-                                    <TextBox Text="{Binding Amount}"/>
+                                    <TextBox Width="80" x:Name="InputTextAmount" Text="{Binding Amount}"/>
                                     <Button Content="确定个数"
-                                                    CommandParameter="{Binding Id}" 
+                                                    CommandParameter="{Binding ElementName=InputTextAmount,Path=Text}" 
                                             Command="{Binding DataContext.DefineAmountCommand,
                                         RelativeSource={RelativeSource 
                                         Mode=FindAncestor,
                                         AncestorType=DataGrid}}" />
                                     <Button Content="单价"/>
-                                    <TextBox Text="{Binding price}"/>
+                                    <TextBox Width="80" x:Name="InputTextPrice" Text="{Binding price}"/>
                                     <Button Content="确定单价"
-                                                    CommandParameter="{Binding Id}" 
+                                                    CommandParameter="{Binding ElementName=InputTextPrice,Path=Text}" 
                                             Command="{Binding DataContext.DefineProceCommand,
                                         RelativeSource={RelativeSource 
                                         Mode=FindAncestor,

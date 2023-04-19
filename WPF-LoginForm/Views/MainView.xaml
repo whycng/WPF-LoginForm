@@ -41,6 +41,12 @@
         <DataTemplate DataType="{x:Type viewModel:MerchantViewModel}">
             <local:MerchantView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AppealViewModel}">
+            <local:AppealView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AdminViewModel}">
+            <local:AdminView />
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="10"                    
@@ -166,10 +172,10 @@
                             <TextBlock Text="商家" Style="{StaticResource menuButtonText}" />
 
                         </StackPanel>
-                    </RadioButton>
-                    <!-- 发现被钉到了区域外 -->
+                    </RadioButton> 
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
+                                 Tag="{StaticResource color1}"
+                                 Command="{Binding ShowAppealViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Cat" Style="{StaticResource menuButtonIcon}" />
@@ -177,61 +183,18 @@
 
                         </StackPanel>
                     </RadioButton>
+                    
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
+                                 Tag="{StaticResource color1}"
+                                  Command="{Binding ShowAdminViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
+                            <fa:IconImage Icon="Dog" Style="{StaticResource menuButtonIcon}" />
+                            <TextBlock Text="管理员" Style="{StaticResource menuButtonText}" />
 
                         </StackPanel>
                     </RadioButton>
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
-
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
-
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
-
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
-
-                        </StackPanel>
-                    </RadioButton>
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Fish" Style="{StaticResource menuButtonIcon}" />
-                            <TextBlock Text="摸鱼(lll￢ω￢)" Style="{StaticResource menuButtonText}" />
-
-                        </StackPanel>
-                    </RadioButton>
-
+                  
                 </StackPanel>
 
             </Border>

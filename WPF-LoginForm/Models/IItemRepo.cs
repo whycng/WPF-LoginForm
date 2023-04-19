@@ -10,6 +10,7 @@ namespace WPF_LoginForm.Models
     public interface IItemRepo
     {
         ItemModel GetById(int id);// 获取商品信息
+        List<ItemModel> GetItemAll();
         List<ItemModel> GetBySellerName(string sellername); // 获取商品信息
         List<ItemModel> GetByClassify(string classify);// 获取商品信息
         void SetCart(int ItemId, string Username); // 塞进购物车数据库
@@ -26,6 +27,17 @@ namespace WPF_LoginForm.Models
         List<ItemModel> GetHisOrdByVague(string vage);// 根据商品名获取
         bool IsMerchant(string username); // 判断为商家
         void DelItemById(int Id);
+        void SetPriceById(int Id, string Price);
+        void SetAmountById(int Id, int Amount);
+
+        // 商品评论
+        void SetCommentByUser(int ItemId, string Username, string comment);// 用户评论
+
+        // 申诉单 GetAppealBySellerName
+        List<AppealModel> GetAppealAll();
+        List<AppealModel> GetAppealBySellerName(string sellername);
+        void SetAppealByUsername(string username, int itemId ,string UsreReason);
+        void UpdataAppealReplyByItemId(int itemId, string Reply);// 商家回复
     }
 }
  

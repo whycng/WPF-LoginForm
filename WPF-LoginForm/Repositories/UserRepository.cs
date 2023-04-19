@@ -255,5 +255,79 @@ namespace WPF_LoginForm.Repositories
                 }
             }// end using
         }//end public
+        public List<UserModel> GetSeller()
+        {
+            List<UserModel> Seller = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                Seller = new List<UserModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [User] WHERE PCL=2;";
+                //command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var t = new UserModel()
+                        {
+                            Id = reader[0].ToString(),
+                            Username = reader[1].ToString(),
+                            Password = reader[2].ToString(),
+                            Name = reader[3].ToString(),
+                            LastName = reader[4].ToString(),
+                            Email = reader[5].ToString(),
+                            UserPhoto =
+                            new Uri("/assets/userHead/" + reader[6].ToString(), UriKind.RelativeOrAbsolute),
+                            // sex.....
+                            Sex = reader[7].ToString(),
+                            Address = reader[8].ToString(),
+                            Phone = reader[9].ToString(),
+                        };
+                        Seller.Add(t);
+                    }
+                }
+            }
+            return Seller;
+        }// end public
+
+        public List<UserModel> GetUser()
+        {
+            List<UserModel> User = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                User = new List<UserModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [User] WHERE PCL=1;";
+                //command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var t = new UserModel()
+                        {
+                            Id = reader[0].ToString(),
+                            Username = reader[1].ToString(),
+                            Password = reader[2].ToString(),
+                            Name = reader[3].ToString(),
+                            LastName = reader[4].ToString(),
+                            Email = reader[5].ToString(),
+                            UserPhoto =
+                            new Uri("/assets/userHead/" + reader[6].ToString(), UriKind.RelativeOrAbsolute),
+                            // sex.....
+                            Sex = reader[7].ToString(),
+                            Address = reader[8].ToString(),
+                            Phone = reader[9].ToString(),
+                        };
+                        User.Add(t);
+                    }
+                }
+            }
+            return User;
+        }// end public
+
     }
 }

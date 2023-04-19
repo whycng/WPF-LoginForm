@@ -181,6 +181,40 @@
                 <!--底部导航栏-->
                 <Grid Panel.ZIndex="0"  Grid.Row="3">
                     <StackPanel Orientation="Horizontal">
+                        <Button    
+                                CommandParameter="{Binding ElementName=CommentHere,Path=Text}" 
+                                Command="{Binding CommentHereCommand}"
+                                  
+                                BorderThickness="0"
+                                Content="发表评论"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#5a847f"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                        <TextBox x:Name="CommentHere" Width="600"/>
                         <!--<Button    
                                      
                                 BorderThickness="0"

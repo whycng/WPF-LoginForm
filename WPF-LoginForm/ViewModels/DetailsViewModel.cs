@@ -14,13 +14,16 @@ namespace WPF_LoginForm.ViewModels
 {
     public class DetailsViewModel : ViewModelBase
     {
+        private IItemRepo itemRepo;
         int CollageItemId = -1;
         public DetailsRepository detailsRepository;
         public UserRepository userRepository;
         //private DetailsModel tmp;
-        // CollageCommand
+        // CollageCommand 
         private RelayCommand<int> _collageCommand;//拼单命令
-        public DetailsModel _model_details;
+        public DetailsModel _model_details; // CommentHereCommand
+
+        public RelayCommand<string> CommentHereCommand { get; set; }
 
         public RelayCommand<int> CollageCommand // int 传进了商品id
         {
@@ -30,7 +33,16 @@ namespace WPF_LoginForm.ViewModels
                     _collageCommand = new RelayCommand<int>((parameter) => ExcuteCollageCommand(parameter));
                 return _collageCommand;
             }
+        }// ExcuteCommentHereCommand
+
+        public void CommentHere(string Comment)// 评论
+        {
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            itemRepo.SetCommentByUser(Model_details.item.Id, user.Username, Comment);
+            LoadData();
         }
+
+  
 
         void ExcuteCollageCommand(object parameter)
         {
@@ -62,7 +74,7 @@ namespace WPF_LoginForm.ViewModels
             } 
             set { 
                 _model_details = value;
-                // OnPropertyChanged("Model_details");
+                OnPropertyChanged("Model_details");
             }
 
         }
@@ -74,12 +86,22 @@ namespace WPF_LoginForm.ViewModels
             detailsRepository = new DetailsRepository();
             detailsRepository.TmpSet(model.item.Id);
         }
+
+        void LoadData()
+        {
+            Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
+
+        }
         public DetailsViewModel()
         {
+            itemRepo = new ItemRepository();
             // Model_details = DetailsModelTmp;// tmp也不行
             detailsRepository = new DetailsRepository();
             userRepository = new UserRepository();
             Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
+
+            CommentHereCommand = new RelayCommand<string>(t => CommentHere(t));
+
             //拼单
             LoadDataCollage();
         }

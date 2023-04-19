@@ -147,6 +147,7 @@
     <Compile Include="CustomControls\StatusThumbs.xaml.cs">
       <DependentUpon>StatusThumbs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AppealModel.cs" />
     <Compile Include="Models\ChatConversation.cs" />
     <Compile Include="Models\ChatListData.cs" />
     <Compile Include="Models\CollageModel.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Repositories\MessRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\AppealViewModel.cs" />
     <Compile Include="ViewModels\CompassViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
@@ -187,6 +189,9 @@
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelCommand.cs" />
+    <Compile Include="Views\AddAppeal.xaml.cs">
+      <DependentUpon>AddAppeal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddCart.xaml.cs">
       <DependentUpon>AddCart.xaml</DependentUpon>
     </Compile>
@@ -196,11 +201,17 @@
     <Compile Include="Views\AddDetails.xaml.cs">
       <DependentUpon>AddDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddReply.xaml.cs">
+      <DependentUpon>AddReply.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddStuView.xaml.cs">
       <DependentUpon>AddStuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddUserView.xaml.cs">
       <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminView.xaml.cs">
+      <DependentUpon>AdminView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AppealView.xaml.cs">
       <DependentUpon>AppealView.xaml</DependentUpon>
@@ -293,6 +304,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddAppeal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddCart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -305,11 +320,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddReply.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddStuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,13 +16,14 @@ namespace WPF_LoginForm.ViewModels
     public class MerchantViewModel:ViewModelBase
     {
         public MerchantViewModel() {
-
+             
             itemRepo = new ItemRepository();
             userRepository = new UserRepository();
             UserNow = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             DelCommand = new RelayCommand<int>(t => Del(t));
-            DefineAmountCommand = new RelayCommand<int>(t => DefineAmount(t));
-            DefineProceCommand = new RelayCommand<int>(t => DefineProce(t));
+            DefineAmountCommand = new RelayCommand<string>(t => DefineAmount(t));
+            DefineProceCommand = new RelayCommand<string>(t => DefineProce(t));
+            ChooseCommand = new RelayCommand<int>(t => Choose(t));
 
 
             LoadMerchantData();
@@ -32,13 +33,47 @@ namespace WPF_LoginForm.ViewModels
         private IItemRepo itemRepo;
         private IUserRepository userRepository;
         public UserModel UserNow;
-        public ObservableCollection<ItemModel> data_item { get; set; }
+        private int idNow = -1;
+        public List<int> AmountChange = new List<int>();
+        public string PriceChange;
+        private ObservableCollection<ItemModel> _data_item;
+        public ObservableCollection<ItemModel> data_item
+        { 
+            get { return _data_item; }
+            set { _data_item = value;
+                OnPropertyChanged("data_item");
+            }
+        }
         // 命令
         public RelayCommand<int> DelCommand { get; set; }
-        public RelayCommand<int> DefineAmountCommand { get; set; }
-        public RelayCommand<int> DefineProceCommand { get; set; }
+        public RelayCommand<string> DefineAmountCommand { get; set; }
+        public RelayCommand<string> DefineProceCommand { get; set; }
+        public RelayCommand<int> ChooseCommand { get; set; }
 
-
+        //DefineAmount DefineProce  Choose
+        public void Choose(int id)
+        {
+            idNow = id; 
+        }
+        public void DefineAmount(string amount)
+        {
+            int x;
+            if(int.TryParse(amount, out x))
+            {
+                itemRepo.SetAmountById(idNow,x);
+            }
+            else
+            {
+                // 弹出输入不是int
+            }
+          
+            LoadMerchantData();
+        }
+        public void DefineProce(string price)
+        { 
+            itemRepo.SetPriceById(idNow,price);
+            LoadMerchantData();
+        }
         public void Del(int id)
         {
             itemRepo.DelItemById(id); 
@@ -51,7 +86,8 @@ namespace WPF_LoginForm.ViewModels
             // 如果你是商家，则显示
             if (itemRepo.IsMerchant(UserNow.Username))
             {
-                var t = itemRepo.GetBySellerName(UserNow.Username); 
+                var t = itemRepo.GetBySellerName(UserNow.Username);
+                
                 data_item = new ObservableCollection<ItemModel>(t);
             }
             else

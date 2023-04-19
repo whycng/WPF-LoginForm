@@ -40,6 +40,7 @@ namespace WPF_LoginForm.Repositories
                             ItemClassify = reader[5].ToString(),
                             reco = reader[6].ToString(),
                             price = reader[7].ToString(),
+                            Amount = (int)reader[8],
                         };
                     }
                     else
@@ -91,6 +92,7 @@ namespace WPF_LoginForm.Repositories
                             ItemClassify = reader[5].ToString(),
                             reco = reader[6].ToString(),   
                             price = reader[7].ToString(),
+                            Amount = (int)reader[8],
                         };
                         item.Add(item_tmp);
                     }
@@ -125,6 +127,7 @@ namespace WPF_LoginForm.Repositories
                             ItemClassify = reader[5].ToString(),
                             reco = reader[6].ToString(),
                             price = reader[7].ToString(),
+                            Amount = (int)reader[8],
                         };
                         item.Add(item_tmp);
                     }
@@ -216,7 +219,39 @@ namespace WPF_LoginForm.Repositories
                 }
             }
         }
-
+        public List<ItemModel> GetItemAll()
+        {
+            List<ItemModel> item = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                item = new List<ItemModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from [Item]";
+                // command.Parameters.Add("@classify", SqlDbType.NVarChar).Value = classify;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item_tmp = new ItemModel()
+                        {
+                            Id = (int)reader[0],
+                            ItemName = reader[1].ToString(),
+                            SellerName = reader[2].ToString(),
+                            ItemShowText = reader[3].ToString(),
+                            ItemPhoto = new Uri("/assets/item/" + reader[4].ToString(), UriKind.RelativeOrAbsolute),
+                            ItemClassify = reader[5].ToString(),
+                            reco = reader[6].ToString(),
+                            price = reader[7].ToString(),
+                            Amount = (int)reader[8],
+                        };
+                        item.Add(item_tmp);
+                    }
+                }
+            }
+            return item;
+        }
         public List<ItemModel> GetHisOrd()
         {
             List<ItemModel> item = null;
@@ -399,6 +434,182 @@ namespace WPF_LoginForm.Repositories
                     }
                 }
             }// end using
+        }// end public
+         
+        public void SetPriceById(int Id, string Price)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE Item SET price = @Price WHERE id = @Id;\r\n";
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                command.Parameters.Add("@Price", SqlDbType.NVarChar).Value = Price;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }
+
+        public void SetAmountById(int Id, int Amount)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE Item SET Amount = @Amount WHERE id = @Id;\r\n";
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                command.Parameters.Add("@Amount", SqlDbType.Int).Value = Amount;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }
+        // 申诉单
+        public List<AppealModel> GetAppealBySellerName(string sellername)
+        {
+            List<AppealModel> appeals = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                appeals = new List<AppealModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM Appeal WHERE SellerName=@sellername;";
+                command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item_tmp = new AppealModel()
+                        {
+                            AppId = (int)reader[0],
+                            ItemId = (int)reader[1],
+                            ItemName = reader[2].ToString(),
+                            SellerName = reader[3].ToString(),
+                            UserName = reader[4].ToString(),
+                            TimeApp = reader[5].ToString(),
+                            UserReason = reader[6].ToString(),
+                            SellerReply = reader[7].ToString(),
+                            Done = reader[8].ToString(),
+                        };
+                        appeals.Add(item_tmp);
+                    }
+                }
+            }
+            return appeals;
+        }
+
+        public void SetAppealByUsername(string username, int itemId, string UsreReason)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            { 
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "INSERT INTO Appeal " +
+                 "(ItemId,ItemName,SellerName,UserName,UserReason,SellerReply,Done)" +
+                 "SELECT @itemId, ItemName, SellerName, @username, @UsreReason,  '未回复',  '未完成'" +
+                 "FROM  Item " +
+                 "WHERE     Id = @itemId;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@itemId", SqlDbType.Int).Value = itemId;
+                command.Parameters.Add("@UsreReason", SqlDbType.NVarChar).Value = UsreReason;
+                using (var reader = command.ExecuteReader())
+                {
+                    if(reader.Read())
+                    {
+
+                    } 
+                }
+            }
+        } // end public
+
+        public void UpdataAppealReplyByItemId(int itemId, string Reply)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE Appeal Set SellerReply=@Reply Where ItemId=@itemId;"; 
+                command.Parameters.Add("@Reply", SqlDbType.NVarChar).Value = Reply;
+                command.Parameters.Add("@itemId", SqlDbType.Int).Value = itemId; 
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }
+        }// end public
+        public List<AppealModel> GetAppealAll()
+        {
+            List<AppealModel> appeals = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                appeals = new List<AppealModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM Appeal";
+                // command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item_tmp = new AppealModel()
+                        {
+                            AppId = (int)reader[0],
+                            ItemId = (int)reader[1],
+                            ItemName = reader[2].ToString(),
+                            SellerName = reader[3].ToString(),
+                            UserName = reader[4].ToString(),
+                            TimeApp = reader[5].ToString(),
+                            UserReason = reader[6].ToString(),
+                            SellerReply = reader[7].ToString(),
+                            Done = reader[8].ToString(),
+                        };
+                        appeals.Add(item_tmp);
+                    }
+                }
+            }
+            return appeals;
+        }// end publci 
+
+        public void SetCommentByUser(int ItemId, string Username, string comment)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Insert INTO ItemComment(ItemId,UserId,Comment) Select @ItemId,Id,@comment FROM" +
+                    " [User] Where Username=@Username;  ";
+                command.Parameters.Add("@comment", SqlDbType.NVarChar).Value = comment;
+                command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = Username;
+                command.Parameters.Add("@ItemId", SqlDbType.Int).Value = ItemId;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }
         }// end public
     }
 }

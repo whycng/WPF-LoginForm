@@ -93,7 +93,8 @@ namespace WPF_LoginForm.ViewModels //
         public ICommand ShowSettingViewCommand { get; }
         public ICommand ShowCompassViewCommand { get; }//
         public ICommand ShowMerchantViewCommand { get; }// 
-        public ICommand ShowAppealViewCommand { get; }//ShowMerchantViewCommand
+        public ICommand ShowAppealViewCommand { get; }//
+        public ICommand ShowAdminViewCommand { get; }//ShowAdminViewCommand
 
 
         public MainViewModel() // 构造函数，初始化使用 view
@@ -111,7 +112,7 @@ namespace WPF_LoginForm.ViewModels //
             ShowCompassViewCommand = new ViewModelCommand(ExecuteShowCompassViewCommand);
             ShowMerchantViewCommand = new ViewModelCommand(ExecuteShowMerchantViewCommand);
             ShowAppealViewCommand = new ViewModelCommand(ExecuteShowAppealViewCommand);
-
+            ShowAdminViewCommand = new ViewModelCommand(ExecuteShowAdminViewCommand);
 
             // Default View
             ExecuteShowHomeViewCommand(null);
@@ -119,10 +120,18 @@ namespace WPF_LoginForm.ViewModels //
 
             LoadCurrentUserData();
         }//
+
+        private void ExecuteShowAdminViewCommand(object obj)
+        {
+
+            CurrentChildView = new AdminViewModel();
+            Caption = "管理员";
+            Icon = IconChar.Dog;
+        }
         private void ExecuteShowAppealViewCommand(object obj)
         {
 
-            CurrentChildView = new MerchantViewModel();
+            CurrentChildView = new AppealViewModel();
             Caption = "申诉";
             Icon = IconChar.Cat;
         }

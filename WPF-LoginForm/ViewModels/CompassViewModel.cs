@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using WPF_LoginForm.Models;
@@ -37,7 +38,9 @@ namespace WPF_LoginForm.ViewModels
                 SearchHist = string.Empty; //搜索条件置为空
                 LoadHistData();
             });
-
+            userRepository = new UserRepository();
+            // 当前用户
+            UserNow = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             itemRepo = new ItemRepository();
             AddCommand_Cart = new RelayCommand<int>(t => Add_Cart(t));
             SubCommand_Cart = new RelayCommand<int>(t => Sub_Cart(t));
@@ -55,8 +58,9 @@ namespace WPF_LoginForm.ViewModels
             // 历史订单处理
             LoadHistData();
         }
-
-
+      
+        private IUserRepository userRepository;
+        public UserModel UserNow;
 
         #region 购物车，历史订单处理
         // AddCommand_Cart
@@ -152,11 +156,23 @@ namespace WPF_LoginForm.ViewModels
             itemRepo.DelHistById(id);
             LoadHistData();
         }//
-        public void Appeal_Hist(int id)
+        public void Appeal_Hist(int ItemId)
         {
+            // 申诉逻辑... 
+            // 写入申诉表
+           
+            var model = new AppealModel();
+            AddAppeal view = new AddAppeal(model);
+            var r = view.ShowDialog(); //返回值r就是 AddStuView页面【确定/取消】的结果
+            if (r.Value)
+            {
+                itemRepo.SetAppealByUsername(UserNow.Username, ItemId, model.UserReason);
+                System.Windows.MessageBox.Show("申诉成功");
+            }
+            else
+                throw new NotImplementedException();
             // 申诉逻辑...
-            // 申诉逻辑...
-            System.Windows.MessageBox.Show("申诉成功");
+            
         }//Appeal_Hist
 
         public void QueryHist()

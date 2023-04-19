@@ -27,5 +27,7 @@ namespace WPF_LoginForm.Models
         void SetAddressByUserName(string username, string address);
         void SetPhoneByUserName(string username, string phone);
         void SetEmailByUserName(string username, string email);
+        List<UserModel> GetSeller();// 拿到卖家  
+        List<UserModel> GetUser();// 拿到普通用户 
     }
 }

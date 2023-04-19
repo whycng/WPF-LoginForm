@@ -8,10 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel>
+            <TextBlock Text="{Binding ShowText}" 
+                       FontSize="{Binding ShowFontSize}"
+                       Foreground="{Binding ShowForeground}"/>
             <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                             ScrollViewer.VerticalScrollBarVisibility="Visible" 
                             Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 
-                            ItemsSource="{Binding data_item}" Height="380"
+                            ItemsSource="{Binding data_appeal}" Height="380"
                             FontSize="16" Background="Transparent" Foreground="#784DFD">
                 <DataGrid.Columns>
                     <DataGridTextColumn 
@@ -20,30 +23,36 @@
                                     Foreground="#784DFD"/>
                     <!--<DataGridTextColumn Header="商品个数" Binding="{Binding ItemNumber}"/>-->
                     <DataGridTextColumn 
-                                    Header="商品单价" 
-                                    Binding="{Binding price}"/>
+                                    Header="卖家" 
+                                    Binding="{Binding SellerName}"/>
                     <DataGridTextColumn 
-                                    Header="商品个数" 
-                                    Binding="{Binding Amount}"/>
+                                    Header="买家" 
+                                    Binding="{Binding UserName}"/>
+                    <DataGridTextColumn 
+                                    Header="商品名" 
+                                    Binding="{Binding ItemName}"/>
+
+                    <DataGridTextColumn 
+                                    Header="时间" 
+                                    Binding="{Binding Time}"/>
+                    <DataGridTextColumn 
+                                    Header="申诉原因" 
+                                    Binding="{Binding UserReason}"/>
+                    <DataGridTextColumn 
+                                    Header="回复" 
+                                    Binding="{Binding SellerReply}"/>
+                    <DataGridTextColumn 
+                                    Header="是否完成" 
+                                    Binding="{Binding Done}"/>
                     <DataGridTemplateColumn Header="操作">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="删除" 
-                                             CommandParameter="{Binding Id}" 
-                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                    <Button Content="回复" 
+                                             CommandParameter="{Binding ItemId}" 
+                                            Command="{Binding DataContext.ReplyCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
                                             Width="60" Height="25" Background="Red" Foreground="White"/>
-                                    <Button Content="个数"/>
-                                    <TextBox/>
-                                    <Button Content="单价"/>
-                                    <TextBox/>
-                                    <!--<Button Content="+"  CommandParameter="{Binding Id}" 
-                                            Command="{Binding DataContext.AddCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
-                                          />
-                                    <Button Content="-"  CommandParameter="{Binding Id}" 
-                                            Command="{Binding DataContext.SubCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
-                                          />-->
-
+                                
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

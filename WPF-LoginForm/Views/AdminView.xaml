@@ -1,0 +1,210 @@
+﻿<UserControl x:Class="WPF_LoginForm.Views.AdminView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_LoginForm.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <ScrollViewer VerticalScrollBarVisibility="Visible" 
+                  >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--商家表-->
+            <DataGrid 
+                ColumnWidth="*" AutoGenerateColumns="False" 
+                ItemsSource="{Binding data_Seller}" Height="380"
+                FontSize="16" Background="Transparent" Foreground="#784DFD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                                    Header="商家id" 
+                                    Binding="{Binding Id}"
+                                    Foreground="#784DFD"/>
+                    <DataGridTextColumn 
+                                    Header="商家名" 
+                                    Binding="{Binding Username}"/>
+                    <DataGridTextColumn 
+                                    Header="密码" 
+                                    Binding="{Binding Password}"/>
+                    <DataGridTextColumn 
+                                    Header="Emial" 
+                                    Binding="{Binding Email}"/>
+                    <DataGridTextColumn 
+                                    Header="地址" 
+                                    Binding="{Binding Address}"/>
+                    <DataGridTextColumn 
+                                    Header="电话" 
+                                    Binding="{Binding Phone}"/>
+
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <!--用户表-->
+            <DataGrid Grid.Row="1"
+                ColumnWidth="*" AutoGenerateColumns="False" 
+                ItemsSource="{Binding data_User}" Height="380"
+                FontSize="16" Background="Transparent" Foreground="#784DFD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                                    Header="用户id" 
+                                    Binding="{Binding Id}"
+                                    Foreground="#784DFD"/>
+                    <DataGridTextColumn 
+                                    Header="用户名" 
+                                    Binding="{Binding Username}"/>
+                    <DataGridTextColumn 
+                                    Header="密码" 
+                                    Binding="{Binding Password}"/>
+                    <DataGridTextColumn 
+                                    Header="Emial" 
+                                    Binding="{Binding Email}"/>
+                    <DataGridTextColumn 
+                                    Header="地址" 
+                                    Binding="{Binding Address}"/>
+                    <DataGridTextColumn 
+                                    Header="电话" 
+                                    Binding="{Binding Phone}"/>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <!--商品表-->
+            <DataGrid Grid.Row="2"
+                ColumnWidth="*" AutoGenerateColumns="False" 
+                ItemsSource="{Binding data_Item}" Height="380"
+                FontSize="16" Background="Transparent" Foreground="#784DFD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                                    Header="商品id" 
+                                    Binding="{Binding Id}"
+                                    Foreground="#784DFD"/>
+                    <DataGridTextColumn 
+                                    Header="商品" 
+                                    Binding="{Binding ItemName}"/>
+                    <DataGridTextColumn 
+                                    Header="卖家" 
+                                    Binding="{Binding SellerName}"/>
+                    <DataGridTextColumn 
+                                    Header="分类" 
+                                    Binding="{Binding ItemClassify}"/>
+                    <DataGridTextColumn 
+                                    Header="推荐" 
+                                    Binding="{Binding reco}"/>
+                    <DataGridTextColumn 
+                                    Header="价格" 
+                                    Binding="{Binding price}"/>
+                    <DataGridTextColumn 
+                                    Header="库存" 
+                                    Binding="{Binding Amount}"/>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <!--申诉表-->
+            <DataGrid Grid.Row="3"
+                ColumnWidth="*" AutoGenerateColumns="False" 
+                ItemsSource="{Binding data_Appeal}" Height="380"
+                FontSize="16" Background="Transparent" Foreground="#784DFD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                                    Header="申诉单id" 
+                                    Binding="{Binding AppId}"
+                                    Foreground="#784DFD"/>
+                    <DataGridTextColumn 
+                                    Header="商品id" 
+                                    Binding="{Binding ItemId}"/>
+                    <DataGridTextColumn 
+                                    Header="商品名" 
+                                    Binding="{Binding ItemName}"/>
+                    <DataGridTextColumn 
+                                    Header="卖家" 
+                                    Binding="{Binding SellerName}"/>
+                    <DataGridTextColumn 
+                                    Header="申诉用户" 
+                                    Binding="{Binding UserName}"/>
+                    <DataGridTextColumn 
+                                    Header="申诉时间" 
+                                    Binding="{Binding TimeApp}"/>
+                    <DataGridTextColumn 
+                                    Header="申诉原因" 
+                                    Binding="{Binding UserReason}"/>
+                    <DataGridTextColumn 
+                                    Header="商家回复" 
+                                    Binding="{Binding SellerReply}"/>
+                    <DataGridTextColumn 
+                                    Header="完成状态" 
+                                    Binding="{Binding Done}"/>
+
+
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="删除" 
+                                             CommandParameter="{Binding Id}" 
+                                            Command="{Binding DataContext.DelCommand_Cart,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" 
+                                            Width="60" Height="25" Background="Red" Foreground="White"/>
+
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+    </ScrollViewer>
+       
+    
+</UserControl>
