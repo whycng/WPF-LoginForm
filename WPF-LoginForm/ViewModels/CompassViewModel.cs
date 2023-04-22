@@ -169,8 +169,8 @@ namespace WPF_LoginForm.ViewModels
                 itemRepo.SetAppealByUsername(UserNow.Username, ItemId, model.UserReason);
                 System.Windows.MessageBox.Show("申诉成功");
             }
-            else
-                throw new NotImplementedException();
+            else { }
+                //throw new NotImplementedException();
             // 申诉逻辑...
             
         }//Appeal_Hist

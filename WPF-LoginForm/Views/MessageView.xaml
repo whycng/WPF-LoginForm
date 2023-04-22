@@ -36,13 +36,13 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Ellipse Height="40" Width="40">
+                    <!--<Ellipse Height="40" Width="40">
                         <Ellipse.DataContext>
                             <ViewModel:ForMessageViewModel/>
                         </Ellipse.DataContext>
                         <Ellipse.Fill>
-                            <!-- FallbackValue='/assets/5.jpg',
-                                TargetNullValue='/assets/5.jpg',-->
+                            --><!-- FallbackValue='/assets/5.jpg',
+                                TargetNullValue='/assets/5.jpg',--><!--
                             <ImageBrush
                                 Stretch="UniformToFill"
                                 ImageSource="{Binding ContactPhoto,
@@ -50,12 +50,12 @@
                                 TargetNullValue='/assets/5.jpg',
                                 Converter={StaticResource StringToImageConverterX},
                                 UpdateSourceTrigger=PropertyChanged}"/>
-                            <!--<ImageBrush ImageSource="{Binding ContactPhoto, 
+                            --><!--<ImageBrush ImageSource="{Binding ContactPhoto, 
                             FallbackValue=/assets/5.jpg,TargetNullValue=/assets/5.jpg,
                             UpdateSourceTrigger=PropertyChanged}"
-                                    Stretch="UniformToFill"/>-->
+                                    Stretch="UniformToFill"/>--><!--
                         </Ellipse.Fill>
-                    </Ellipse>
+                    </Ellipse>-->
 
                     <Grid Grid.Column="1">
 
@@ -179,7 +179,6 @@
                         />
                 </Border>
                 <!-- #endregion-->
-
                 <!--#region Status Thumbnails-->
                 <customcontrols:StatusThumbs Grid.Row="2"/>
                 <!--#endregion-->
@@ -187,6 +186,10 @@
                 <!-- #region Cahts List -->
                 <customcontrols:ChatList Grid.Row="3"/>
 
+                <!--<Button Height="50" Content="test1" 
+                        Command="{Binding ChageChatCommandY}" Grid.Row="2"/>
+                <Button Height="50" Content="test2" 
+                        Command="{Binding ChageChatCommandX}" Grid.Row="3"/>-->
                 <!-- #endregion -->
             </Grid>
 
@@ -218,11 +221,11 @@
                     </Grid.ColumnDefinitions>
 
                     <!--Conatact Info Button-->
-                    <Button  
+                    <!--<Button  
                         Template="{StaticResource ContactInfoButtonTemplate}"
                         Style="{StaticResource ContactInfoButtonStyle}">
 
-                    </Button>
+                    </Button>-->
 
                     <!--VideCall Button-->
                     <Button Grid.Column="1" 

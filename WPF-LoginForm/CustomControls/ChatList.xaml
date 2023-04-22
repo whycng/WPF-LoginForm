@@ -68,7 +68,7 @@
 
                                                 <Ellipse Grid.Column="0" Width="50" Height="50">
                                                     <Ellipse.Fill>
-                                                        <!-- FallbackValue=ContactPhoto,
+                                                         <!--FallbackValue=ContactPhoto,
                                                             TargetNullValue=ContactPhoto,-->
                                                         <ImageBrush
                                                             Stretch="UniformToFill"

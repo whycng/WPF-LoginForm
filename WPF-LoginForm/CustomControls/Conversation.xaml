@@ -209,7 +209,7 @@
             Background="WhiteSmoke"
             HorizontalScrollBarVisibility="Disabled" 
             Grid.Row="1">
-            <ItemsControl
+            <ItemsControl 
                 ItemsSource="{Binding Conversations,
                 UpdateSourceTrigger=PropertyChanged}"
                 ItemTemplate="{StaticResource ItemTemplate}"

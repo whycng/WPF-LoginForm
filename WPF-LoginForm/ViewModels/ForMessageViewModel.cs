@@ -17,6 +17,7 @@ using System.Threading;
 using System.Runtime.Remoting.Proxies;
 using System.Data;
 using System.Windows.Forms;
+using System.Windows.Controls;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -181,8 +182,9 @@ namespace WPF_LoginForm.ViewModels
                 } 
                
             }
-            FContactName = Chats[0].ContactName;
-
+            if (Chats.Count > 0)
+                FContactName = Chats[0].ContactName;
+            else FContactName = "空";
 
             //Chats = new ObservableCollection<ChatListData>()
             //{
@@ -270,6 +272,53 @@ namespace WPF_LoginForm.ViewModels
             FContactName = parameter.ToString(); //聊天对象名
             Conversations = new ObservableCollection<ChatConversation>();
             LoadChatConversation();
+            Conversations = new ObservableCollection<ChatConversation>(Conversations);
+            // InvalidateVisual();
+            // Refresh();
+            // ItemsControl.UpdateLayout();
+        }
+        // test
+        public GalaSoft.MvvmLight.Command.RelayCommand  _chageChatCommandX;
+        // to get the contactName of selected chat so that we can open corresponding conversation
+ 
+        public GalaSoft.MvvmLight.Command.RelayCommand  ChageChatCommandX
+        {
+            get
+            {
+                if (_chageChatCommandX == null)
+                     _chageChatCommandX = new GalaSoft.MvvmLight.Command.RelayCommand(ExecuteTest1);
+
+                return _chageChatCommandX;
+            }
+        }
+        public GalaSoft.MvvmLight.Command.RelayCommand _chageChatCommandY;
+        // to get the contactName of selected chat so that we can open corresponding conversation
+
+        public GalaSoft.MvvmLight.Command.RelayCommand ChageChatCommandY
+        {
+            get
+            {
+                if (_chageChatCommandY == null)
+                    _chageChatCommandY = new GalaSoft.MvvmLight.Command.RelayCommand(ExecuteTest2);
+
+                return _chageChatCommandY;
+            }
+        }
+        void ExecuteTest1()
+        {
+            FContactName = "admin";//聊天对象名
+            Conversations = new ObservableCollection<ChatConversation>();
+            LoadChatConversation();
+            Conversations = new ObservableCollection<ChatConversation>(Conversations);
+
+        }
+        void ExecuteTest2()
+        {
+            FContactName = "keni";//聊天对象名
+            Conversations = new ObservableCollection<ChatConversation>();
+            LoadChatConversation();
+            Conversations = new ObservableCollection<ChatConversation>(Conversations);
+            OnPropertyChanged(nameof(OnPropertyChanged));   
         }
         #endregion
 
