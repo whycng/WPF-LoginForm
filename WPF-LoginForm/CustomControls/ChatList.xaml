@@ -179,9 +179,9 @@
                 <ItemsControl  ItemsSource="{Binding Chats,UpdateSourceTrigger=PropertyChanged}" 
                               ItemTemplate="{StaticResource ChatButtonItemTemplate}"
                               Padding="0,15"  Width="400">
-                    <ItemsControl.DataContext>
+                    <!--<ItemsControl.DataContext>
                         <viewModel:ForMessageViewModel/>
-                    </ItemsControl.DataContext>
+                    </ItemsControl.DataContext>-->
                 </ItemsControl>
             </ScrollViewer>
         </StackPanel>

@@ -11,9 +11,9 @@
              d:DesignHeight="450" d:DesignWidth="800"
              FontSize="25">
 
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <viewModel:CustomerViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <Border Padding="20">
   
 

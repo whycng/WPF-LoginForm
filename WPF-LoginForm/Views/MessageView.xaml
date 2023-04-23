@@ -8,9 +8,9 @@
              xmlns:ViewModel="clr-namespace:WPF_LoginForm.ViewModels" xmlns:local1="clr-namespace:WPF_LoginForm.Commands" xmlns:converters="clr-namespace:WPF_LoginForm.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <ViewModel:ForMessageViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <UserControl.Resources>
         <converters:StringToImageConverter x:Key="StringToImageConverterX" />
         <Style x:Key="ContactInfoButtonStyle" TargetType="{x:Type Button}">
@@ -26,9 +26,9 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 >
                 <Grid VerticalAlignment="Center">
-                    <Grid.DataContext>
+                    <!--<Grid.DataContext>
                         <ViewModel:ForMessageViewModel/>
-                    </Grid.DataContext>
+                    </Grid.DataContext>-->
                     <Grid.ColumnDefinitions>
                         <!--Profile photo-->
                         <ColumnDefinition Width="75"/>
@@ -60,9 +60,9 @@
                     <Grid Grid.Column="1">
 
                         <TextBlock>
-                            <TextBlock.DataContext>
+                            <!--<TextBlock.DataContext>
                                 <ViewModel:ForMessageViewModel/>
-                            </TextBlock.DataContext>
+                            </TextBlock.DataContext>-->
                         <!--name-->
                         <Run Text="{Binding ContactName, 
                             FallbackValue='ContactName',

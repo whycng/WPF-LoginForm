@@ -8,9 +8,9 @@
              Height="Auto"
              Width="Auto">
 
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <viewModel:ForMessageViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
     <UserControl.Resources>
 

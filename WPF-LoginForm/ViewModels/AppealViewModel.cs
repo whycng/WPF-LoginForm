@@ -39,7 +39,10 @@ namespace WPF_LoginForm.ViewModels
                 System.Windows.MessageBox.Show("回复成功");
             }
             else
-                throw new NotImplementedException();
+            {
+                // 取消
+            }
+              //  throw new NotImplementedException();
             LoadAppealData();
         }
         // 属性

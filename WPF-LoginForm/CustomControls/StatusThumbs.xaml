@@ -116,9 +116,9 @@
     </UserControl.Resources>
     <ItemsControl ItemTemplate="{StaticResource thumbsTemplate}" 
                   ItemsSource="{Binding statusThumbsCollection, UpdateSourceTrigger=PropertyChanged}">
-        <ItemsControl.DataContext>
+        <!--<ItemsControl.DataContext>
             <viewModel:ForMessageViewModel/>
-        </ItemsControl.DataContext>
+        </ItemsControl.DataContext>-->
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Orientation="Horizontal"/>
