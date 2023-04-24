@@ -70,14 +70,20 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <!--价格-->
-                        <TextBlock Text="{Binding Model_details.item.price}" 
-                                   Background="{StaticResource color2}"/>
+                        <!--价格   Text="{Binding Model_details.item.price,StringFormat={}{0}元}"  -->
+                        <TextBlock 
+                            FontSize="20"
+                            Foreground="Wheat"
+                            Text="{Binding Model_details.item.price,StringFormat=单价:{0}}" 
+                            
+                                   Background="#462AD8"/>
                          
                         <!--介绍-->
                         <TextBlock Grid.Column="1" 
+                                   FontSize="20"
+                                   Foreground="White"
                                    Text="{Binding Model_details.item.ItemShowText}"
-                                   Background="{StaticResource color1}"/>
+                                   Background="{StaticResource color2}"/>
                          
                         <!--评价标签-->
                         <StackPanel Grid.Column="2">
@@ -182,6 +188,39 @@
                 <Grid Panel.ZIndex="0"  Grid.Row="3">
                     <StackPanel Orientation="Horizontal">
                         <Button    
+                                
+                                Command="{Binding StoreCommand}"
+                                  
+                                BorderThickness="0"
+                                Content="商店"
+                                Foreground="White"
+                                FontSize="16"
+                                FontFamily="Montserrat"
+                                Cursor="Hand"    >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#5a847f"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+                        <Button    
                                 CommandParameter="{Binding ElementName=CommentHere,Path=Text}" 
                                 Command="{Binding CommentHereCommand}"
                                   
@@ -214,7 +253,9 @@
                             </Button.Template>
 
                         </Button>
-                        <TextBox x:Name="CommentHere" Width="600"/>
+                        <TextBox x:Name="CommentHere"
+                                 HorizontalAlignment="Center"
+                                 Width="600"/>
                         <!--<Button    
                                      
                                 BorderThickness="0"

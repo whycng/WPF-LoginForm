@@ -18,6 +18,7 @@ using System.Runtime.Remoting.Proxies;
 using System.Data;
 using System.Windows.Forms;
 using System.Windows.Controls;
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -241,7 +242,18 @@ namespace WPF_LoginForm.ViewModels
         public GalaSoft.MvvmLight.Command.RelayCommand<string> _chageChatCommand;
         // to get the contactName of selected chat so that we can open corresponding conversation
         protected ICommand _getSelectedChatCommand;
-
+        public GalaSoft.MvvmLight.Command.RelayCommand _addFriendCommand;
+        //添加好友
+        // 
+        public GalaSoft.MvvmLight.Command.RelayCommand AddFriendCommand
+        {
+            get
+            {
+                if (_addFriendCommand == null)
+                    _addFriendCommand = new GalaSoft.MvvmLight.Command.RelayCommand(( ) => ExcuteAddFriendCommand( ));
+                return _addFriendCommand;
+            }
+        }
         public GalaSoft.MvvmLight.Command.RelayCommand<string> ChageChatCommand  
         {
             get
@@ -267,6 +279,21 @@ namespace WPF_LoginForm.ViewModels
             
         });
 
+        void ExcuteAddFriendCommand()
+        {
+            // 添加好友逻辑
+            AddFriend view = new AddFriend();
+            var r = view.ShowDialog();
+            if (r.Value)
+            {
+                // 查询成功，添加信息正常发送
+
+            }
+            else
+            {
+                // 查询失败，不存在这个人
+            }
+        }
         void ExcuteChangeCommand(object parameter) // 点击左侧聊天用户切换聊天人
         {
             FContactName = parameter.ToString(); //聊天对象名

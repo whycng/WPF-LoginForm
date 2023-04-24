@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using WPF_LoginForm.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace WPF_LoginForm.Repositories
@@ -328,6 +329,29 @@ namespace WPF_LoginForm.Repositories
             }
             return User;
         }// end public
+
+        public bool Search(UserModel user)
+        {
+            var isSearch = false;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [User] \r\nWHERE Phone LIKE @Phone \r\nOR email LIKE @Email \r\nOR username LIKE @Username;";
+                command.Parameters.Add("@Phone", SqlDbType.NVarChar).Value = user.Phone;
+                command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = user.Email;
+                command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = user.Username;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        isSearch = true;
+                    }
+                }
+            }// end using
+            return isSearch;
+        }
 
     }
 }

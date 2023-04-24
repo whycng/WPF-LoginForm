@@ -8,14 +8,21 @@
     <UserControl.Resources>
         <DataTemplate x:Key="thumbsTemplate"  >
             <!--Ellipse 28.00-->
+            
             <Grid Margin="8,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition  />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid  >
-                    <Ellipse
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition  />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid  >
+                        <Ellipse
                         Name="outerEllipse"
                         Width="55"
                         Height="55"
@@ -26,8 +33,24 @@
                         StrokeDashCap="Round"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"/>
+                        <!--<Ellipse.Style>
+                        <Style TargetType="{x:Type Ellipse}">
+                            <Setter Property="Fill" Value="#49a078"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMeAddStatus}" Value="False">
+                                    <Setter Property="Fill">
+                                        <Setter.Value>
+                                            <ImageBrush Stretch="UniformToFill" 
+                                                            ImageSource="{Binding ContactPhoto}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>-->
 
-                    <Ellipse
+
+                        <Ellipse
                         Margin="10,0"
                         Name="innerEllipse"
                         Width="50"
@@ -35,48 +58,51 @@
                         Stretch="Uniform"   
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center">
-                        <!--if IsMeAddStatus=false then shiow the status image inside ellipse
+                            <!--if IsMeAddStatus=false then shiow the status image inside ellipse
                         & if it is true then fill the ellipse-->
-                        <Ellipse.Style>
-                            <Style TargetType="{x:Type Ellipse}">
-                                <Setter Property="Fill" Value="#49a078"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsMeAddStatus}" Value="False">
-                                        <Setter Property="Fill">
-                                            <Setter.Value>
-                                                <ImageBrush Stretch="UniformToFill" 
+                            <Ellipse.Style>
+                                <Style TargetType="{x:Type Ellipse}">
+                                    <Setter Property="Fill" Value="#49a078"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMeAddStatus}" Value="False">
+                                            <Setter Property="Fill">
+                                                <Setter.Value>
+                                                    <ImageBrush Stretch="UniformToFill" 
                                                             ImageSource="{Binding ContactPhoto}"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Ellipse.Style>
-                        <!--30.00-->
-                    </Ellipse>
-                    
-                    <!--if the IsMeAddStatue=false then hide the add sgin-->
-                    
-                     
-                    <Path
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                            <!--30.00-->
+                        </Ellipse>
+
+                        <!--if the IsMeAddStatue=false then hide the add sgin-->
+
+
+                        <Path
                         Data="{StaticResource addSign}"
                         Fill="#dce1de" 
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Stretch="Uniform">
-                        <Path.Style>
-                            <Style TargetType="{x:Type Path}"> 
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsMeAddStatus}" Value="False">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
+                            <Path.Style>
+                                <Style TargetType="{x:Type Path}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMeAddStatus}" Value="False">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Grid>
                 </Grid>
-                
-                <!--Contact Profile Ellipse-->
+                <!--<Button Grid.Column="1" /> 模板问题-->
+
+
+                <!--Contact Profile Ellipse !-->
                 <Ellipse  
                         Name="contactPhotoEllipse"
                     Margin="40,0,0,8"

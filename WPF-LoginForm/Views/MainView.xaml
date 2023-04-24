@@ -96,7 +96,7 @@
                                 Height="35"
                                 Margin="15,25,0,40">
                         <Image Source="/Images/Logo.png" Height="30" />
-                        <TextBlock Text="whg CODE from RJ"
+                        <TextBlock Text="UPC电子商务系统"
                                    Foreground="{StaticResource titleColor2}"
                                    FontSize="20"
                                    FontFamily="Montserrat"

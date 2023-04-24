@@ -151,8 +151,8 @@ namespace WPF_LoginForm.ViewModels
                 //var x = model.Username;
                 //var y = model.Email;
             }
-            else
-                throw new NotImplementedException();
+            else { }
+              // throw new NotImplementedException();
         }
     }
 }

@@ -34,7 +34,7 @@
 
                     <DataGridTextColumn 
                                     Header="时间" 
-                                    Binding="{Binding Time}"/>
+                                    Binding="{Binding TimeApp}"/>
                     <DataGridTextColumn 
                                     Header="申诉原因" 
                                     Binding="{Binding UserReason}"/>

@@ -170,6 +170,7 @@
     <Compile Include="Repositories\MessRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="ViewModels\AddFriendViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\AppealViewModel.cs" />
     <Compile Include="ViewModels\CompassViewModel.cs" />
@@ -201,8 +202,14 @@
     <Compile Include="Views\AddDetails.xaml.cs">
       <DependentUpon>AddDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddFriend.xaml.cs">
+      <DependentUpon>AddFriend.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddReply.xaml.cs">
       <DependentUpon>AddReply.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddStoreView.xaml.cs">
+      <DependentUpon>AddStoreView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddStuView.xaml.cs">
       <DependentUpon>AddStuView.xaml</DependentUpon>
@@ -320,7 +327,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddFriend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddReply.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddStoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

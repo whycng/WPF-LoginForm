@@ -72,6 +72,13 @@
                         
                     </Run>
                 </TextBlock>
+                <!-- 价格 -->
+                <TextBlock HorizontalAlignment="Center" 
+                          >
+                    <Run  Text="{Binding price, StringFormat=价格:{0}}" 
+                          Foreground="{StaticResource plainTextColor1}" 
+                          FontSize="16"/>
+                </TextBlock>
                 <!-- 商家信息 -->
                 <TextBlock HorizontalAlignment="Center" 
                           >
