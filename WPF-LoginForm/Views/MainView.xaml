@@ -107,7 +107,9 @@
                     </StackPanel>
 
                     <!-- Menu Buttons左侧导航栏按钮 -->
-                    <RadioButton Style="{StaticResource menuButton}"
+                    <RadioButton 
+                        x:Name="testDash"
+                        Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
                                  IsChecked="True"
                                  Command="{Binding ShowHomeViewCommand}">
@@ -327,14 +329,17 @@
                             <!--<Button Style="{StaticResource iconButton}"
                                     Tag="{StaticResource color3}">
                                 <fa:IconImage Icon="Clock" Style="{StaticResource iconButtonIcon}" />
-                            </Button>
+                            </Button>-->
 
-                            <Button Style="{StaticResource iconButton}"
-                                    Tag="{StaticResource color4}">
+                            <Button 
+                                x:Name="MyMessage"
+                                Command="{Binding ShowMyMessageCommand}"    
+                                Style="{StaticResource iconButton}"
+                                Tag="{StaticResource color4}">
                                 <fa:IconImage Icon="Envelope" Style="{StaticResource iconButtonIcon}" />
                             </Button>
 
-                            <Button Style="{StaticResource iconButton}"
+                            <!--<Button Style="{StaticResource iconButton}"
                                     Tag="{StaticResource color5}">
                                 <fa:IconImage Icon="Bell" Style="{StaticResource iconButtonIcon}" />
                             </Button>-->

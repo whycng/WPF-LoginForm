@@ -190,6 +190,7 @@
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelCommand.cs" />
+    <Compile Include="ViewModels\VisualTreeHelperExtensions.cs" />
     <Compile Include="Views\AddAppeal.xaml.cs">
       <DependentUpon>AddAppeal.xaml</DependentUpon>
     </Compile>

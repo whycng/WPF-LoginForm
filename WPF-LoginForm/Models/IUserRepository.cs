@@ -29,6 +29,8 @@ namespace WPF_LoginForm.Models
         void SetEmailByUserName(string username, string email);
         List<UserModel> GetSeller();// 拿到卖家  
         List<UserModel> GetUser();// 拿到普通用户 
-        bool Search(UserModel user); // 模糊搜索
+        UserModel Search(UserModel user); // 模糊搜索
+        // FromUser向ToUser发送好友邀请，写入AddFriend表
+        void SetAddFriend(UserModel ToUser, UserModel FromUser, string Reason);
     }
 }

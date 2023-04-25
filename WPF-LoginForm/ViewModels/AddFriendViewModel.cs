@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WPF_LoginForm.Models;
 using GalaSoft.MvvmLight.Command;
 using WPF_LoginForm.Repositories;
-
+using System.Threading;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -18,13 +18,16 @@ namespace WPF_LoginForm.ViewModels
             // 信息初始化
             Reason = string.Empty;
             IsSaveEnabled = true;// 无用
-            Model_user = null;
+            Model_user = new UserModel();
             userRepository = new UserRepository();
+            UserNow = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+
         }
         // 命令
-        
+
         public RelayCommand SearchFriCommand { get; set; }
         // 属性
+        public UserModel UserNow;
         private IUserRepository userRepository;
         private UserModel _model_user;// 添加的用户的信息
         public UserModel Model_user
@@ -61,16 +64,18 @@ namespace WPF_LoginForm.ViewModels
         void ExecuteSearchFriCommand()
         {
             // 查找这个人是否存在
-            var search = userRepository.Search(Model_user);
-            if (search)
+            UserModel search = userRepository.Search(Model_user);
+            if (search != null)
             {
-                 
+                // 若存在，发送添加好友信息，写入待添加好友信息表
+                userRepository.SetAddFriend(search, UserNow, Reason);
+                // 弹出 添加成功
+                System.Windows.MessageBox.Show("添加成功");
             }
             else
             {
-                
                 // 弹出“未找到”
-                 
+                System.Windows.MessageBox.Show("未找到用户");
             }
            
         }

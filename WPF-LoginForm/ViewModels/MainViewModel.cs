@@ -1,4 +1,5 @@
 ﻿using FontAwesome.Sharp;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels //
 {
@@ -94,8 +99,63 @@ namespace WPF_LoginForm.ViewModels //
         public ICommand ShowCompassViewCommand { get; }//
         public ICommand ShowMerchantViewCommand { get; }// 
         public ICommand ShowAppealViewCommand { get; }//
-        public ICommand ShowAdminViewCommand { get; }//ShowAdminViewCommand
+        public ICommand ShowAdminViewCommand { get; }// 
+        // ShowMyMessageCommand
+        public ICommand ShowMyMessageCommand => new RelayCommand(OnShowDropdown);
+        public static List<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
+        {
+            var children = new List<T>();
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typedChild)
+                {
+                    children.Add(typedChild);
+                }
+                children.AddRange(FindVisualChildren<T>(child));
+            }
+            return children;
+        }
 
+        public static T FindChildByXName<T>(DependencyObject parent, string xname) where T : FrameworkElement
+        {
+            if (parent == null || string.IsNullOrEmpty(xname))
+            {
+                return null;
+            }
+
+            var children = FindVisualChildren<T>(parent);
+
+            foreach (var child in children)
+            {
+                if (child is Button button && button.Name == xname)
+                {
+                    return child;
+                }
+            }
+
+            return null;
+        }
+
+
+        private void OnShowDropdown()
+        {
+            // 获取按钮的位置和大小
+            //var button = Application.Current.MainWindow.FindChild<Button>("MyMessage");
+            var button = FindChildByXName<Button>(Application.Current.MainWindow, "btnClose");
+
+            var position = button.PointToScreen(new Point(0, button.ActualHeight));
+            var size = new Size(button.ActualWidth, 100);
+
+            // 创建下拉窗口并将其放置于按钮的下方
+            var popup = new Popup();
+            popup.Child = new AddFriend(); // YourDropDownContent
+            popup.Placement = PlacementMode.Bottom;
+            popup.PlacementTarget = button;
+            popup.VerticalOffset = position.Y;
+            popup.HorizontalOffset = position.X;
+            popup.IsOpen = true;
+        }
 
         public MainViewModel() // 构造函数，初始化使用 view
         {

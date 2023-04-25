@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
         mc:Ignorable="d"
-        Title="添加好友" Height="300" Width="200">
+        Title="添加好友" Height="400" Width="200"
+        WindowStartupLocation="CenterScreen"
+        >
     <Window.DataContext>
         <viewModel:AddFriendViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid MouseLeftButtonDown="PnlControlBar_MouseLeftButtonDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
             <RowDefinition  />
@@ -18,18 +20,23 @@
             <TextBlock Text="请输入以下任意一项:"
                       Margin="0,0,0,10"/>
             <TextBlock Text="用户名"/>
-            <TextBox  Text="{Binding Model_user.Username}"/>
+            <TextBox  Text="{Binding Model_user.Username,
+                UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="手机号"/>
-            <TextBox Text="{Binding Model_user.Phone}"/>
+            <TextBox Text="{Binding Model_user.Phone,
+                UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="姓名"/>
-            <TextBox Text="{Binding Model_user.Name}"/> 
+            <TextBox Text="{Binding Model_user.Name,
+                UpdateSourceTrigger=PropertyChanged}"/> 
             <TextBlock Text="邮箱 Email"/>
-            <TextBox Text="{Binding Model_user.Email}"/>
+            <TextBox Text="{Binding Model_user.Email,
+                UpdateSourceTrigger=PropertyChanged}"/>
             <Button Height="20" Width="60"
                     Content="添加用户"
                     Command="{Binding SearchFriCommand}"/>
             <TextBlock Text="打个招呼吧~"/>
-            <TextBox Height="50" Text="{Binding Reason}"/>
+            <TextBox Height="50" Text="{Binding Reason,
+                UpdateSourceTrigger=PropertyChanged}"/>
             
         </StackPanel>
 

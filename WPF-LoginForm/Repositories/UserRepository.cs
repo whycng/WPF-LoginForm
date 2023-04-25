@@ -330,9 +330,14 @@ namespace WPF_LoginForm.Repositories
             return User;
         }// end public
 
-        public bool Search(UserModel user)
+        public UserModel Search(UserModel user)
         {
-            var isSearch = false;
+            UserModel isSearch = null;
+            if (user is null) 
+                return null;
+            user.Phone = user.Phone ?? "";
+            user.Email = user.Email ?? "";
+            user.Username = user.Username ?? "";
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
@@ -346,12 +351,52 @@ namespace WPF_LoginForm.Repositories
                 {
                     if (reader.Read())
                     {
-                        isSearch = true;
+                        // isSearch = true;
+
+                        isSearch = new UserModel()
+                        {
+                            Id = reader[0].ToString(),
+                            Username = reader[1].ToString(),
+                            Password = reader[2].ToString(),
+                            Name = reader[3].ToString(),
+                            LastName = reader[4].ToString(),
+                            Email = reader[5].ToString(),
+                            UserPhoto =
+    new Uri("/assets/userHead/" + reader[6].ToString(), UriKind.RelativeOrAbsolute),
+                            
+                            Sex = reader[7].ToString(),
+                            Address = reader[8].ToString(),
+                            Phone = reader[9].ToString(),
+                        };
                     }
                 }
             }// end using
             return isSearch;
         }
 
+        public void SetAddFriend(UserModel ToUser, UserModel FromUser, string Reason)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Insert Into " +
+                    "AddFriend(FromUsername,FromUserId,ToUsername,ToUserId,Reason)\r\n" +
+                    "Select @FromUsername,t.Id,@ToUsername,q.Id,@Reason " +
+                    "From [User] t,[User] q \r\n" +
+                    "Where t.Username=@FromUsername And q.Username=@ToUsername";
+                command.Parameters.Add("@FromUsername", SqlDbType.NVarChar).Value = FromUser.Username;
+                command.Parameters.Add("@ToUsername", SqlDbType.NVarChar).Value = ToUser.Username;
+                command.Parameters.Add("@Reason", SqlDbType.Text).Value = Reason;
+                 using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+     
+                    }
+                }
+            }// end using
+        }// end public 
     }
 }
