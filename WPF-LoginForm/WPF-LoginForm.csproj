@@ -147,6 +147,7 @@
     <Compile Include="CustomControls\StatusThumbs.xaml.cs">
       <DependentUpon>StatusThumbs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddFriModel.cs" />
     <Compile Include="Models\AppealModel.cs" />
     <Compile Include="Models\ChatConversation.cs" />
     <Compile Include="Models\ChatListData.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="ViewModels\AddFriendViewModel.cs" />
+    <Compile Include="ViewModels\AddMyMessageViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\AppealViewModel.cs" />
     <Compile Include="ViewModels\CompassViewModel.cs" />
@@ -205,6 +207,9 @@
     </Compile>
     <Compile Include="Views\AddFriend.xaml.cs">
       <DependentUpon>AddFriend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddMyMessage.xaml.cs">
+      <DependentUpon>AddMyMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddReply.xaml.cs">
       <DependentUpon>AddReply.xaml</DependentUpon>
@@ -329,6 +334,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddFriend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddMyMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

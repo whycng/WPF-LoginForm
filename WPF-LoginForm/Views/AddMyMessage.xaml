@@ -1,0 +1,122 @@
+﻿<Window x:Class="WPF_LoginForm.Views.AddMyMessage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_LoginForm.Views" 
+        xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
+        mc:Ignorable="d"
+        Title="我的消息" Height="350" Width="400">
+    <Window.DataContext>
+        <viewModel:AddMyMessageViewModel/>
+    </Window.DataContext>
+    
+    <Grid MouseLeftButtonDown="PnlControlBar_MouseLeftButtonDown">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            
+        </Grid>
+        <!-- xx想要添加您为好友 -->
+        <ScrollViewer Height="170" 
+                      Grid.Row="1">
+            <StackPanel  >
+                 
+                <ItemsControl 
+                            ItemsSource="{Binding AddFri}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Width="50" Content="用户名："/>
+                                <Button Width="50" Content="{Binding FromUsername}"/>
+                                <Button Width="50" Content="接受"
+                                        CommandParameter="{Binding FromUsername}" 
+                                        Command="{Binding DataContext.AcceptCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=ItemsControl}}"/>
+                                <Button Width="50" Content="拒绝"
+                                        CommandParameter="{Binding FromUsername}" 
+                                        Command="{Binding DataContext.RejectCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=ItemsControl}}"/>
+                                <Button    
+                                     Content="{Binding Reason}"
+                                    BorderThickness="0" 
+                                    Foreground="White"
+                                    FontSize="16"
+                                    FontFamily="Montserrat"
+                                    Cursor="Hand"    >
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#502327"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#28AEED"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Width="Auto" Height="Auto"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+
+                                </Button>
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Button    
+                    Click="btnSave"
+                    BorderThickness="0"
+                    Content="关闭"
+                    Foreground="White"
+                    FontSize="16"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"    >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#5a847f"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+                
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

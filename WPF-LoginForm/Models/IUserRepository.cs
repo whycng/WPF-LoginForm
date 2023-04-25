@@ -32,5 +32,9 @@ namespace WPF_LoginForm.Models
         UserModel Search(UserModel user); // 模糊搜索
         // FromUser向ToUser发送好友邀请，写入AddFriend表
         void SetAddFriend(UserModel ToUser, UserModel FromUser, string Reason);
+        // 根据当前用户获取他的添加好友信息
+        List<AddFriModel> GetAddFriByNowUsername(string NowUsername);
+        // 添加好友呗
+        void AddFriend(string FromUsername, string ToUsername );
     }
 }

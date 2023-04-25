@@ -398,5 +398,69 @@ namespace WPF_LoginForm.Repositories
                 }
             }// end using
         }// end public 
+
+        public List<AddFriModel> GetAddFriByNowUsername(string NowUsername)
+        {
+            List<AddFriModel> AddFriList = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                AddFriList = new List<AddFriModel>();
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "select * from AddFriend Where ToUsername=@NowUsername";
+                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var t = new AddFriModel()
+                        {
+                            FromUsername = reader[0].ToString(),
+                            FromUserId = reader[1].ToString(),
+                            ToUsername = reader[2].ToString(),
+                            ToUserId = reader[3].ToString(),
+                            Reason = reader[4].ToString(),
+                            
+                        };
+                        AddFriList.Add(t);
+                    }
+                }
+            }
+            return AddFriList;
+        }// end public
+    
+        public void AddFriend(string FromUsername, string ToUsername)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "Insert Into Friend(Id,Username,FId,FUsername)\r\n" +
+                    "Select t.Id,@FromUsername,q.Id,@ToUsername \r\n" +
+                    "From [User] t,[User] q \r\n" +
+                    "Where t.Username=@FromUsername And q.Username=@ToUsername " +
+                    "And Not Exists\r\n" +
+                    "( Select * from Friend \r\n" +
+                    "Where Username=@FromUsername And FUsername=@ToUsername);\r\n" +
+                    "Insert Into Friend(Id,Username,FId,FUsername)\r\n" +
+                    "Select t.Id,@ToUsername,q.Id,@FromUsername \r\n" +
+                    "From [User] t,[User] q \r\n" +
+                    "Where t.Username=@ToUsername And q.Username=@FromUsername " +
+                     "And Not Exists\r\n" +
+                    "( Select * from Friend \r\n" +
+                    "Where Username=@ToUsername And FUsername=@FromUsername);";
+                command.Parameters.Add("@FromUsername", SqlDbType.NVarChar).Value = FromUsername;
+                command.Parameters.Add("@ToUsername", SqlDbType.NVarChar).Value = ToUsername;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }
     }
 }

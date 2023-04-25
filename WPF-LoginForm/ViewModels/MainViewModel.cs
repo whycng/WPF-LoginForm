@@ -101,7 +101,10 @@ namespace WPF_LoginForm.ViewModels //
         public ICommand ShowAppealViewCommand { get; }//
         public ICommand ShowAdminViewCommand { get; }// 
         // ShowMyMessageCommand
-        public ICommand ShowMyMessageCommand => new RelayCommand(OnShowDropdown);
+        public ICommand ShowMyMessageCommand => new RelayCommand(ExecuteShowMyMessageCommand);
+     
+
+        #region 使用可视化树，错误
         public static List<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
         {
             var children = new List<T>();
@@ -156,7 +159,7 @@ namespace WPF_LoginForm.ViewModels //
             popup.HorizontalOffset = position.X;
             popup.IsOpen = true;
         }
-
+        #endregion
         public MainViewModel() // 构造函数，初始化使用 view
         {
 
@@ -180,7 +183,13 @@ namespace WPF_LoginForm.ViewModels //
 
             LoadCurrentUserData();
         }//
-
+        void ExecuteShowMyMessageCommand()
+        {
+            // 打开页面
+            AddMyMessage view = new AddMyMessage();
+            var r = view.ShowDialog();
+             
+        }
         private void ExecuteShowAdminViewCommand(object obj)
         {
 
