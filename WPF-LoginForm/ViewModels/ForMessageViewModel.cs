@@ -415,8 +415,11 @@ namespace WPF_LoginForm.ViewModels
                // connection.Open();
                 command.Connection = connection;
                 command.CommandText = "select * from Message where M_ToUsername = @FContactName And M_FromUsername = @NowUsername";
-                command.Parameters.Add("@FContactName", SqlDbType.NVarChar).Value = FContactName;
-                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+                //command.Parameters.Add("@FContactName", SqlDbType.NVarChar).Value = FContactName;
+                //command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+                // 一个小问题，左右聊天，先这么解决
+                command.Parameters.Add("@FContactName", SqlDbType.NVarChar).Value = NowUsername;
+                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = FContactName;
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -455,8 +458,12 @@ namespace WPF_LoginForm.ViewModels
               //  connection.Open();
                 command.Connection = connection;
                 command.CommandText = "select * from Message where M_ToUsername = @NowUsername And M_FromUsername = @FcontactName";
-                command.Parameters.Add("@FcontactName", SqlDbType.NVarChar).Value = FContactName;
-                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+                //command.Parameters.Add("@FcontactName", SqlDbType.NVarChar).Value = FContactName;
+                //command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value = NowUsername;
+
+                command.Parameters.Add("@FcontactName", SqlDbType.NVarChar).Value = NowUsername;
+                command.Parameters.Add("@NowUsername", SqlDbType.NVarChar).Value =  FContactName;
+
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
