@@ -42,7 +42,31 @@ namespace WPF_LoginForm.Repositories
             return messModel;
         }
 
- 
+        public void SendMessage(string FromUsername, string ToUsername, string Text)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = " \tInsert Into Message\r\n\t" +
+                    "(M_Message,M_FromUsername,M_ToUsername,M_FromUserID,M_ToUserID) \r\n\t" +
+                    "Values(@Text,@FromUsername,@ToUsername,\r\n\t" +
+                    "(Select Id from [User] Where Username='admin'),\r\n\t" +
+                    "(Select Id from [User] Where Username='test') \r\n\t) ;";
+                command.Parameters.Add("@Text", SqlDbType.Text).Value = Text;
+                command.Parameters.Add("@FromUsername", SqlDbType.NVarChar).Value = FromUsername;
+                command.Parameters.Add("@ToUsername", SqlDbType.NVarChar).Value = ToUsername;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                       
+                    }
+                }
+            }// end using
+        }// end public
+
 
     }
 }

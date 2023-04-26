@@ -27,7 +27,8 @@ namespace WPF_LoginForm.ViewModels
 
         #region MainWindow For Message
 
-        #region Properties
+        #region Properties 
+        public MessModel messModel;
         public string ContactName { get; set; }
         public Uri ContactPhoto { get; set; }
         public string Email { get; set; }
@@ -243,6 +244,17 @@ namespace WPF_LoginForm.ViewModels
         // to get the contactName of selected chat so that we can open corresponding conversation
         protected ICommand _getSelectedChatCommand;
         public GalaSoft.MvvmLight.Command.RelayCommand _addFriendCommand;
+        // 发送信息 SendCommand
+        public GalaSoft.MvvmLight.Command.RelayCommand _sendCommand;
+        public GalaSoft.MvvmLight.Command.RelayCommand SendCommand
+        {
+            get
+            {
+                if (_sendCommand == null)
+                    _sendCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => ExcuteSendCommand());
+                return _sendCommand;
+            }
+        }
         //添加好友
         // 
         public GalaSoft.MvvmLight.Command.RelayCommand AddFriendCommand
@@ -331,22 +343,7 @@ namespace WPF_LoginForm.ViewModels
                 return _chageChatCommandY;
             }
         }
-        void ExecuteTest1()
-        {
-            FContactName = "admin";//聊天对象名
-            Conversations = new ObservableCollection<ChatConversation>();
-            LoadChatConversation();
-            Conversations = new ObservableCollection<ChatConversation>(Conversations);
 
-        }
-        void ExecuteTest2()
-        {
-            FContactName = "keni";//聊天对象名
-            Conversations = new ObservableCollection<ChatConversation>();
-            LoadChatConversation();
-            Conversations = new ObservableCollection<ChatConversation>(Conversations);
-            OnPropertyChanged(nameof(OnPropertyChanged));   
-        }
         #endregion
 
         #endregion
@@ -380,17 +377,38 @@ namespace WPF_LoginForm.ViewModels
         #endregion
 
         #region Logics
+        void ExcuteSendCommand()
+        {
+            // 发送信息
+            messRepository.SendMessage(NowUsername, FContactName, MessageText);
+            LoadChatConversation();
+        }
+        void ExecuteTest1()
+        {
+            FContactName = "admin";//聊天对象名
+            Conversations = new ObservableCollection<ChatConversation>();
+            LoadChatConversation();
+            Conversations = new ObservableCollection<ChatConversation>(Conversations);
 
+        }
+        void ExecuteTest2()
+        {
+            FContactName = "keni";//聊天对象名
+            Conversations = new ObservableCollection<ChatConversation>();
+            LoadChatConversation();
+            Conversations = new ObservableCollection<ChatConversation>(Conversations);
+            OnPropertyChanged(nameof(OnPropertyChanged));
+        }
         void LoadChatConversation() { 
             
             if(connection.State == System.Data.ConnectionState.Closed)
                 connection.Open();
-            if(Conversations == null)
-            {
-                Conversations = new ObservableCollection<ChatConversation>();
-            }
+            //if(Conversations == null)
+            //{
+            //    Conversations = new ObservableCollection<ChatConversation>();
+            //}
+            Conversations = new ObservableCollection<ChatConversation>();
 
-           
             using (var command = new SqlCommand())
             {
                 
@@ -427,7 +445,7 @@ namespace WPF_LoginForm.ViewModels
 
                         };
                         Conversations.Add(conversation);
-                        OnPropertyChanged(nameof(Conversations));
+                        // OnPropertyChanged(nameof(Conversations));
                     }
                 }
             }
@@ -459,6 +477,7 @@ namespace WPF_LoginForm.ViewModels
                             MsgReceivedOn = MsgReceivedOn,// reader["MsgReceivedOn"].ToString(),
 
                             MsgSentOn = MsgSentOn,// reader["MsgSentOn"].ToString(),
+                            
                             IsMessageReceived = false,//string.IsNullOrEmpty(reader["SentMessage"].ToString()) ? false : true
 
                         };
@@ -491,12 +510,12 @@ namespace WPF_LoginForm.ViewModels
                         //    Conversations.Add(con);
                         //}
                         //i++;
-                        OnPropertyChanged(nameof(Conversations));
+                        // OnPropertyChanged(nameof(Conversations));
                     }
                 }
             }
 
-
+            #region 注释掉的SQL
             // 2 SQL
             //using (SqlCommand com = new SqlCommand("select * from Message where M_ToUsername=@FcontactName And M_FromUsername=@NowUsername", connection))
             //{
@@ -624,7 +643,7 @@ namespace WPF_LoginForm.ViewModels
             //    }
 
             //}// end using
-
+            #endregion
         }
         #endregion
 
@@ -639,6 +658,7 @@ namespace WPF_LoginForm.ViewModels
             messRepository = new MessRepository();
             _messModel = new MessModel();
             Conversations = null;
+            MessageText = string.Empty;
 
             LoadChats();
             LoadStatusThumbs();

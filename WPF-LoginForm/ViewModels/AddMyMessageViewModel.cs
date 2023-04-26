@@ -24,7 +24,7 @@ namespace WPF_LoginForm.ViewModels
             UserNow = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             LoadData();
         }
-        // 属性 AddFri 
+        // 属性 AddFri   
         public UserModel UserNow;
         private ObservableCollection<AddFriModel> _addFri;
         public ObservableCollection<AddFriModel> AddFri
@@ -50,7 +50,8 @@ namespace WPF_LoginForm.ViewModels
         void ExecuteRejectCommand(string FromUsername)
         {
             // 拒绝好友邀请
-            // 发送回执
+            // 发送回执 无
+
         }
         void LoadData()
         {

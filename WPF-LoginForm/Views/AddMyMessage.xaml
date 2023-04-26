@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_LoginForm.Views" 
         xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
         mc:Ignorable="d"
-        Title="我的消息" Height="350" Width="400">
+        Title="我的消息" Height="350" Width="300">
     <Window.DataContext>
         <viewModel:AddMyMessageViewModel/>
     </Window.DataContext>
@@ -24,7 +24,9 @@
         <ScrollViewer Height="170" 
                       Grid.Row="1">
             <StackPanel  >
+                <!--其他信息 拒绝-->
                  
+                <!-- 添加好友的信息-->
                 <ItemsControl 
                             ItemsSource="{Binding AddFri}">
                     <ItemsControl.ItemTemplate>

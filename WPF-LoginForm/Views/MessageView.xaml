@@ -307,7 +307,9 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBox Background="Transparent" BorderThickness="0"
-                                     Padding="12,0" Text="{Binding MessageText}"
+                                     Padding="12,0" 
+                                     Text="{Binding MessageText,
+                                     UpdateSourceTrigger=PropertyChanged}"
                                      VerticalAlignment="Stretch" VerticalContentAlignment="Center"
                                      x:Name="MessageBox">
 
@@ -318,11 +320,14 @@
                                 Orientation="Horizontal">
                                 <!--to do commands-->
 
-
+                                <!--添加附加按钮-->
                                 <Button Content="{StaticResource attach}"
                                 x:Name="AttachButton"
                                 Style="{StaticResource IconButtonStyle}"/>
-                                <Button Content="{StaticResource send}"
+                                <!--发送按钮-->
+                                <Button 
+                                    Command="{Binding SendCommand}"
+                                    Content="{StaticResource send}"
                                 x:Name="SendMsgButton"
                                 Style="{StaticResource IconButtonStyle}"/>
                             </StackPanel>

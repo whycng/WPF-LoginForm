@@ -143,7 +143,7 @@
                                                                 <Setter Property="HorizontalAlignment" Value="Left"/>
                                                             </DataTrigger>
 
-                                                            <!--else on left-->
+                                                            <!--else on right-->
                                                             <DataTrigger Binding="{Binding IsMessageReceived}" Value="False">
                                                                 <Setter Property="Text" Value="{Binding MsgSentOn}"/>
                                                                 <Setter Property="HorizontalAlignment" Value="Right"/>
