@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_LoginForm.ViewModels;
 
 namespace WPF_LoginForm.Views
 {
@@ -19,9 +20,18 @@ namespace WPF_LoginForm.Views
     /// </summary>
     public partial class AddStoreView : Window
     {
+        //public AddStoreView(AddStoreViewModel viewModel)
+        //{
+
+        //    InitializeComponent();
+        //    _viewModel = viewModel;
+        //}
+        // 属性
+        //private AddStoreViewModel _viewModel;
         public AddStoreView()
-        {
-            InitializeComponent();
+        { 
+            InitializeComponent(); 
         }
+        
     }
 }

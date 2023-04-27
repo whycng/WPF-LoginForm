@@ -38,6 +38,9 @@ namespace WPF_LoginForm.Models
         List<AppealModel> GetAppealBySellerName(string sellername);
         void SetAppealByUsername(string username, int itemId ,string UsreReason);
         void UpdataAppealReplyByItemId(int itemId, string Reply);// 商家回复
+        // 临时表 临时商家名
+        void TmpSetSellername(string sellername);
+        string TmpGetSellername();
     }
 }
  

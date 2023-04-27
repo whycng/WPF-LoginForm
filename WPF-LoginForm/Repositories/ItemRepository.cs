@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using System.Windows;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Xml.Linq;
 
 namespace WPF_LoginForm.Repositories
 {
@@ -611,5 +612,47 @@ namespace WPF_LoginForm.Repositories
                 }
             }
         }// end public
+
+        public void TmpSetSellername(string sellername)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "truncate table TmpSellername;" +
+                    "Insert Into TmpSellername(Sellername) Values (@sellername); ";
+                command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername; 
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }// end public
+
+        public string TmpGetSellername()
+        {
+            string Sellername= string.Empty;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = " select * from TmpSellername;\r\n" +
+                    "truncate table TmpSellername;";
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Sellername = reader[0].ToString();
+                    }
+                }
+            }// end using
+            return Sellername;
+        }
+
     }
 }

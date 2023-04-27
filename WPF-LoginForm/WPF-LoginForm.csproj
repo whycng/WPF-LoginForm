@@ -173,6 +173,7 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="ViewModels\AddFriendViewModel.cs" />
     <Compile Include="ViewModels\AddMyMessageViewModel.cs" />
+    <Compile Include="ViewModels\AddStoreViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\AppealViewModel.cs" />
     <Compile Include="ViewModels\CompassViewModel.cs" />

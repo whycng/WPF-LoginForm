@@ -14,13 +14,32 @@ namespace WPF_LoginForm.ViewModels
 {
     public class DetailsViewModel : ViewModelBase
     {
+        public DetailsViewModel()
+        {
+            itemRepo = new ItemRepository();
+            // Model_details = DetailsModelTmp;// tmp也不行
+            detailsRepository = new DetailsRepository();
+            userRepository = new UserRepository();
+            Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
+
+            CommentHereCommand = new RelayCommand<string>(t => CommentHere(t));
+            // 未知错误
+            //StoreCommand = new GalaSoft.MvvmLight.Command.RelayCommand(ExecuteStoreCommand);
+
+            //拼单
+            LoadDataCollage();
+        }
+
+        // 属性
         private IItemRepo itemRepo;
         int CollageItemId = -1;
         public DetailsRepository detailsRepository;
         public UserRepository userRepository;
-        //private DetailsModel tmp;
-        // CollageCommand 
+         
+        // 命令 StoreCommand
+        // public GalaSoft.MvvmLight.Command.RelayCommand StoreCommand; // 打开商店
         private RelayCommand<int> _collageCommand;//拼单命令
+        private RelayCommand  _storeCommand; 
         public DetailsModel _model_details; // CommentHereCommand
 
         public RelayCommand<string> CommentHereCommand { get; set; }
@@ -33,29 +52,17 @@ namespace WPF_LoginForm.ViewModels
                     _collageCommand = new RelayCommand<int>((parameter) => ExcuteCollageCommand(parameter));
                 return _collageCommand;
             }
-        }// ExcuteCommentHereCommand
-
-        public void CommentHere(string Comment)// 评论
+        }
+        public RelayCommand StoreCommand
         {
-            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
-            itemRepo.SetCommentByUser(Model_details.item.Id, user.Username, Comment);
-            LoadData();
+            get
+            {
+                if (_storeCommand == null)
+                    _storeCommand = new RelayCommand(() => ExecuteStoreCommand());
+                return _storeCommand;
+            }
         }
 
-  
-
-        void ExcuteCollageCommand(object parameter)
-        {
-            CollageItemId = (int)parameter;
-
-            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
-
-            // 写入拼单表
-            detailsRepository.SetCollageById(CollageItemId, user.Username);
-            // 打开拼单页面  可以将其上下文设置在此
-            AddCollage view = new AddCollage();
-            var r = view.ShowDialog();
-        }
         #region Collage 拼单
         public ObservableCollection<CollageModel> data_collage { get; set; }
         public void LoadDataCollage()
@@ -67,7 +74,7 @@ namespace WPF_LoginForm.ViewModels
 
         }
         #endregion
-        public DetailsModel Model_details
+        public DetailsModel Model_details // 当前页面的所以信息，商品商店商家等
         {
             get { 
                 return _model_details;
@@ -87,25 +94,41 @@ namespace WPF_LoginForm.ViewModels
             detailsRepository.TmpSet(model.item.Id);
         }
 
+        // 函数
+
+        void ExecuteStoreCommand()
+        {
+            // 打开商店
+            // AddStoreViewModel viewModel = new AddStoreViewModel(Model_details.item.Id);
+            // 因为错误，更换解决方法，使用临时表，卖家名
+            itemRepo.TmpSetSellername(Model_details.item.SellerName);
+            AddStoreView view = new AddStoreView();
+            var r = view.ShowDialog();
+        }
         void LoadData()
         {
             Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
 
         }
-        public DetailsViewModel()
+
+        public void CommentHere(string Comment)// 评论
         {
-            itemRepo = new ItemRepository();
-            // Model_details = DetailsModelTmp;// tmp也不行
-            detailsRepository = new DetailsRepository();
-            userRepository = new UserRepository();
-            Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
-
-            CommentHereCommand = new RelayCommand<string>(t => CommentHere(t));
-
-            //拼单
-            LoadDataCollage();
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+            itemRepo.SetCommentByUser(Model_details.item.Id, user.Username, Comment);
+            LoadData();
         }
 
+        void ExcuteCollageCommand(object parameter)
+        {
+            CollageItemId = (int)parameter;
 
+            var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
+
+            // 写入拼单表
+            detailsRepository.SetCollageById(CollageItemId, user.Username);
+            // 打开拼单页面  可以将其上下文设置在此
+            AddCollage view = new AddCollage();
+            var r = view.ShowDialog();
+        }
     }
 }
