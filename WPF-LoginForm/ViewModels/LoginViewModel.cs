@@ -5,6 +5,7 @@ using System.Net;
 using System.Security;
 using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -140,19 +141,52 @@ namespace WPF_LoginForm.ViewModels
         private void ExecuteRecoverPassCommand(string username, string email)
         {
             var model = new UserModel();
+
             AddUserView view = new AddUserView(model);
             var r = view.ShowDialog(); //返回值r就是 AddStuView页面【确定/取消】的结果
-            if (r.Value)
-            {
-                // 不需要，sql NEWID()生成
-                //string user_id = GenerateCheckCodeNum(20);
-                //model.Id = user_id;
-                userRepository.Add(model);
-                //var x = model.Username;
-                //var y = model.Email;
-            }
-            else { }
-              // throw new NotImplementedException();
-        }
+            if (r.Value) { // 点击了【确定】
+                // 用于验证
+                UserModel t = userRepository.GetByUsername(model.Username);
+
+                // 如果用户名或者密码为空，报错
+                if (model.Username == null || model.Username == string.Empty || model.Password == null || model.Password == string.Empty)
+                {
+                    System.Windows.MessageBox.Show("用户名或密码为空");
+                }
+                else if (t!=null) // 用户名没有被注册过
+                {
+                    System.Windows.MessageBox.Show("用户名已经存在");
+                }
+                else if (!Regex.IsMatch(model.Password, @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_!])[a-zA-Z0-9@#$%^&+=_!]{8,}$")) // 判断密码强度
+                { // 至少8-16个字符，至少1个大写字母，1个小写字母和1个数字，其他可以是任意字符：
+                    System.Windows.MessageBox.Show("密码必须包含至少一个数字、一个小写字母、一个大写字母以及一个特殊字符(@#\r\n%^&+=_!] 长度至少为8位。");
+                }
+                else if (model.Email == null || model.Phone == null || model.Email == string.Empty || model.Phone == string.Empty)
+                {
+                    System.Windows.MessageBox.Show("手机号码或者邮箱必须填一项");
+                }
+                else if ( (!Regex.IsMatch(model.Phone, @"\d{3}-\d{8}|\d{4}-\{7,8}")) || (!Regex.IsMatch(model.Email, @"[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?")) )
+                {// 手机号，邮箱校验
+                    System.Windows.MessageBox.Show("手机号码或者邮箱格式不对");
+                }
+                else if (model.Address == null || model.Address == string.Empty)
+                {
+                    System.Windows.MessageBox.Show("地址没填");
+                }
+                else
+                {
+                    userRepository.Add(model);
+                }
+            }// end if 
+        }// end private
+
+        //int passJudge(string password)
+        //{
+        //    if( password.Length < 6 ) return 0;
+        //    else
+        //    {
+
+        //    }
+        //}
     }
 }

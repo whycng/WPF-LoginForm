@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_LoginForm.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="注册" Height="300" Width="200">
+        Title="注册" Height="400" Width="200">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="170"/>
+            <RowDefinition Height="250"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel>
@@ -22,7 +22,10 @@
             <TextBox Text="{Binding Model_user.LastName}"/>
             <TextBlock Text="邮箱 Email"/>
             <TextBox Text="{Binding Model_user.Email}"/>
-            
+            <TextBlock Text="手机号"/>
+            <TextBox Text="{Binding Model_user.Phone}"/>
+            <TextBlock Text="地址"/>
+            <TextBox Text="{Binding Model_user.Address}"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
