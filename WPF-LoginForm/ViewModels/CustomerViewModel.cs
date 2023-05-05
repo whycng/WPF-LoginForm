@@ -17,6 +17,7 @@ using System.Windows;
 using System.Xml.Linq;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
+using System.Text.RegularExpressions;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -53,7 +54,20 @@ namespace WPF_LoginForm.ViewModels
         private string _address;
         private string _phone;
         private string _email;
+        private string _passwordX;
         //Properties
+        public string PasswordX
+        {
+            get { return _passwordX; }
+            set
+            {
+                if (_passwordX != value)
+                {
+                    _passwordX = value;
+                    OnPropertyChanged(nameof(PasswordX));
+                }
+            }
+        }
         public string Email
         {
             get { return _email; }
@@ -203,6 +217,22 @@ namespace WPF_LoginForm.ViewModels
 
         }
 
+        public ICommand ConfirmPasswordCommand => new RelayCommand(() =>
+        {
+            var password = PasswordX; // 获取Name属性的值 
+                                      // 判断密码强弱
+            if (!Regex.IsMatch(password, @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_!])[a-zA-Z0-9@#$%^&+=_!]{8,}$")) // 判断密码强度
+            { // 至少8-16个字符，至少1个大写字母，1个小写字母和1个数字，其他可以是任意字符：
+                System.Windows.MessageBox.Show("密码必须包含至少一个数字、一个小写字母、一个大写字母以及一个特殊字符(@#\r\n%^&+=_!] 长度至少为8位。");
+            }
+            else
+            {
+                userRepository.SetPasswordByUserName(User.Username, password);
+                System.Windows.MessageBox.Show("密码修改成功！");
+            }
+           
+
+        });
         public ICommand ConfirmSexCommand => new RelayCommand(() => {
             var sex = IsFemale ? '女'.ToString() : '男'.ToString() ;
             userRepository.SetSexByUserName(User.Username, sex);
@@ -222,13 +252,26 @@ namespace WPF_LoginForm.ViewModels
         }); 
         public ICommand ConfirmPhoneCommand => new RelayCommand(() =>
         {
-            var phone = Phone;  
+            var phone = Phone;
+            if (!Regex.IsMatch(phone, @"\d{3}-\d{8}|\d{4}-\{7,8}"))
+            {// 手机号 校验
+
+//                格式为 "XXX-XXXXXXXX" 的电话号码，其中 X 代表某个数字。
+//                例如：021 - 12345678。
+
+//格式为 "XXXX-XXXXXXXX" 或 "XXXX-XXXXXXXXX" 的电话号码，其中 X 代表某个数字。
+//                例如：0571 - 1234567 或 0312 - 76543210。
+                System.Windows.MessageBox.Show("手机号格式不对");
+            }else
             userRepository.SetPhoneByUserName(User.Username, phone);
 
         });
         public ICommand ConfirmEmailCommand => new RelayCommand(() =>
         {
             var email = Email;
+            if (!Regex.IsMatch(email, @"[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?")) {
+                System.Windows.MessageBox.Show("邮箱格式不对");
+            }else
             userRepository.SetEmailByUserName(User.Username, email);
 
         });
@@ -256,7 +299,7 @@ namespace WPF_LoginForm.ViewModels
             }
             Email = User.Email;
             Phone = User.Phone;
-
+            // PasswordX = User.Password;
                
         }
  

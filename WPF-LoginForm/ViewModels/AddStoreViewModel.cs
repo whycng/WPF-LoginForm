@@ -19,6 +19,7 @@ namespace WPF_LoginForm.ViewModels
         //}
         public AddStoreViewModel()
         {
+             
             itemRepo = new ItemRepository();
             userRepository = new UserRepository();
             data_store = new ObservableCollection<ItemModel>();
@@ -29,7 +30,9 @@ namespace WPF_LoginForm.ViewModels
         // private int _itemId;
         private IItemRepo itemRepo;
         private IUserRepository userRepository;
-        private string Sellername;
+        //public string _sellername;
+        public string Sellername { get; set; }
+  
         private ObservableCollection<ItemModel> _data_store;
         public ObservableCollection<ItemModel> data_store
         {

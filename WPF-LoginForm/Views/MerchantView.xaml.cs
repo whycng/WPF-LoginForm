@@ -24,5 +24,13 @@ namespace WPF_LoginForm.Views
         {
             InitializeComponent();
         }
+
+        private void HandlePreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text[0])) // 如果不是数字就不让输入
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

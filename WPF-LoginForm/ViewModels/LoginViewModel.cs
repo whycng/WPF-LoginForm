@@ -167,6 +167,15 @@ namespace WPF_LoginForm.ViewModels
                 }
                 else if ( (!Regex.IsMatch(model.Phone, @"\d{3}-\d{8}|\d{4}-\{7,8}")) || (!Regex.IsMatch(model.Email, @"[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?")) )
                 {// 手机号，邮箱校验
+
+
+                    //                格式为 "XXX-XXXXXXXX" 的电话号码，其中 X 代表某个数字。
+                    //                例如：021 - 12345678。
+
+                    //格式为 "XXXX-XXXXXXXX" 或 "XXXX-XXXXXXXXX" 的电话号码，其中 X 代表某个数字。
+                    //                例如：0571 - 1234567 或 0312 - 76543210。
+
+
                     System.Windows.MessageBox.Show("手机号码或者邮箱格式不对");
                 }
                 else if (model.Address == null || model.Address == string.Empty)

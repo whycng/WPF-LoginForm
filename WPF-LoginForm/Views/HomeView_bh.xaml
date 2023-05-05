@@ -73,7 +73,7 @@
                                     </Button>
 
                                     <!--查看详情-->
-                                    <Button    
+                                    <!--<Button    
                                          
                                         BorderThickness="0"
                                         Content="查看详情"
@@ -104,8 +104,43 @@
                                             </ControlTemplate>
                                         </Button.Template>
 
-                                    </Button>
+                                    </Button>-->
+                                    <Button    
+                                        Command="{Binding DataContext.DetailsCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding Id}"
+                                        BorderThickness="0"
+                                        Content="查看详情"
+                                        Foreground="White"
+                                        FontSize="16"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"    >
 
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="#462AD8"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#28AEED"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Width="120" Height="40"
+                                        CornerRadius="7"
+                                        Background="{TemplateBinding Background}">
+                                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+
+                                    </Button>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>

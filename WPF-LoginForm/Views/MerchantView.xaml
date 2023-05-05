@@ -43,7 +43,8 @@
                                         Mode=FindAncestor,
                                         AncestorType=DataGrid}}" />
                                     <Button Content="个数"/>
-                                    <TextBox Width="80" x:Name="InputTextAmount" Text="{Binding Amount}"/>
+                                    <TextBox Width="80" x:Name="InputTextAmount" Text="{Binding Amount}"
+                                             PreviewTextInput="HandlePreviewTextInput"/>
                                     <Button Content="确定个数"
                                                     CommandParameter="{Binding ElementName=InputTextAmount,Path=Text}" 
                                             Command="{Binding DataContext.DefineAmountCommand,

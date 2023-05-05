@@ -65,8 +65,9 @@ namespace WPF_LoginForm.ViewModels
             else
             {
                 // 弹出输入不是int
+                // 不需要了，见 PreviewTextInput="HandlePreviewTextInput，System.Windows.MessageBox.Show("不是int");
             }
-          
+
             LoadMerchantData();
         }
         public void DefineProce(string price)
@@ -92,6 +93,7 @@ namespace WPF_LoginForm.ViewModels
             }
             else
             {
+                System.Windows.MessageBox.Show("你不是商家");
                 // 你不是商家
             }
 

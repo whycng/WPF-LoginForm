@@ -41,6 +41,8 @@ namespace WPF_LoginForm.Models
         // 临时表 临时商家名
         void TmpSetSellername(string sellername);
         string TmpGetSellername();
+        //购物车购买之后库存需要相应的减少
+        void DelAmountByCart();
     }
 }
  

@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace WPF_LoginForm.Repositories
 {
@@ -212,7 +213,10 @@ namespace WPF_LoginForm.Repositories
                 // 向HistoricalOrders表中插入值，值来自item，约束条件：Item.Id in ItemCart.Id AND Item.Id not in HistoricalOrders.Id
                 //command.CommandText = "Insert Into HistoricalOrders(Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price,Amount) Select " +
                 //    "Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price,(select Amount From ItemCart Where ItemCart.Id=Id) From Item Where Item.Id in (Select Id From ItemCart) And Item.Id Not In (Select Id From HistoricalOrders)";
-                command.CommandText = "INSERT INTO HistoricalOrders\r\n(Id, ItemName, SellerName, ItemShowText, ItemPhoto, ItemClassify, reco, price, Amount)\r\nSELECT i.Id, i.ItemName, i.SellerName, i.ItemShowText, i.ItemPhoto, i.ItemClassify, i.reco, i.price, c.Amount\r\nFROM Item i\r\nJOIN ItemCart c ON i.Id = c.Id\r\nLEFT JOIN HistoricalOrders h ON i.Id = h.Id\r\nWHERE h.Id IS NULL;";
+                command.CommandText = "INSERT INTO HistoricalOrders\r\n" +
+                    "(Id, ItemName, SellerName, ItemShowText, ItemPhoto, ItemClassify, reco, price, Amount)\r\n" +
+                    "SELECT i.Id, i.ItemName, i.SellerName, i.ItemShowText, i.ItemPhoto, i.ItemClassify, i.reco, i.price, c.Amount\r\nFROM Item i\r\n" +
+                    "JOIN ItemCart c ON i.Id = c.Id ;";
 
                 // command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
                 using (var reader = command.ExecuteReader())
@@ -652,6 +656,24 @@ namespace WPF_LoginForm.Repositories
                 }
             }// end using
             return Sellername;
+        }
+
+        public void DelAmountByCart()
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "  UPDATE t SET Amount = t.Amount - m.Amount FROM Item t JOIN ItemCart m ON m.Id = t.Id";
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                         
+                    }
+                }
+            }// end using
         }
 
     }

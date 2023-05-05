@@ -13,8 +13,20 @@
         <viewModel:AddStoreViewModel/>
     </Window.DataContext>
     <Grid>
-
-        <ScrollViewer  
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition  />
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="商家：" FontSize="20"/>
+                <TextBlock Text="{Binding Sellername}" FontSize="20"/>
+                <!--<TextBlock 
+                    TextWrapping="Wrap"
+                    Text="{Binding RecommendCont}" FontSize="10"/>-->
+            </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled">
             <customerControl:IndivItems x:Name="IndivItems">
                 <ItemsControl

@@ -256,6 +256,26 @@ namespace WPF_LoginForm.Repositories
                 }
             }// end using
         }//end public
+
+        public void SetPasswordByUserName(string username, string password)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET Password=@password WHERE Username=@username;";
+                command.Parameters.Add("@username", SqlDbType.NVarChar).Value = username;
+                command.Parameters.Add("@password", SqlDbType.NVarChar).Value = password;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                    }
+                }
+            }// end using
+        }
         public List<UserModel> GetSeller()
         {
             List<UserModel> Seller = null;

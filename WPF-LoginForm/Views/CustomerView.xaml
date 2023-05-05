@@ -44,55 +44,61 @@
                     HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="20">
 
-                    <Ellipse StrokeThickness="2"
-                        Stroke="#49a078"
-                        Width="150"
-                        Height="150"
-                        Stretch="Uniform">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding UserPhoto}"  
-                                Stretch="UniformToFill"/>
-                        </Ellipse.Fill>
+                        <Ellipse StrokeThickness="2"
+                            Stroke="#49a078"
+                            Width="150"
+                            Height="150"
+                            Stretch="Uniform">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding UserPhoto}"  
+                                    Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
 
-                    </Ellipse>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="上传头像" Command="{Binding UploadImageCommand}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Width="150" Content="名字："/>
-                            <TextBox x:Name="NameTextBox" Text="{Binding TextBoxName}" Width="200"/>
-                            <Button Content="修改" Command="{Binding ConfirmNameCommand}"/> 
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                         <StackPanel Orientation="Horizontal">
-                                <RadioButton x:Name="maleRadioButton" 
-                                             Content="男" 
-                                             GroupName="genderGroup" 
-                                             Foreground="White"
-                                             IsChecked="{Binding IsMale}"/>
-                                <RadioButton x:Name="femaleRadioButton" 
-                                             Content="女" 
-                                             GroupName="genderGroup" 
-                                             Foreground="White"
-                                             IsChecked="{Binding IsFemale}"/>
+                        </Ellipse>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="上传头像" Command="{Binding UploadImageCommand}"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Width="150" Content="名字："/>
+                                <TextBox x:Name="NameTextBox" Text="{Binding TextBoxName}" Width="200"/>
+                                <Button Content="修改" Command="{Binding ConfirmNameCommand}"/> 
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                             <StackPanel Orientation="Horizontal">
+                                    <RadioButton x:Name="maleRadioButton" 
+                                                 Content="男" 
+                                                 GroupName="genderGroup" 
+                                                 Foreground="White"
+                                                 IsChecked="{Binding IsMale}"/>
+                                    <RadioButton x:Name="femaleRadioButton" 
+                                                 Content="女" 
+                                                 GroupName="genderGroup" 
+                                                 Foreground="White"
+                                                 IsChecked="{Binding IsFemale}"/>
+                            </StackPanel>
 
-                            <Button Content="确定" Command="{Binding ConfirmSexCommand}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Width="150" Content="地址："/>
-                            <TextBox Width="200" Text="{Binding Address}"  />
-                            <Button Content="修改" Command="{Binding ConfirmAddressCommand}"/> 
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Width="150" Content="联系电话："/>
-                        <TextBox Width="200" Text="{Binding Phone}"  />
-                        <Button Content="修改" Command="{Binding ConfirmPhoneCommand}"/> 
-                    </StackPanel>
+                                <Button Content="确定" Command="{Binding ConfirmSexCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Width="150" Content="地址："/>
+                                <TextBox Width="200" Text="{Binding Address}"  />
+                                <Button Content="修改" Command="{Binding ConfirmAddressCommand}"/> 
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Width="150" Content="联系电话："/>
+                            <TextBox Width="200" Text="{Binding Phone}"  />
+                            <Button Content="修改" Command="{Binding ConfirmPhoneCommand}"/> 
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Width="150" Content="Email："/>
                             <TextBox Width="200" Text="{Binding Email}"  />
                             <Button Content="修改" Command="{Binding ConfirmEmailCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Width="150" Content="密码："/>
+                            <TextBox Width="200" Text="{Binding PasswordX}"  />
+                            <!--<PasswordBox Width="200" Password="{Binding Password}" />-->
+                            <Button Content="修改" Command="{Binding ConfirmPasswordCommand}"/>
                         </StackPanel>
                     </StackPanel>
 

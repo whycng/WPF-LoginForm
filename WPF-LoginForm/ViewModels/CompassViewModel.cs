@@ -107,9 +107,19 @@ namespace WPF_LoginForm.ViewModels
             // 1.正在发货 2.塞进历史订单
             // 扫描微信二维码
             Process.Start("https://i.328888.xyz/2023/04/17/iekViJ.png");
+            // 判断库存够不够
+
             // 如果购买成功 则：
             //2.直接把购物车塞进历史订单 
             itemRepo.SetHisOrd();
+            // 购买之后，这些商品的库存数就减少了
+            itemRepo.DelAmountByCart();
+            // 购买成功，清空购物车 --清空购物车表，清空data_cart
+            itemRepo.EmptyCart();
+            data_cart = new ObservableCollection<ItemModel>();
+            OnPropertyChanged("data_cart");
+            
+
             LoadHistData();
         }
 

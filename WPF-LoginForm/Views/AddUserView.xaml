@@ -5,16 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_LoginForm.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="注册" Height="400" Width="200">
+        Title="注册" Height="400" Width="250">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="330"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Text="用户名 Username"/>
             <TextBox Text="{Binding Model_user.Username}"/>
             <TextBlock Text="密码 Password"/>
+            <TextBlock 
+                FontSize="10" 
+                TextWrapping="Wrap"
+                Text="密码必须包含至少一个数字、一个小写字母、一个大写字母以及一个特殊字符(@#\r\n%^ +=_!] 长度至少为8位。"/>
             <TextBox Text="{Binding Model_user.Password}"/>
             <TextBlock Text="Name"/>
             <TextBox Text="{Binding Model_user.Name}"/>
@@ -22,7 +26,11 @@
             <TextBox Text="{Binding Model_user.LastName}"/>
             <TextBlock Text="邮箱 Email"/>
             <TextBox Text="{Binding Model_user.Email}"/>
-            <TextBlock Text="手机号"/>
+            <TextBlock Text="手机号"/> 
+            <TextBlock 
+                FontSize="10"
+                TextWrapping="Wrap"
+                Text="手机号 例如：021-12345678,例如：0571-1234567 或 0312-76543210"/>
             <TextBox Text="{Binding Model_user.Phone}"/>
             <TextBlock Text="地址"/>
             <TextBox Text="{Binding Model_user.Address}"/>
