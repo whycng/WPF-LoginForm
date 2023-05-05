@@ -249,6 +249,8 @@ namespace WPF_LoginForm.ViewModels
         #endregion
 
         #region Commands
+        // TkCommand
+        private GalaSoft.MvvmLight.Command.RelayCommand<string> _tkCommand;
         public GalaSoft.MvvmLight.Command.RelayCommand<string> _chageChatCommand;
         // to get the contactName of selected chat so that we can open corresponding conversation
         protected ICommand _getSelectedChatCommand;
@@ -281,6 +283,16 @@ namespace WPF_LoginForm.ViewModels
             {
                 if (_chageChatCommand == null)
                     _chageChatCommand = new GalaSoft.MvvmLight.Command.RelayCommand<string>((parameter) => ExcuteChangeCommand(parameter));
+                return _chageChatCommand;
+            }
+        }
+
+        public GalaSoft.MvvmLight.Command.RelayCommand<string> TkCommand
+        {
+            get
+            {
+                if (_chageChatCommand == null)
+                    _chageChatCommand = new GalaSoft.MvvmLight.Command.RelayCommand<string>((parameter) => ExcuteTkCommand(parameter));
                 return _chageChatCommand;
             }
         }
@@ -324,6 +336,15 @@ namespace WPF_LoginForm.ViewModels
             // InvalidateVisual();
             // Refresh();
             // ItemsControl.UpdateLayout();
+        }
+        void ExcuteTkCommand(object parameter) // 点击与其对话
+        {
+            FContactName = parameter.ToString(); //聊天对象名
+            // 空的对话
+            Conversations = new ObservableCollection<ChatConversation>();
+            LoadChatConversation();
+            Conversations = new ObservableCollection<ChatConversation>(Conversations);
+
         }
         // test
         public GalaSoft.MvvmLight.Command.RelayCommand  _chageChatCommandX;

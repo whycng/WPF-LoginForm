@@ -57,7 +57,9 @@
                         Height="50"
                         Stretch="Uniform"   
                         VerticalAlignment="Center"
-                        HorizontalAlignment="Center">
+                        HorizontalAlignment="Center"
+                        
+                         >
                             <!--if IsMeAddStatus=false then shiow the status image inside ellipse
                         & if it is true then fill the ellipse-->
                             <Ellipse.Style>
@@ -77,10 +79,7 @@
                             </Ellipse.Style>
                             <!--30.00-->
                         </Ellipse>
-
                         <!--if the IsMeAddStatue=false then hide the add sgin-->
-
-
                         <Path
                         Data="{StaticResource addSign}"
                         Fill="#dce1de" 
@@ -102,7 +101,7 @@
                 <!--<Button Grid.Column="1" /> 模板问题-->
 
 
-                <!--Contact Profile Ellipse !-->
+                <!--Contact Profile Ellipse  状态部分-->
                 <Ellipse  
                         Name="contactPhotoEllipse"
                     Margin="40,0,0,8"
@@ -131,12 +130,29 @@
                 <!--Contact Name-->
                 <!--if contact name is unspecified which can only happen in case if the Statsu is meant to
                 be  Add button her-->
-                <TextBlock
+                <!--<TextBlock
                     Grid.Row="2"
                     Text="{Binding ContactName, TargetNullValue=Add}"
                     TextTrimming="CharacterEllipsis"
-                    TextAlignment="Center"/>
-
+                    TextAlignment="Center"/>-->
+                <Button
+                    Grid.Row="2" 
+                    Content="{Binding ContactName, TargetNullValue=Add}"
+                
+                       Command="{Binding DataContext.TkCommand,
+                                        RelativeSource={RelativeSource 
+                                        Mode=FindAncestor,
+                                        AncestorType=ItemsControl}}"
+                         CommandParameter="{Binding ContactName}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Top"/>
+                            <Setter Property="Margin" Value="5,0,0,0"/>
+                            <Setter Property="Height" Value="20"/>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

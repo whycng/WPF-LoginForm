@@ -19,7 +19,7 @@
                                         RelativeSource={RelativeSource 
                                         Mode=FindAncestor,
                                         AncestorType=ItemsControl}}"
-                                        CommandParameter="{Binding ContactName}">
+                         CommandParameter="{Binding ContactName}">
                          
                 <RadioButton.Style>
                     <Style TargetType="{x:Type ToggleButton}">
