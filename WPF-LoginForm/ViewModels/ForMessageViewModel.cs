@@ -143,7 +143,14 @@ namespace WPF_LoginForm.ViewModels
 
         #region Chats List
         #region properties
-        public ObservableCollection<ChatListData> Chats { get; set; }
+        private ObservableCollection<ChatListData> _chats;
+        //public ObservableCollection<ChatListData> Chats { get; set; }
+        public ObservableCollection<ChatListData> Chats
+        {
+            get { return _chats; }
+            set { _chats = value;
+            OnPropertyChanged(nameof(Chats)); } 
+        }
         #endregion
         #region Logics
 
@@ -163,11 +170,13 @@ namespace WPF_LoginForm.ViewModels
             var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             nameList = userRepository.GetFriByUsername(user.Username);// 当前用户所有朋友Username
             Chats = new ObservableCollection<ChatListData>();// 该集合用于展示
-            string fromId = userRepository.GetByUsername(user.Username).Id;
+            //string fromId = userRepository.GetByUsername(user.Username).Id;
             foreach (var f in nameList)
             {
-                string toId = userRepository.GetByUsername(f).Id;
-                _messModel = messRepository.LastMessageModel(fromId, toId);
+                // 一个BUG 发现keni的ID前后变化了
+                // string toId = userRepository.GetByUsername(f).Id;
+                string toName = userRepository.GetByUsername(f).Username;
+                _messModel = messRepository.LastMessageModel(user.Username, toName);
                 if (_messModel != null) {
                     ChatListData t = new ChatListData()
                     {
@@ -184,9 +193,9 @@ namespace WPF_LoginForm.ViewModels
                 } 
                
             }
-            if (Chats.Count > 0)
+            if (Chats.Count > 0) // 默认显示左侧第一个
                 FContactName = Chats[0].ContactName;
-            else FContactName = "空";
+            else FContactName = ""; 
 
             //Chats = new ObservableCollection<ChatListData>()
             //{
@@ -382,6 +391,7 @@ namespace WPF_LoginForm.ViewModels
             // 发送信息
             messRepository.SendMessage(NowUsername, FContactName, MessageText);
             LoadChatConversation();
+            LoadChats();// 刷新一下左侧聊天栏
         }
         void ExecuteTest1()
         {

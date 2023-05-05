@@ -14,7 +14,7 @@ namespace WPF_LoginForm.Repositories
     public class MessRepository: RepositoryBase,IMessRepository
     {
         // 应该拿到最后一个消息
-        public MessModel LastMessageModel(string FromUserId, string ToUserId )
+        public MessModel LastMessageModel(string FromUsername, string ToUsername )
         {
             MessModel messModel = null;
             using (var connection = GetConnection())
@@ -22,12 +22,12 @@ namespace WPF_LoginForm.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "select M_ID,M_Message,M_Time from [Message] where M_FromUserID=@FromUserId AND M_ToUserID=@ToUserId ORDER BY M_ID DESC";
-                command.Parameters.Add("@FromUserId", SqlDbType.NVarChar).Value = FromUserId;
-                command.Parameters.Add("@ToUserId", SqlDbType.NVarChar).Value = ToUserId;
+                command.CommandText = "select M_ID,M_Message,M_Time from [Message] where M_FromUsername=@FromUsername AND M_ToUsername=@ToUsername ORDER BY M_ID DESC";
+                command.Parameters.Add("@FromUsername", SqlDbType.NVarChar).Value = FromUsername;
+                command.Parameters.Add("@ToUsername", SqlDbType.NVarChar).Value = ToUsername;
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    if(reader.Read())
                     {
                          messModel = new MessModel()
                         {

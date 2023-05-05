@@ -35,9 +35,20 @@ namespace WPF_LoginForm.ViewModels
         private void ExcuteDetailsCommand(object parameter)
         {
             int ItemId = (int)parameter;// 加入购物车的商品id 
-            DetailsModelTmp = detailsRepository.GetDetails(ItemId);
+            base.DetailsModelTmp = detailsRepository.GetDetails(ItemId);
+            GetInstace();
             AddDetails view = new AddDetails();
             var r = view.ShowDialog();
+
+            // 旧方法，关键在于DetailsViewModel的两个初始化函数
+            //int ItemId = (int)parameter;// 加入购物车的商品id 
+            //DetailsModelTmp = detailsRepository.GetDetails(ItemId);
+            //AddDetails view = new AddDetails();
+            //var r = view.ShowDialog();
+        }
+        public DetailsViewModel GetInstace()
+        {
+            return new DetailsViewModel(base.DetailsModelTmp);
         }
         public RelayCommand<int> BuyCommand // int 传进了商品id
         {
