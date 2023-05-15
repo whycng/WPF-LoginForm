@@ -144,6 +144,9 @@
     <Compile Include="CustomControls\IndivItems.xaml.cs">
       <DependentUpon>IndivItems.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\InfoCard.xaml.cs">
+      <DependentUpon>InfoCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\StatusThumbs.xaml.cs">
       <DependentUpon>StatusThumbs.xaml</DependentUpon>
     </Compile>
@@ -276,6 +279,9 @@
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StoreView.xaml.cs">
+      <DependentUpon>StoreView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\test_delete.xaml.cs">
       <DependentUpon>test_delete.xaml</DependentUpon>
     </Compile>
@@ -303,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\IndivItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\InfoCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -419,6 +429,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
