@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_LoginForm.Views"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:uc="clr-namespace:WPF_LoginForm.CustomControls"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Height="740" Width="1280"
         WindowStartupLocation="CenterScreen"
@@ -16,7 +18,7 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!--Left Menu-->
         <Border CornerRadius="10 0 0 10">
             <Border.Background>
@@ -49,7 +51,7 @@
                 </StackPanel>
 
                 <Separator Height="0.8" Margin="20 30" Background="#46558a"/>
-            
+
                 <!--Menu Buttons-->
                 <Button Style="{StaticResource menuButtonActiveSt}">
                     <StackPanel Orientation="Horizontal">
@@ -96,7 +98,7 @@
             </StackPanel>
 
         </Border>
-        
+
         <!--Main Section-->
         <Border Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown">
             <Border.Background>
@@ -109,10 +111,11 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="48.005"/>
+                    <RowDefinition Height="151.995"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
+
                 <!--Top Menu-->
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 30 20">
                     <Button Content="Today" Style="{StaticResource topMenuButtonSt}"/>
@@ -120,21 +123,183 @@
                     <Button Content="Month" Style="{StaticResource topMenuButtonSt}"/>
                     <Button Content="Year" Style="{StaticResource topMenuButtonSt}"/>
                 </StackPanel>
-                
+
                 <!--Tttle-->
                 <TextBlock Text="Good Afternoon,Pernam" FontSize="26" Foreground="#ccd7ff" 
                            HorizontalAlignment="Left" Margin="50 35 0 20"/>
-                
+
                 <!--Info Card-->
-                <Grid Grid.Row="1" Margin="50 20 15 40">
+                <Grid Grid.Row="1" Margin="50 20 15 40" Grid.RowSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+
+                    <uc:InfoCard Grid.Column="0" 
+                                 Title="Total Views"
+                                 Number="654,947" 
+                                 Icon="Eye" 
+                                 Background1="#827bff"
+                                 Background2="#d9b5ff" 
+                                 EllipseBackground1="#b298fd"
+                                 EllipseBackground2="#e4bbff"/>
+
+                    <uc:InfoCard Grid.Column="1"
+                                 Title="Total Orders"
+                                 Number="24,947" 
+                                 Icon="ShoppingCart" 
+                                 Background1="#fd8a87"
+                                 Background2="#f3ab92"
+                                 EllipseBackground1="#fbd5a8"
+                                 EllipseBackground2="#fdb89b"/>
+
+                    <uc:InfoCard Grid.Column="2" 
+                                 Title="Total Revenue"
+                                 Number="$3232" 
+                                 Icon="Coins" 
+                                 Background1="#fc84cb"
+                                 Background2="#fc8fae"
+                                 EllipseBackground1="#fc8fae"
+                                 EllipseBackground2="#ffabe6"/>
+
+
                 </Grid>
+
+                <Grid Grid.Row="2" Margin="0,152,0,0" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Chart Section-->
+                    <Border CornerRadius="20" Padding="35 25" Background="#243771" Margin="15 0 47 40">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                                <fa:IconImage Icon="Circle" Style="{StaticResource titleIconSt}"/>
+                                <TextBlock Text="Profit" Style="{StaticResource titleTextSt}"/>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Left" 
+                                        VerticalAlignment="Bottom"
+                                        Margin="0 0 0 25"
+                                        Grid.Row="1">
+                                <TextBlock Text="70000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="60000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="50000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="40000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="30000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="20000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="10000" Foreground="#717eb2" Margin="0 0 0 25"/>
+                                <TextBlock Text="0" Foreground="#717eb2" HorizontalAlignment="Right"/>
+
+                            </StackPanel>
+
+
+                            <StackPanel HorizontalAlignment="Center" 
+                                        VerticalAlignment="Bottom"
+                                        Orientation="Horizontal"
+                                        Margin="50 0 0 0"
+                                        Grid.Row="1">
+                                <TextBlock Text="1" Foreground="#717eb2" />
+                                <TextBlock Text="2" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="3" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="4" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="5" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="6" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="7" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="8" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="9" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="10" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="11" Foreground="#717eb2" Margin="41 0 0 0"/>
+                                <TextBlock Text="12" Foreground="#717eb2" Margin="41 0 0 0"/>
+
+                            </StackPanel>
+
+                            <!--Chart-->
+                            <lvc:CartesianChart Grid.Row="1" Margin="45 0 0 25">
+                                <lvc:CartesianChart.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#26379f" Offset="0"/>
+                                        <GradientStop Color="#6a6ae4" Offset="1.5"/>
+                                    </LinearGradientBrush>
+                                </lvc:CartesianChart.Background>
+
+                                
+                                
+                                <lvc:CartesianChart.DataTooltip>
+                                    <lvc:DefaultTooltip Background="#24336a" Foreground="#d5e2ff"/>
+                                </lvc:CartesianChart.DataTooltip>
+
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis MinValue="1" MaxValue="5" Foreground="#717eb2" ShowLabels="False">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator StrokeThickness="0"/>
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis MinValue="0" MaxValue="60000" Foreground="#717eb2" ShowLabels="False">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator StrokeThickness="0"/>
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+
+                                <lvc:CartesianChart.Series>
+                                    <lvc:LineSeries Stroke="#ada4fd"
+                                                    StrokeThickness="2"
+                                                    PointGeometrySize="0"
+                                                    Values="20000,17000,3000,15000,50000">
+                                        <lvc:LineSeries.Fill>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop Color="#b397e2" Offset="0.4"/>
+                                                <GradientStop Color="#6a6ae4" Offset="1.2"/>
+                                            </LinearGradientBrush>
+                                        </lvc:LineSeries.Fill>
+                                    </lvc:LineSeries>
+                                </lvc:CartesianChart.Series>
+                            </lvc:CartesianChart>
+
+                        </Grid>
+                    </Border>
+
+                    <!--Order Section-->
+                    <Border Grid.Column="1" CornerRadius="20" Padding="0 25" Background="#243771" Margin="15 0 47 40">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 15">
+                                <fa:IconImage Icon="Circle" Style="{StaticResource titleIconSt}"/>
+                                <TextBlock Text="Last Orders" Style="{StaticResource titleTextSt}"/>
+                            </StackPanel>
+
+                            <!--Order-->
+                            <StackPanel Grid.Row="1">
+                                <uc:Order Title="T-shirt Embrace" Desc="Jpjn Doe - 10:30" Icon="Tshirt"/>
+                                <uc:Order Title="T-shirt Embrace" Desc="Jpjn Doe - 10:30" Icon="Tshirt"/>
+                                <uc:Order Title="T-shirt Embrace" Desc="Jpjn Doe - 10:30" Icon="Tshirt"/>
+                                <uc:Order Title="T-shirt Embrace" Desc="Jpjn Doe - 10:30" Icon="Tshirt"/>
+                                <uc:Order Title="T-shirt Embrace" Desc="Jpjn Doe - 10:30" Icon="Tshirt"/>
+                                <uc:Order Title="T-shirt Embrace" Desc="Jpjn Doe - 10:30" Icon="Tshirt"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+
+
             </Grid>
-          
+
         </Border>
     </Grid>
 </Window>
