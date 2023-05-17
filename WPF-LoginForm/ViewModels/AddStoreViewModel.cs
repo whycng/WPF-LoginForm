@@ -31,7 +31,8 @@ namespace WPF_LoginForm.ViewModels
         private IItemRepo itemRepo;
         private IUserRepository userRepository;
         //public string _sellername;
-        public string Sellername { get; set; }
+        public string Sellername { get; set; }// 这里应该拿到UserModel
+        public UserModel SellerUser { get; set; }
   
         private ObservableCollection<ItemModel> _data_store;
         public ObservableCollection<ItemModel> data_store
@@ -83,6 +84,7 @@ namespace WPF_LoginForm.ViewModels
         void LoadData()
         {
             var t = itemRepo.GetBySellerName(Sellername);
+            SellerUser = userRepository.GetByUsername(Sellername);
             data_store = new ObservableCollection<ItemModel>(t);
         }
     }

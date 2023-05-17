@@ -31,5 +31,14 @@ namespace WPF_LoginForm.Views
             Process.Start("https://github.com/whycng/WPF-LoginForm");
         }
 
+        public double StringToDouble(string value)
+        {
+            if (double.TryParse(value, out double result))
+            {
+                return result;
+            }
+            return 0.0;
+        }
+
     }
 }

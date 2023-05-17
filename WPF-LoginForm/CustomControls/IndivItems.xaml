@@ -41,10 +41,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Margin="15,0"
+        <!--<Button Margin="15,0"
                 HorizontalAlignment="Left"
                 Content="{StaticResource close}"
-                Style="{StaticResource IconButtonStyle}"/>
+                Style="{StaticResource IconButtonStyle}"/>-->
 
         <ScrollViewer Grid.Row="1"
                       HorizontalScrollBarVisibility="Disabled">

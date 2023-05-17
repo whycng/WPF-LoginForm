@@ -35,12 +35,12 @@ namespace WPF_LoginForm.ViewModels
         {
             // 加载卖家
             var t1 = userRepository.GetSeller();
-            data_User = new ObservableCollection<UserModel>(t1);
-            OnPropertyChanged("data_User");
-            // 加载普通用户
-            var t2 = userRepository.GetUser();
             data_Seller = new ObservableCollection<UserModel>(t1);
             OnPropertyChanged("data_Seller");
+            // 加载普通用户
+            var t2 = userRepository.GetUser();
+            data_User = new ObservableCollection<UserModel>(t1);
+            OnPropertyChanged("data_User");
             // 加载商品数据
             var t3 = itemRepo.GetItemAll();
             data_Item = new ObservableCollection<ItemModel>(t3);
