@@ -7,45 +7,78 @@
                  xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <Button 
+
+    <ScrollViewer>
+        <StackPanel>
+            <Button 
             Click="OpenWebPage"
             FontSize="20"
             Content="项目地址：https://github.com/whycng/WPF-LoginForm"/>
-        <Button 
+            <Button 
             FontSize="20"
             Content="测试StoreView" 
             Command="{Binding TestStoreCommand}"/>
 
-        <!--<lvc:CartesianChart Grid.Row="1" Margin="45 0 0 25" Height="400">
+            <!--<lvc:CartesianChart Grid.Row="1" Margin="45 0 0 25" Height="400">
            
         </lvc:CartesianChart>-->
 
-        <lvc:CartesianChart Grid.Row="1" Margin="45 0 0 25" Height="400">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries Title="Line Series" Values="1,2,3,4,5" />
-            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart 
+            Height="400"
+            Series="{Binding Achievement, UpdateSourceTrigger=PropertyChanged}">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Labels="{Binding StudentNameList}" />
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis />
+                </lvc:CartesianChart.AxisY>
 
-            <lvc:CartesianChart.AxisX>
                 
-                <!-- 指定 X 轴的标签格式化程序 -->
-                <lvc:Axis Title="X Axis" >
-                    <lvc:Axis.LabelFormatter>
-                        <lvc:FuncFormatter Func="{x:Static lvc:Functions.ToDouble}" />
-                    </lvc:Axis.LabelFormatter>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisX>
+                
+            </lvc:CartesianChart>
 
-            <lvc:CartesianChart.AxisY>
-                <!-- 指定 Y 轴的标签格式化程序 -->
-                <lvc:Axis Title="Y Axis">
-                    <lvc:Axis.LabelFormatter>
-                        <lvc:FuncFormatter Func="{x:Static lvc:Functions.ToDouble}" />
-                    </lvc:Axis.LabelFormatter>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisY>
-        </lvc:CartesianChart>
+            <!--tu3-->
+            <lvc:CartesianChart Height="400" Series="{Binding SeriesCollection}" LegendLocation="Right" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
 
 
-    </StackPanel>
+            <!-- 图2-->
+            <lvc:CartesianChart  
+            Height="400"
+            Margin="50 50 50 50"
+            >
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis MinValue="1" MaxValue="5" Foreground="#717eb2" ShowLabels="True">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator StrokeThickness="0"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="60" MaxValue="100" Foreground="#717eb2" ShowLabels="True">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator StrokeThickness="0"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries 
+                        Stroke="White"
+                        Title="Achievement2" Values="{Binding Achievement2}" />
+                </lvc:CartesianChart.Series>
+
+            </lvc:CartesianChart>
+
+
+        </StackPanel>
+    </ScrollViewer>
+   
 </UserControl>
