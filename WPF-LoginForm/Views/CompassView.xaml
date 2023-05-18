@@ -101,6 +101,7 @@
                             <DataGridTextColumn Header="商品分类" Binding="{Binding ItemClassify}"/>
                             <DataGridTextColumn Header="单价" Binding="{Binding price}"/>
                             <DataGridTextColumn Header="个数" Binding="{Binding Amount}"/>
+                            <DataGridTextColumn Header="时间" Binding="{Binding Date}"/>
                             <DataGridTemplateColumn Header="操作">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

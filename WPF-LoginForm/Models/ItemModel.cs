@@ -18,6 +18,7 @@ namespace WPF_LoginForm.Models
         public string price { get; set;}
         // 历史订单使用
         public int Amount { get; set; }
+        public string Date { get; set; }
 
     }
 }

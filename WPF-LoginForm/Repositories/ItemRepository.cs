@@ -213,10 +213,42 @@ namespace WPF_LoginForm.Repositories
                 // 向HistoricalOrders表中插入值，值来自item，约束条件：Item.Id in ItemCart.Id AND Item.Id not in HistoricalOrders.Id
                 //command.CommandText = "Insert Into HistoricalOrders(Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price,Amount) Select " +
                 //    "Id,ItemName,SellerName,ItemShowText,ItemPhoto,ItemClassify,reco,price,(select Amount From ItemCart Where ItemCart.Id=Id) From Item Where Item.Id in (Select Id From ItemCart) And Item.Id Not In (Select Id From HistoricalOrders)";
+
+                // 第二句主要更新Seller表
+                /*
+            因为ItemCart中一个Username对应了多个购物车项，而且每个购物车项
+                可能属于不同的卖家。因此，我们需要使用GROUP BY子句来将相同的
+                Username组合在一起，并计算它们所关联的所有购物车项的总金额。
+                以下是一个可以实现您所需功能的SQL语句：
+
+```
+UPDATE Seller
+SET TotalOrder = TotalOrder + c.Amount
+FROM Seller s
+JOIN (
+    SELECT i.Sellername, SUM(c.Amount) AS Amount
+    FROM ItemCart c
+    JOIN Item i ON c.Id = i.Id
+    GROUP BY i.Sellername
+) c ON s.Username = c.Sellername;
+```
+
+这个SQL语句中，内部的SELECT语句使用JOIN操作将购物车项和商品关联在一起，
+                并计算每个卖家的总销售额。然后，通过JOIN操作将这些数据
+                与Seller表进行关联，并更新TotalOrder属性。
+
+
+                第三行：总收入
+
+
+                 */
                 command.CommandText = "INSERT INTO HistoricalOrders\r\n" +
                     "(Id, ItemName, SellerName, ItemShowText, ItemPhoto, ItemClassify, reco, price, Amount)\r\n" +
                     "SELECT i.Id, i.ItemName, i.SellerName, i.ItemShowText, i.ItemPhoto, i.ItemClassify, i.reco, i.price, c.Amount\r\nFROM Item i\r\n" +
-                    "JOIN ItemCart c ON i.Id = c.Id ;";
+                    "JOIN ItemCart c ON i.Id = c.Id ;"
+                    + "UPDATE Seller\r\nSET TotalOrder = TotalOrder + c.Amount\r\nFROM Seller s\r\nJOIN (\r\n    SELECT i.Sellername, SUM(c.Amount) AS Amount\r\n    FROM ItemCart c\r\n    JOIN Item i ON c.Id = i.Id\r\n    GROUP BY i.Sellername\r\n) c ON s.Sellername = c.SellerName;"
+                    + "CREATE TABLE #SellerRevenue (\r\n    Sellername nvarchar(50),\r\n    ALLPrice decimal(10, 2)\r\n);\r\n\r\nINSERT INTO #SellerRevenue (Sellername, ALLPrice)\r\nSELECT ic.Username, SUM(ic.price * ic.Amount) AS ALLPrice\r\nFROM ItemCart ic\r\nGROUP BY ic.Username;\r\n\r\nUPDATE s\r\nSET Revenue = s.Revenue + sr.ALLPrice\r\nFROM Seller s\r\nINNER JOIN #SellerRevenue sr ON s.Sellername = sr.Sellername;\r\n\r\nDROP TABLE #SellerRevenue;"
+                    + "";
 
                 // command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
                 using (var reader = command.ExecuteReader())
@@ -283,6 +315,7 @@ namespace WPF_LoginForm.Repositories
                             reco = reader[6].ToString(),
                             price = reader[7].ToString(),
                             Amount = (int)reader[8],
+                            Date = reader[9].ToString(),
                         };
                         item.Add(item_tmp);
                     }
@@ -391,6 +424,7 @@ namespace WPF_LoginForm.Repositories
                             reco = reader[6].ToString(),
                             price = reader[7].ToString(),
                             Amount = (int)reader[8],
+                            Date = reader[9].ToString(),    
                         };
                         item.Add(item_tmp);
                     }
@@ -674,6 +708,58 @@ namespace WPF_LoginForm.Repositories
                     }
                 }
             }// end using
+        }
+
+        public SellerModel GetSellerModelBySellername(string sellername)
+        {
+            SellerModel model = null;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                // 第一行刷新Appeal数据，第二行拿四个数据
+                command.CommandText = "UPDATE Seller\r\nSET Appeal = t.AppealCount\r\nFROM (\r\n    SELECT Username, COUNT(*) AS AppealCount\r\n    FROM Appeal Where Done <> '完成'\r\n    GROUP BY Username\r\n) t\r\nWHERE Seller.Sellername = t.Username;"
+                    + "Select * From Seller Where Sellername = @sellername";  
+                command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        //int l = (int)reader[0];
+                        //int x = (int)reader[1];
+                        //double c = (double)reader[2];
+                        //int n = (int)reader[3];
+                        model = new SellerModel()
+                        { // 第一个数据 Sellername 不需要
+                            TotalOrder = (int)reader[1],
+                            Watch = (int)reader[2],
+                            Revenue = (double)reader[3],
+                            Appeal = (int)reader[4],
+                        }; 
+                    }
+                }
+            }// end using
+            return model;
+        }// end public
+
+        public void AddWatchBySellername(string sellername)
+        { 
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE Seller\r\nSET Watch = Watch + 1\r\nWhere Sellername = @sellername";
+                command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+               
+                    }
+                }
+            }// end using 
         }
 
     }

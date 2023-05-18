@@ -28,6 +28,9 @@ namespace WPF_LoginForm.ViewModels
 
             //拼单
             LoadDataCollage();
+
+            // 访问量加一
+            itemRepo.AddWatchBySellername(Model_details.item.SellerName);
         }
 
         // 属性
@@ -108,7 +111,7 @@ namespace WPF_LoginForm.ViewModels
         void LoadData()
         {
             Model_details = detailsRepository.GetDetails(detailsRepository.TmpGet());
-
+            // 
         }
 
         public void CommentHere(string Comment)// 评论

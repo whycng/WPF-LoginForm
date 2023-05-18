@@ -43,6 +43,9 @@ namespace WPF_LoginForm.Models
         string TmpGetSellername();
         //购物车购买之后库存需要相应的减少
         void DelAmountByCart();
+        // Seller
+        SellerModel GetSellerModelBySellername(string sellername);
+        void AddWatchBySellername(string sellername);
     }
 }
  
