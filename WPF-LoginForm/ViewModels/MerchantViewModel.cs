@@ -10,6 +10,7 @@ using WPF_LoginForm.Repositories;
 using GalaSoft.MvvmLight.Command;
 using LiveCharts.Wpf;
 using LiveCharts;
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -24,9 +25,10 @@ namespace WPF_LoginForm.ViewModels
             DefineAmountCommand = new RelayCommand<string>(t => DefineAmount(t));
             DefineProceCommand = new RelayCommand<string>(t => DefineProce(t));
             ChooseCommand = new RelayCommand<int>(t => Choose(t));
-
+            AddItem = new RelayCommand(() => ExecuteAddItem());
 
             LoadMerchantData();
+            Init2();
         }
 
         // 属性
@@ -95,6 +97,7 @@ namespace WPF_LoginForm.ViewModels
         public RelayCommand<string> DefineAmountCommand { get; set; }
         public RelayCommand<string> DefineProceCommand { get; set; }
         public RelayCommand<int> ChooseCommand { get; set; }
+        public RelayCommand AddItem { get; set; }
 
         //DefineAmount DefineProce  Choose
         public void Choose(int id)
@@ -125,6 +128,22 @@ namespace WPF_LoginForm.ViewModels
         {
             itemRepo.DelItemById(id); 
             LoadMerchantData(); 
+        }
+        public void ExecuteAddItem() // 新增商品
+        {
+            var model = new ItemModel();
+            // 卖家默认填入
+            // ...
+            AddItemView view = new AddItemView();
+            var r = view.ShowDialog(); //返回值r就是 【确定/取消】的结果
+            if (r.Value)
+            { // 点击了【确定】
+
+            }
+            else
+            {
+                // ...
+            }
         }
         // 获取商家四项信息
         void GetTotalOrder()
@@ -171,14 +190,14 @@ namespace WPF_LoginForm.ViewModels
             get { return achievement; }
             set { achievement = value; }
         }
-        private SeriesCollection achievement2 = new SeriesCollection();
+        private SeriesCollection _salesVolume = new SeriesCollection();
         /// <summary>
-        /// 成绩柱状图
+        /// 销售额柱状图
         /// </summary>
-        public SeriesCollection Achievement2
+        public SeriesCollection SalesVolume
         {
-            get { return achievement2; }
-            set { achievement2 = value; }
+            get { return _salesVolume; }
+            set { _salesVolume = value; }
         }
 
         private List<string> studentNameList;
@@ -189,6 +208,16 @@ namespace WPF_LoginForm.ViewModels
         {
             get { return studentNameList; }
             set { studentNameList = value; }
+        }
+
+        private List<string> _monthList;
+        /// <summary>
+        /// 月份
+        /// </summary>
+        public List<string> MonthList
+        {
+            get { return _monthList; }
+            set { _monthList = value; }
         }
 
         #endregion
@@ -221,19 +250,38 @@ namespace WPF_LoginForm.ViewModels
             column.Title = "成绩";
             column.Values = achievement;
             Achievement.Add(column);
+ 
+        }
 
-            // 测试用例
-            ChartValues<double> achievement2 = new ChartValues<double>();
-            Random random2 = new Random();
-            for (int i = 0; i < 5; i++)
+        public void Init2()
+        {
+
+            // 月份
+            MonthList = new List<string>();
+            for(int i = 1; i <= 12; i++)
             {
-                achievement.Add(random.Next(60, 100));
+                string t = i.ToString() + "月"; 
+                MonthList.Add(t);
             }
-            var column2 = new ColumnSeries();
-            column2.DataLabels = true;
-            column2.Title = "成绩";
-            column2.Values = achievement;
-            Achievement2.Add(column2);
+   
+            // 销售额集合
+            ChartValues<int> _salesVolume = new ChartValues<int>();
+            Random random = new Random();
+            // 拿数据 fun(int i)
+            for(int i = 1; i <= 4 ; i++) // 暂时给出前四个月的数据
+            {
+                _salesVolume.Add(random.Next(0,30));
+            }
+            // 拿到当月数据
+            // ....
+            //List<int> myList = new List<int>() { 10, 20, 30, 40 };
+            //_salesVolume.AddRange(myList);
+
+            var column = new ColumnSeries();
+            column.DataLabels = true;
+            column.Title = "销售额";
+            column.Values = _salesVolume;
+            SalesVolume.Add(column);
         }
         #endregion
 

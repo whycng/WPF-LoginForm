@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer>
         <StackPanel>
-
+            
             <!--展示框-->
             <Grid>
                 <Grid.RowDefinitions>
@@ -79,19 +79,20 @@
             <!--销售额柱状图-->
             <lvc:CartesianChart 
             Height="400"
-            Series="{Binding Achievement, UpdateSourceTrigger=PropertyChanged}">
+            Series="{Binding SalesVolume, UpdateSourceTrigger=PropertyChanged}">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Labels="{Binding StudentNameList}" />
+                    <lvc:Axis Labels="{Binding MonthList}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis />
                 </lvc:CartesianChart.AxisY>
-
-
-
-            </lvc:CartesianChart>
+            </lvc:CartesianChart>  
 
             <!--表格-->
+            <StackPanel>
+                <Button Content="新增" FontSize="20"
+                        Command="{Binding AddItem}"/>
+            </StackPanel>
             <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                             ScrollViewer.VerticalScrollBarVisibility="Visible" 
                             Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" 

@@ -186,6 +186,7 @@
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="ViewModels\AddFriendViewModel.cs" />
+    <Compile Include="ViewModels\AddItemViewModel.cs" />
     <Compile Include="ViewModels\AddMyMessageViewModel.cs" />
     <Compile Include="ViewModels\AddStoreViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
@@ -222,6 +223,9 @@
     </Compile>
     <Compile Include="Views\AddFriend.xaml.cs">
       <DependentUpon>AddFriend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddItemView.xaml.cs">
+      <DependentUpon>AddItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddMyMessage.xaml.cs">
       <DependentUpon>AddMyMessage.xaml</DependentUpon>
@@ -360,6 +364,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddFriend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

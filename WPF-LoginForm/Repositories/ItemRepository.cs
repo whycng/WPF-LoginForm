@@ -246,8 +246,7 @@ JOIN (
                     "(Id, ItemName, SellerName, ItemShowText, ItemPhoto, ItemClassify, reco, price, Amount)\r\n" +
                     "SELECT i.Id, i.ItemName, i.SellerName, i.ItemShowText, i.ItemPhoto, i.ItemClassify, i.reco, i.price, c.Amount\r\nFROM Item i\r\n" +
                     "JOIN ItemCart c ON i.Id = c.Id ;"
-                    + "UPDATE Seller\r\nSET TotalOrder = TotalOrder + c.Amount\r\nFROM Seller s\r\nJOIN (\r\n    SELECT i.Sellername, SUM(c.Amount) AS Amount\r\n    FROM ItemCart c\r\n    JOIN Item i ON c.Id = i.Id\r\n    GROUP BY i.Sellername\r\n) c ON s.Sellername = c.SellerName;"
-                    + "CREATE TABLE #SellerRevenue (\r\n    Sellername nvarchar(50),\r\n    ALLPrice decimal(10, 2)\r\n);\r\n\r\nINSERT INTO #SellerRevenue (Sellername, ALLPrice)\r\nSELECT ic.Username, SUM(ic.price * ic.Amount) AS ALLPrice\r\nFROM ItemCart ic\r\nGROUP BY ic.Username;\r\n\r\nUPDATE s\r\nSET Revenue = s.Revenue + sr.ALLPrice\r\nFROM Seller s\r\nINNER JOIN #SellerRevenue sr ON s.Sellername = sr.Sellername;\r\n\r\nDROP TABLE #SellerRevenue;"
+                    + " \r\nUPDATE Seller\r\nSET TotalOrder = TotalOrder + c.Amount\r\nFROM Seller s\r\nJOIN (\r\n    SELECT i.Sellername, SUM(CAST(c.Amount AS int)) AS Amount\r\n    FROM ItemCart c\r\n    JOIN Item i ON c.Id = i.Id\r\n    GROUP BY i.Sellername\r\n) c ON s.Sellername = c.SellerName;\r\n\r\nCREATE TABLE #SellerRevenue (\r\n    Sellername nvarchar(50),\r\n    ALLPrice decimal(10, 2)\r\n);\r\n\r\nINSERT INTO #SellerRevenue (Sellername, ALLPrice)\r\nSELECT ic.Username, SUM(CAST(ic.price AS double precision) * CAST(ic.Amount AS int)) AS ALLPrice\r\nFROM ItemCart ic\r\nGROUP BY ic.Username;\r\n\r\nUPDATE s\r\nSET Revenue = s.Revenue + sr.ALLPrice\r\nFROM Seller s\r\nINNER JOIN #SellerRevenue sr ON s.Sellername = sr.Sellername;\r\n\r\nDROP TABLE #SellerRevenue;"
                     + "";
 
                 // command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
