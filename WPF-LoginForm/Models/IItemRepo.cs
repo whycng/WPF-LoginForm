@@ -20,6 +20,7 @@ namespace WPF_LoginForm.Models
         void AddCartById(int Id);
         void SubCartById(int Id);
         // void SetHisOrdById(int Id);// 根据商品id给历史订单数据
+        void InsertItem( ItemModel Item, string photoName); // 插入商品
 
         void SetHisOrd(); // 直接把购物车塞进历史订单
         List<ItemModel> GetHisOrd();// 获取历史订单数据

@@ -66,7 +66,31 @@ namespace WPF_LoginForm.Repositories
             return item;
         }
 
+        public void InsertItem(ItemModel Item, string photoName)
+        { 
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            { 
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = " INSERT INTO Item (Id, ItemName, SellerName, ItemShowText, ItemPhoto, ItemClassify, price, Amount)\r\nSELECT COUNT(*) + 1, @ItemName, @SellerName, @ItemShowText, @ItemPhoto, @ItemClassify, @price, @Amount FROM Item;\r\n";
+               // command.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                command.Parameters.Add("@ItemName", SqlDbType.NVarChar).Value = Item.ItemName;
+                command.Parameters.Add("@SellerName", SqlDbType.NVarChar).Value = Item.SellerName;
+                command.Parameters.Add("@ItemShowText", SqlDbType.NVarChar).Value = Item.ItemShowText;
+                command.Parameters.Add("@ItemPhoto", SqlDbType.NVarChar).Value = photoName;//Item.ItemPhoto;
+                command.Parameters.Add("@ItemClassify", SqlDbType.NVarChar).Value = Item.ItemClassify;
+                command.Parameters.Add("@price", SqlDbType.NVarChar).Value = Item.price;
+                command.Parameters.Add("@Amount", SqlDbType.Int).Value = Item.Amount; 
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
 
+                    }
+                }
+            }// end using
+        }// end public
 
         // 根据商品卖家选择  
         public List<ItemModel> GetBySellerName(string group)
@@ -723,6 +747,13 @@ JOIN (
                 command.Parameters.Add("@sellername", SqlDbType.NVarChar).Value = sellername;
                 using (var reader = command.ExecuteReader())
                 {
+                   
+                        //string x = reader[0].ToString();
+                        //string x1 = reader[1].ToString();
+                        //string x2 = reader[2].ToString();
+                        //string x3 = reader[3].ToString();
+
+
                     if (reader.Read())
                     {
                         //int l = (int)reader[0];

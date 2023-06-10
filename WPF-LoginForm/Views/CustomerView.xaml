@@ -50,7 +50,7 @@
                             Height="150"
                             Stretch="Uniform">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="{Binding UserPhoto}"  
+                                <ImageBrush ImageSource="{Binding UserPhoto,UpdateSourceTrigger=PropertyChanged}"  
                                     Stretch="UniformToFill"/>
                             </Ellipse.Fill>
 

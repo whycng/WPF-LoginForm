@@ -18,9 +18,7 @@
         <viewModel:LoginViewModel/>
     </Window.DataContext>
     
-    <!--<Window.DataContext>
-        <viewModel:LoginViewModel/>
-    </Window.DataContext>-->
+
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>

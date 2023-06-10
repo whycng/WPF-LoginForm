@@ -201,6 +201,7 @@ namespace WPF_LoginForm.ViewModels
                     {
                         userRepository.SetUserPhoto(User.Username,fileName);
                         UserPhoto = User.UserPhoto;//加载
+                        OnPropertyChanged(nameof(UserPhoto));
                     }
                     else
                     {

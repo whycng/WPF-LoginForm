@@ -542,5 +542,8 @@
   <ItemGroup>
     <Folder Include="Database\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\userHead\head1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -37,5 +37,7 @@ namespace WPF_LoginForm.Models
         List<AddFriModel> GetAddFriByNowUsername(string NowUsername);
         // 添加好友呗
         void AddFriend(string FromUsername, string ToUsername );
+        // 判断是不是管理员
+        bool IsAdmin(string Username);
     }
 }

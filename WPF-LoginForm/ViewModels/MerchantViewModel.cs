@@ -26,12 +26,14 @@ namespace WPF_LoginForm.ViewModels
             DefineProceCommand = new RelayCommand<string>(t => DefineProce(t));
             ChooseCommand = new RelayCommand<int>(t => Choose(t));
             AddItem = new RelayCommand(() => ExecuteAddItem());
+            isMerchant = 0;// 不是
 
             LoadMerchantData();
-            Init2();
+            //Init2();
         }
 
         // 属性
+        private int isMerchant;//是不是商家
         private IItemRepo itemRepo;
         private IUserRepository userRepository;
         public UserModel UserNow;
@@ -166,10 +168,12 @@ namespace WPF_LoginForm.ViewModels
             // 如果你是商家，则显示
             if (itemRepo.IsMerchant(UserNow.Username))
             {
+                isMerchant = 1;
                 var t = itemRepo.GetBySellerName(UserNow.Username);
                 
                 data_item = new ObservableCollection<ItemModel>(t);
                 GetTotalOrder();
+                //Init2();
             }
             else
             {
@@ -270,13 +274,19 @@ namespace WPF_LoginForm.ViewModels
             // 拿数据 fun(int i)
             for(int i = 1; i <= 4 ; i++) // 暂时给出前四个月的数据
             {
-                _salesVolume.Add(random.Next(0,30));
+                //if (isMerchant == 1)
+                //    _salesVolume.Add(random.Next(0, 30));
+                //else
+                //    _salesVolume.Add(0);
+
+                _salesVolume.Add(random.Next(0, 30));
             }
             // 拿到当月数据
             // ....
             //List<int> myList = new List<int>() { 10, 20, 30, 40 };
             //_salesVolume.AddRange(myList);
 
+            SalesVolume.Clear(); // 清空 SalesVolume 中的柱状图
             var column = new ColumnSeries();
             column.DataLabels = true;
             column.Title = "销售额";

@@ -482,5 +482,27 @@ namespace WPF_LoginForm.Repositories
                 }
             }// end using
         }
+
+        public bool IsAdmin(string Username)
+        {
+            bool IsAdmin = false;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [User] WHERE Username=@Username AND PCL='1';";
+                command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = Username;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        IsAdmin = true;
+                    }
+                }
+            }
+            return IsAdmin;
+        }
     }
 }
